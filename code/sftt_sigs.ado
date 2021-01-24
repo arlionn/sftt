@@ -47,13 +47,13 @@ program define sftt_sigs_ori, rclass
 
 	dis
 	dis in g "               Variance Estimation          " 
-	dis in g in smcl "{hline 47}"
-	dis in g "sigma_u    : " _col(20) in y %6.4f `_sigu' 
-	dis in g "sigma_w    : " _col(20) in y %6.4f `_sigw'
+	dis in g in smcl "{hline 47}"  
 	dis in g "sigma_v    : " _col(20) in y %6.4f `_sigv'
+	dis in g "sigma_u    : " _col(20) in y %6.4f `_sigu' 
+	dis in g "sigma_w    : " _col(20) in y %6.4f `_sigw'    
+	dis in g "sigma_v_sq : " _col(20) in y %6.4f `_sigv'^2     
 	dis in g "sigma_u_sq : " _col(20) in y %6.4f `_sigu'^2 
-	dis in g "sigma_w_sq : " _col(20) in y %6.4f `_sigw'^2 
-	dis in g "sigma_v_sq : " _col(20) in y %6.4f `_sigv'^2       
+	dis in g "sigma_w_sq : " _col(20) in y %6.4f `_sigw'^2   
 	dis in g in smcl "{hline 47}"      
 	dis in g "               Variance Analysis          " 
 	dis in g in smcl "{hline 47}"
