@@ -1,0 +1,42 @@
+. sftt_eff
+{\smallskip}
+. tabstat w_hat u_hat wu_diff, by(black) stat(mean p25 p50 p75) format(\%6.3f) c(s)
+{\smallskip}
+Summary for variables: w_hat u_hat wu_diff
+     by categories of: black 
+{\smallskip}
+   black {\VBAR}      mean       p25       p50       p75
+\HLI{9}{\PLUS}\HLI{40}
+       0 {\VBAR}     0.189     0.114     0.143     0.212
+         {\VBAR}     0.221     0.122     0.165     0.249
+         {\VBAR}    -0.032    -0.135    -0.021     0.091
+\HLI{9}{\PLUS}\HLI{40}
+       1 {\VBAR}     0.184     0.110     0.150     0.210
+         {\VBAR}     0.213     0.122     0.156     0.279
+         {\VBAR}    -0.029    -0.169    -0.006     0.088
+\HLI{9}{\PLUS}\HLI{40}
+   Total {\VBAR}     0.189     0.114     0.144     0.212
+         {\VBAR}     0.221     0.122     0.164     0.251
+         {\VBAR}    -0.032    -0.137    -0.020     0.091
+\HLI{9}{\BOTT}\HLI{40}
+{\smallskip}
+. tabstat w_hat_exp u_hat_exp wu_diff_exp, by(black) stat(mean p25 p50 p75) ///
+>         format(\%6.3f) c(s)
+{\smallskip}
+Summary for variables: w_hat_exp u_hat_exp wu_diff_exp
+     by categories of: black 
+{\smallskip}
+   black {\VBAR}      mean       p25       p50       p75
+\HLI{9}{\PLUS}\HLI{40}
+       0 {\VBAR}     0.159     0.103     0.127     0.182
+         {\VBAR}     0.181     0.109     0.144     0.210
+         {\VBAR}    -0.022    -0.107    -0.017     0.073
+\HLI{9}{\PLUS}\HLI{40}
+       1 {\VBAR}     0.157     0.100     0.133     0.180
+         {\VBAR}     0.178     0.110     0.138     0.232
+         {\VBAR}    -0.021    -0.132    -0.005     0.071
+\HLI{9}{\PLUS}\HLI{40}
+   Total {\VBAR}     0.159     0.103     0.128     0.182
+         {\VBAR}     0.181     0.109     0.144     0.211
+         {\VBAR}    -0.022    -0.109    -0.016     0.073
+\HLI{9}{\BOTT}\HLI{40}

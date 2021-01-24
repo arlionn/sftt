@@ -1,0 +1,47 @@
+. sftt_sigs
+{\smallskip}
+               Variance Estimation          
+\HLI{47}
+sigma_u    :       0.6224
+sigma_w    :       1.4797
+sigma_v    :       0.9312
+sigma_u_sq :       0.3873
+sigma_w_sq :       2.1896
+sigma_v_sq :       0.8671
+\HLI{47}
+               Variance Analysis          
+\HLI{47}
+Total sigma_sqs     :  3.4441
+(sigu2+sigw2)/Total :  0.7482
+sigu2/(sigu2+sigw2) :  0.1503
+sigw2/(sigu2+sigw2) :  0.8497
+sig_u - sig_w       : -0.8574
+\HLI{47}
+{\smallskip}
+. sftt_eff
+{\smallskip}
+. sum u_hat_exp w_hat_exp wu_diff_exp
+{\smallskip}
+    Variable {\VBAR}        Obs        Mean    Std. Dev.       Min        Max
+\HLI{13}{\PLUS}\HLI{57}
+   u_hat_exp {\VBAR}      1,600    .3818455    .1049275   .3046379   .9900417
+   w_hat_exp {\VBAR}      1,600    .6003683    .1988679   .3046379   .9999939
+ wu_diff_exp {\VBAR}      1,600    .2185227    .2852198  -.6854037    .695356
+{\smallskip}
+. sum wu_diff_exp, detail
+{\smallskip}
+                         wu_diff_exp
+\HLI{61}
+      Percentiles      Smallest
+ 1\%    -.4977244      -.6854037
+ 5\%     -.270857      -.6775046
+10\%    -.1505555       -.644035       Obs               1,600
+25\%      .022987      -.6344908       Sum of Wgt.       1,600
+{\smallskip}
+50\%     .2233696                      Mean           .2185227
+                        Largest       Std. Dev.      .2852198
+75\%     .4496879       .6951653
+90\%     .6112551       .6952194       Variance       .0813503
+95\%     .6619134        .695279       Skewness      -.3046356
+99\%     .6920477        .695356       Kurtosis       2.605792
+{\smallskip}

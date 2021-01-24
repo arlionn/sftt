@@ -1,0 +1,91 @@
+. use lu11, clear
+{\smallskip}
+. sftt lnprice lnage symp urban education job endurance insur i.province i.year, search check
+note: i_province_1 dropped because of collinearity
+note: i_year_1 dropped because of collinearity
+{\smallskip}
+initial:       log likelihood = -3719.3106
+rescale:       log likelihood = -3719.3106
+rescale eq:    log likelihood = -3676.5552
+Iteration 0:   log likelihood = -3676.5552  
+Iteration 1:   log likelihood = -3674.6652  (backed up)
+Iteration 2:   log likelihood = -3570.7771  (backed up)
+Iteration 3:   log likelihood = -3540.6192  (backed up)
+Iteration 4:   log likelihood = -3525.7221  (backed up)
+Iteration 5:   log likelihood = -3514.5853  (backed up)
+Iteration 6:   log likelihood = -3500.0743  (backed up)
+Iteration 7:   log likelihood = -3489.6528  (backed up)
+Iteration 8:   log likelihood = -3484.3669  
+Iteration 9:   log likelihood =  -3469.129  (backed up)
+Iteration 10:  log likelihood = -3452.8507  
+Iteration 11:  log likelihood =  -3437.553  
+Iteration 12:  log likelihood = -3421.5207  
+Iteration 13:  log likelihood = -3411.4425  (backed up)
+Iteration 14:  log likelihood = -3404.3417  
+Iteration 15:  log likelihood = -3392.5186  
+Iteration 16:  log likelihood = -3375.8171  (backed up)
+Iteration 17:  log likelihood = -3369.3479  
+Iteration 18:  log likelihood = -3353.7763  
+Iteration 19:  log likelihood =  -3339.179  (backed up)
+Iteration 20:  log likelihood =  -3337.864  
+Iteration 21:  log likelihood = -3335.7765  
+Iteration 22:  log likelihood = -3326.9821  
+Iteration 23:  log likelihood = -3318.5364  
+Iteration 24:  log likelihood = -3318.1658  
+Iteration 25:  log likelihood = -3315.0751  
+Iteration 26:  log likelihood = -3314.3979  
+Iteration 27:  log likelihood = -3314.1822  
+Iteration 28:  log likelihood = -3312.2798  
+Iteration 29:  log likelihood = -3311.7254  
+Iteration 30:  log likelihood = -3311.6351  
+Iteration 31:  log likelihood = -3311.5903  
+Iteration 32:  log likelihood = -3311.4822  
+Iteration 33:  log likelihood = -3311.4333  
+Iteration 34:  log likelihood = -3311.4276  
+Iteration 35:  log likelihood = -3311.4211  
+Iteration 36:  log likelihood = -3311.4166  
+Iteration 37:  log likelihood = -3311.4153  
+Iteration 38:  log likelihood =  -3311.415  
+Iteration 39:  log likelihood =  -3311.415  
+Iteration 40:  log likelihood =  -3311.415  
+{\smallskip}
+Two-tiered SF Model (2TSF) : HOMO exponential     Number of obs   =       1806
+                                                  Wald chi2(21)   =     672.27
+Log likelihood =  -3311.415                       Prob > chi2     =     0.0000
+{\smallskip}
+\HLI{13}{\TOPT}\HLI{64}
+     lnprice {\VBAR}      Coef.   Std. Err.      z    P>|z|     [95\% Conf. Interval]
+\HLI{13}{\PLUS}\HLI{64}
+lnprice      {\VBAR}
+       lnage {\VBAR}    .598313   .1144374     5.23   0.000     .3740197    .8226062
+    symptoms {\VBAR}    .745754   .0548348    13.60   0.000     .6382799    .8532282
+       urban {\VBAR}   .2049503   .0761181     2.69   0.007     .0557615     .354139
+   education {\VBAR}   .0630498   .0347409     1.81   0.070    -.0050412    .1311407
+         job {\VBAR}  -.2929331   .0777548    -3.77   0.000    -.4453297   -.1405366
+   endurance {\VBAR}  -1.015462   .0916035   -11.09   0.000    -1.195001   -.8359221
+   insurance {\VBAR}   .0989759   .0857159     1.15   0.248    -.0690242     .266976
+i_province_2 {\VBAR}    .218336   .1409043     1.55   0.121    -.0578314    .4945033
+i_province_3 {\VBAR}    .954297   .1576783     6.05   0.000     .6452531    1.263341
+i_province_4 {\VBAR}   .4149257   .1523484     2.72   0.006     .1163283    .7135231
+i_province_5 {\VBAR}   .5426147   .1485101     3.65   0.000     .2515402    .8336892
+i_province_6 {\VBAR}   1.158333   .1372431     8.44   0.000     .8893416    1.427325
+i_province_7 {\VBAR}    .619783   .1360705     4.55   0.000     .3530897    .8864762
+i_province_8 {\VBAR}   .6700439   .1298162     5.16   0.000     .4156089    .9244789
+i_province_9 {\VBAR}   .8401448   .1728512     4.86   0.000     .5013627    1.178927
+    i_year_2 {\VBAR}  -.2171928   .2684174    -0.81   0.418    -.7432812    .3088956
+    i_year_3 {\VBAR}   .4859277   .2390552     2.03   0.042     .0173881    .9544672
+    i_year_4 {\VBAR}   .9461232   .2338326     4.05   0.000     .4878197    1.404427
+    i_year_5 {\VBAR}   1.093347   .2220386     4.92   0.000     .6581592    1.528534
+    i_year_6 {\VBAR}   1.228365    .216852     5.66   0.000     .8033429    1.653387
+    i_year_7 {\VBAR}   1.201617   .2266252     5.30   0.000     .7574402    1.645795
+       _cons {\VBAR}  -1.586952   .5319659    -2.98   0.003    -2.629586   -.5443182
+\HLI{13}{\PLUS}\HLI{64}
+sigma_v      {\VBAR}
+       _cons {\VBAR}   .1269546   .1233529     1.03   0.303    -.1148127    .3687219
+\HLI{13}{\PLUS}\HLI{64}
+sigma_u      {\VBAR}
+       _cons {\VBAR}  -1.176943   1.072369    -1.10   0.272    -3.278748    .9248616
+\HLI{13}{\PLUS}\HLI{64}
+sigma_w      {\VBAR}
+       _cons {\VBAR}   .0037104   .0915371     0.04   0.968     -.175699    .1831198
+\HLI{13}{\BOTT}\HLI{64}
