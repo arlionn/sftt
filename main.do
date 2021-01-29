@@ -1,5 +1,6 @@
 
 // ----- Load commands -----
+cd /Users/rang/sftt
 adopath + "./code"
 
 
