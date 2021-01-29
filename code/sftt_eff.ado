@@ -83,7 +83,7 @@ program define sftt_eff
 
 		quietly generate double u_hat_exp = 1 - `lamda2' * `qq2' / `Eta1'  /*E(1-e^{-u} | epselon)*/
 		quietly generate double w_hat_exp = 1 - `lamda2' * `qq4' / `Eta2'  /*E(1-e^{-w} | epselon)*/
-		quietly generate double wu_diff_exp = w_hat_exp - u_hat_exp        /*E(e^{-u}-e^{-w}) | epselon*/ 
+		quietly generate double wu_diff_exp = w_hat_exp - u_hat_exp        /*E(e^{-w}-e^{-u}) | epselon*/ 
 		// quietly generate double uw_diff_exp2= 1 - (1-u_hat_exp)/(1-w_hat_exp)  /*E[e^{w-u}-1], see KP05b, pp.16*/
 		
 		// net effect
@@ -117,7 +117,7 @@ program define sftt_eff
 		tempvar psi1 psi2 psi
 		quietly generate double `psi1' = `g1' / (`G1' - `G2')
 		quietly generate double `psi2' = `g2' / (`G1' - `G2')
-	    quietly generate double `psi'  = `psi1' - `psi2'
+                 quietly generate double `psi'  = `psi1' - `psi2'
 		
 		quietly generate u_hat   = `s'^2 * `psi2' - `sig_u'^2 / `s'^2 * (`ehat' - `s'^2 * `psi')
 		quietly generate w_hat   = `s'^2 * `psi1' + `sig_w'^2 / `s'^2 * (`ehat' - `s'^2 * `psi')
@@ -130,7 +130,7 @@ program define sftt_eff
 		quietly generate double `omega_w' = `sig_w' * `s2' / `s'
 		
 		tempvar G_diff rho
-        quietly generate double `G_diff' = `G1' - `G2'		
+                 quietly generate double `G_diff' = `G1' - `G2'		
 		quietly generate double `rho'    = - `sig_w' * `sig_u' / (`s1' * `s2')
 		
 		tempvar tmp_w1 tmp_w2 tmp_w3 tmp_u1 tmp_u2 tmp_u3 
@@ -143,7 +143,7 @@ program define sftt_eff
 		
 		quietly generate u_hat_exp = 1 - 2 / `G_diff' * exp(`tmp_u1') * (normal(`tmp_u2') - binormal(`tmp_u2', `tmp_u3', `rho'))
 		quietly generate w_hat_exp = 1 - 2 / `G_diff' * exp(`tmp_w1') * (normal(`tmp_w2') - binormal(`tmp_w2', `tmp_w3', `rho'))		
-		quietly generate double wu_diff_exp = w_hat_exp - u_hat_exp        /*E(e^{-u}-e^{-w}) | epselon*/ 
+		quietly generate double wu_diff_exp = w_hat_exp - u_hat_exp        /*E(e^{-w}-e^{-u}) | epselon*/ 
 		
 		tempvar ne1 ne2 ne3 ne4 ne5 ne_rho1 ne_rho2
 		quietly generate double `ne1'     = ((`sig_w'^2 + `sig_u'^2) / `s'^2) * (`sig_v'^2 / 2 + `ehat')
