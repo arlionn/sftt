@@ -20,8 +20,8 @@ program define sftt_sigs_ori, rclass
     marksample touse 
 	markout `touse' `e(depvar)' `e(rhs)' `e(sigmaw)' `e(sigmau)'
 
-    if e(title) == "Two-tiered SF Model (2TSF) : HOMO exponential" | ///
-	   e(title) == "Two-tiered SF Model (2TSF) : HOMO half-normal" {
+    if e(title) == "Two-tier SF Model (2TSF) : HOMO exponential" | ///
+	   e(title) == "Two-tier SF Model (2TSF) : HOMO half-normal" {
         local _sigv = exp([sigma_v]_cons)
         local _sigu = exp([sigma_u]_cons)
         local _sigw = exp([sigma_w]_cons)

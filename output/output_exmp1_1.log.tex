@@ -1,0 +1,93 @@
+. use kp09, clear
+{\smallskip}
+. sftt lwage iq educ educ2 exper exper2 tenure tenure2 age married south ///
+>          urban black sibs brthord meduc feduc, check search seed(999)
+{\smallskip}
+initial:       log likelihood = -385.36577
+rescale:       log likelihood = -385.36577
+rescale eq:    log likelihood = -382.79647
+Iteration 0:   log likelihood = -382.79647  
+Iteration 1:   log likelihood = -381.50013  (backed up)
+Iteration 2:   log likelihood = -367.45096  (backed up)
+Iteration 3:   log likelihood = -360.02586  (backed up)
+Iteration 4:   log likelihood = -348.96213  (backed up)
+Iteration 5:   log likelihood =  -326.7465  (backed up)
+Iteration 6:   log likelihood = -316.43468  (backed up)
+Iteration 7:   log likelihood = -309.79174  (backed up)
+Iteration 8:   log likelihood = -304.91158  (backed up)
+Iteration 9:   log likelihood = -283.67563  (backed up)
+Iteration 10:  log likelihood =  -277.1813  (backed up)
+Iteration 11:  log likelihood = -275.15142  (backed up)
+Iteration 12:  log likelihood = -271.95009  (backed up)
+Iteration 13:  log likelihood = -267.91798  (backed up)
+Iteration 14:  log likelihood = -264.47981  (backed up)
+Iteration 15:  log likelihood = -260.74394  (backed up)
+Iteration 16:  log likelihood = -255.17899  (backed up)
+Iteration 17:  log likelihood = -254.60745  (backed up)
+Iteration 18:  log likelihood = -245.18767  
+Iteration 19:  log likelihood = -240.81044  
+Iteration 20:  log likelihood =  -232.5727  (backed up)
+Iteration 21:  log likelihood = -227.09654  
+Iteration 22:  log likelihood = -226.24875  
+Iteration 23:  log likelihood = -226.08533  
+Iteration 24:  log likelihood = -226.07249  
+Iteration 25:  log likelihood = -226.06953  
+Iteration 26:  log likelihood = -226.06925  
+Iteration 27:  log likelihood = -226.06915  
+Iteration 28:  log likelihood = -226.06914  
+{\smallskip}
+Two-tier SF Model (2TSF) : HOMO exponential       Number of obs   =        663
+                                                  Wald chi2(16)   =     319.35
+Log likelihood = -226.06914                       Prob > chi2     =     0.0000
+{\smallskip}
+\HLI{13}{\TOPT}\HLI{64}
+       lwage {\VBAR}      Coef.   Std. Err.      z    P>|z|     [95\% Conf. Interval]
+\HLI{13}{\PLUS}\HLI{64}
+lwage        {\VBAR}
+          iq {\VBAR}   .0043961   .0011061     3.97   0.000     .0022281     .006564
+        educ {\VBAR}   2.035504   1.128688     1.80   0.071    -.1766833    4.247692
+       educ2 {\VBAR}  -.7556993   .5533985    -1.37   0.172     -1.84034    .3289418
+       exper {\VBAR}   .2822846   .1561954     1.81   0.071    -.0238527     .588422
+      exper2 {\VBAR}   -.100513   .0921489    -1.09   0.275    -.2811215    .0800955
+      tenure {\VBAR}   .1536122   .0635721     2.42   0.016     .0290131    .2782112
+     tenure2 {\VBAR}   -.056848    .038085    -1.49   0.136    -.1314931    .0177972
+         age {\VBAR}    .495001   .1867617     2.65   0.008     .1289547    .8610473
+     married {\VBAR}   .2060026   .0443445     4.65   0.000      .119089    .2929162
+       south {\VBAR}  -.0348156   .0297136    -1.17   0.241    -.0930531    .0234219
+       urban {\VBAR}   .2208679   .0290569     7.60   0.000     .1639175    .2778184
+       black {\VBAR}   -.102222   .0526956    -1.94   0.052    -.2055034    .0010595
+        sibs {\VBAR}   .0088143   .0072324     1.22   0.223     -.005361    .0229895
+     brthord {\VBAR}  -.0153657   .0106099    -1.45   0.148    -.0361606    .0054293
+       meduc {\VBAR}   .0081414   .0056129     1.45   0.147    -.0028597    .0191425
+       feduc {\VBAR}   .0076518   .0050713     1.51   0.131    -.0022878    .0175915
+       _cons {\VBAR}   3.858941    .612932     6.30   0.000     2.657617    5.060266
+\HLI{13}{\PLUS}\HLI{64}
+sigma_v      {\VBAR}
+       _cons {\VBAR}  -1.659554   .1569061   -10.58   0.000    -1.967084   -1.352024
+\HLI{13}{\PLUS}\HLI{64}
+sigma_u      {\VBAR}
+       _cons {\VBAR}  -1.510842   .1146947   -13.17   0.000    -1.735639   -1.286045
+\HLI{13}{\PLUS}\HLI{64}
+sigma_w      {\VBAR}
+       _cons {\VBAR}  -1.665967   .1230599   -13.54   0.000     -1.90716   -1.424774
+\HLI{13}{\BOTT}\HLI{64}
+{\smallskip}
+. sftt_sigs
+{\smallskip}
+               Variance Estimation          
+\HLI{47}
+sigma_v    :       0.1902
+sigma_u    :       0.2207
+sigma_w    :       0.1890
+sigma_v_sq :       0.0362
+sigma_u_sq :       0.0487
+sigma_w_sq :       0.0357
+\HLI{47}
+               Variance Analysis          
+\HLI{47}
+Total sigma_sqs     :  0.1206
+(sigu2+sigw2)/Total :  0.7000
+sigu2/(sigu2+sigw2) :  0.5769
+sigw2/(sigu2+sigw2) :  0.4231
+sig_u - sig_w       :  0.0317
+\HLI{47}

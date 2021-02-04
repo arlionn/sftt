@@ -6,7 +6,7 @@
 {title:Title}
 
 {p2colset 5 22 23 2}{...}
-{p2col :{hi:sftt_sigs} {hline 2}}Variance identification in two-tiered stochastic frontier model{p_end}
+{p2col :{hi:sftt_sigs} {hline 2}}Variance identification in two-tier stochastic frontier model{p_end}
 {p2colreset}{...}
 
 {title:Syntax}
@@ -35,7 +35,7 @@
 {phang2}{cmd:. generate v = invnormal(uniform())}{p_end}
 {phang2}{cmd:. generate generate y = x1 + 2 * x2 - ue + we + v}{p_end}
 
-{pstd}Two-tiered stochastic frontier model with exponential distribution for
+{pstd}Two-tier stochastic frontier model with exponential distribution for
 inefficiency terms{p_end}
 {phang2}{cmd:. sftt y x1 x2, check search nocons}{p_end}
 
@@ -54,7 +54,7 @@ inefficiency terms{p_end}
 {phang2}{cmd:. generate vi = invnormal(uniform())}{p_end}
 {phang2}{cmd:. generate y = x - exp(0.6 * zu) * ui + exp(0.8 * zw) * wi + vi}{p_end}
 
-{pstd}Two-tiered stochastic frontier model with scaling assumption for
+{pstd}Two-tier stochastic frontier model with scaling assumption for
 inefficiency terms{p_end}
 {phang2}{cmd:. sftt y x, scal sigmau(zu) sigmaw(zw) robust}{p_end}
 

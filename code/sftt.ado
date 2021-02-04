@@ -219,7 +219,7 @@ program sftt_scaling, eclass
 				id_var(`r(panelvar)') parameters(`para_list')  ///
 				iterate(`iterate') initial(`initial') ///
 				`robust' vce(`vce') ///
-				title(Two-tiered SF Model (2TSF) : Scaling)        		
+				title(Two-tier SF Model (2TSF) : Scaling)        		
 	}
 	else {
 		local skipconstant 
@@ -228,7 +228,7 @@ program sftt_scaling, eclass
 		}
 		nl scaling_opt @ `y' `xs', zu(`zu') zw(`zw') `skipconstant' ///
 				parameters(`para_list') `robust' vce(`vce') iterate(`iterate') ///
-				initial(`initial') title(Two-tiered SF Model (2TSF) : Scaling)
+				initial(`initial') title(Two-tier SF Model (2TSF) : Scaling)
 	}	
 	
 	ereturn local zu `zu'
@@ -351,7 +351,7 @@ version 8.2
 					(sigma_u: `sigmau')                                   ///
 					(sigma_w: `sigmaw' )                                  ///
 					if `touse', `robust' vce(`vce') technique(bfgs)       ///
-					title(Two-tiered SF Model (2TSF) : HOMO exponential)  
+					title(Two-tier SF Model (2TSF) : HOMO exponential)  
 		}
 		else {
 			ml model lf sftt_Pa15_ll (`eq1': `lhs'=`varlist' `nocns') ///
@@ -359,7 +359,7 @@ version 8.2
 					 (sigma_u: `sigmau')                                  ///
 					 (sigma_w: `sigmaw' )                                 ///
 					 if `touse', `robust' vce(`vce') technique(bfgs)      ///
-					 title(Two-tiered SF Model (2TSF) : HOMO half-normal) 
+					 title(Two-tier SF Model (2TSF) : HOMO half-normal) 
 		}
 	}
 	else {
@@ -369,7 +369,7 @@ version 8.2
 					 (sigma_u: `sigmau')                                  ///
 					 (sigma_w: `sigmaw' )                                 ///
 					 if `touse', `robust' vce(`vce') technique(bfgs)      ///
-					 title(Two-tiered SF Model (2TSF) : HET exponential)
+					 title(Two-tier SF Model (2TSF) : HET exponential)
 		}
 		else {
 			ml model lf sftt_Pa15_ll (`eq1': `lhs'=`varlist' `nocns') ///
@@ -377,7 +377,7 @@ version 8.2
 					 (sigma_u: `sigmau')                                  ///
 					 (sigma_w: `sigmaw' )                                 ///
 					 if `touse', `robust' vce(`vce') technique(bfgs)      ///
-					 title(Two-tiered SF Model (2TSF) : HET half-normal)
+					 title(Two-tier SF Model (2TSF) : HET half-normal)
 		}
 	}		
 	

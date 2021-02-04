@@ -14,7 +14,7 @@ program define sftt_eff
 	gen double `ehat' = `e(depvar)' - `yhat' if `touse'
 
 	
-	if e(title) == "Two-tiered SF Model (2TSF) : HOMO exponential" {
+	if e(title) == "Two-tier SF Model (2TSF) : HOMO exponential" {
 		local sig_u = exp([sigma_u]_cons)
 		local sig_w = exp([sigma_w]_cons)
 		local sig_v = exp([sigma_v]_cons)
@@ -22,7 +22,7 @@ program define sftt_eff
 		local lamda1 = 1 / `lamda'
 		local lamda2 = `lamda' / (1 + `lamda')
 	}
-	else if e(title) == "Two-tiered SF Model (2TSF) : HET exponential" {
+	else if e(title) == "Two-tier SF Model (2TSF) : HET exponential" {
 		tempvar sig_u sig_w lamda lamda1 lamda2
 		local sig_v = exp([sigma_v]_cons)
 		qui predict `sig_u' if `touse', eq(sigma_u) 
@@ -33,12 +33,12 @@ program define sftt_eff
 		gen double `lamda1' = 1 / `lamda'
 		gen double `lamda2' = `lamda' / (1+`lamda')
 	}
-	else if e(title) == "Two-tiered SF Model (2TSF) : HOMO half-normal" {
+	else if e(title) == "Two-tier SF Model (2TSF) : HOMO half-normal" {
 	    local sig_u = exp([sigma_u]_cons)
 		local sig_w = exp([sigma_w]_cons)
 		local sig_v = exp([sigma_v]_cons)
 	}
-	else if e(title) == "Two-tiered SF Model (2TSF) : HET half-normal" {
+	else if e(title) == "Two-tier SF Model (2TSF) : HET half-normal" {
 		tempvar sig_u sig_w lamda lamda1 lamda2
 		local sig_v = exp([sigma_v]_cons)
 		qui predict `sig_u' if `touse', eq(sigma_u) 
@@ -57,8 +57,8 @@ program define sftt_eff
 	}
 	
 	
-	if e(title) == "Two-tiered SF Model (2TSF) : HOMO exponential" | ///
-	   e(title) == "Two-tiered SF Model (2TSF) : HET" {
+	if e(title) == "Two-tier SF Model (2TSF) : HOMO exponential" | ///
+	   e(title) == "Two-tier SF Model (2TSF) : HET" {
 		tempvar aa bb betahat etahat Eta1 Eta2
 		quietly generate double `aa'      =  `ehat'/`sig_u' + `sig_v'^2/(2*`sig_u'^2)
 		quietly generate double `bb'      =  `ehat'/`sig_v' - `sig_v'/`sig_w'
@@ -94,7 +94,7 @@ program define sftt_eff
 		quietly generate double `ne_p2' = exp(`aa') * normal(`betahat') + exp(`etahat') * normal(`bb')
 		quietly generate wu_net_effect = `ne_p1' / `ne_p2' - 1
     }
-	else if e(title) == "Two-tiered SF Model (2TSF) : HOMO half-normal" {
+	else if e(title) == "Two-tier SF Model (2TSF) : HOMO half-normal" {
 	    tempvar theta1 theta2 tmp_sqrt s 
 		quietly generate double `theta1'   = `sig_w' / `sig_v'
 		quietly generate double `theta2'   = `sig_u' / `sig_v'

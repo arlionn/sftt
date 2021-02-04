@@ -6,7 +6,7 @@
 {title:Title}
 
 {p2colset 5 18 23 2}{...}
-{p2col :{hi:sftt} {hline 2}}Two-tiered stochastic frontier model{p_end}
+{p2col :{hi:sftt} {hline 2}}Two-tier stochastic frontier model{p_end}
 {p2colreset}{...}
 
 {title:Syntax}
@@ -56,7 +56,7 @@ Or just removing this option to use the exponential specification{p_end}
 {title:Description}
 
 {pstd}
-{opt sftt} fits two-tiered stochastic frontier (2TSF) models; the default
+{opt sftt} fits two-tier stochastic frontier (2TSF) models; the default
 is a 2TSF model with inefficiency terms assumed to be distributed exponential. 
 It provides estimators for the parameters of
 a linear model with a disturbance that is assumed to be a mixture of three components, 
@@ -132,11 +132,11 @@ that use bootstrap or jackknife methods; see
 {phang2}{cmd:. generate v = invnormal(uniform())}{p_end}
 {phang2}{cmd:. generate generate y = x1 + 2 * x2 - ue + we + v}{p_end}
 
-{pstd}Two-tiered stochastic frontier model with exponential distribution for
+{pstd}Two-tier stochastic frontier model with exponential distribution for
 inefficiency terms{p_end}
 {phang2}{cmd:. sftt y x1 x2, check search nocons}{p_end}
 
-{pstd}Two-tiered stochastic frontier model with half-normal distribution for
+{pstd}Two-tier stochastic frontier model with half-normal distribution for
 inefficiency terms{p_end}
 {phang2}{cmd:. sftt y x1 x2, check search nocons hnormal}{p_end}
 
@@ -162,7 +162,7 @@ inefficiency terms{p_end}
 {phang2}{cmd:. generate vi = invnormal(uniform())}{p_end}
 {phang2}{cmd:. generate y = x - exp(0.6 * zu) * ui + exp(0.8 * zw) * wi + vi}{p_end}
 
-{pstd}Two-tiered stochastic frontier model with scaling assumption for
+{pstd}Two-tier stochastic frontier model with scaling assumption for
 inefficiency terms{p_end}
 {phang2}{cmd:. sftt y x, scal sigmau(zu) sigmaw(zw) robust}{p_end}
 

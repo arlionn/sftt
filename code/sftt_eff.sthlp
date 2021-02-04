@@ -6,7 +6,7 @@
 {title:Title}
 
 {p2colset 5 21 23 2}{...}
-{p2col :{hi:sftt_eff} {hline 2}}Residual decomposition in two-tiered stochastic frontier model{p_end}
+{p2col :{hi:sftt_eff} {hline 2}}Residual decomposition in two-tier stochastic frontier model{p_end}
 {p2colreset}{...}
 
 {title:Syntax}
@@ -33,7 +33,7 @@
 {phang2}{cmd:. generate v = invnormal(uniform())}{p_end}
 {phang2}{cmd:. generate generate y = x1 + 2 * x2 - ue + we + v}{p_end}
 
-{pstd}Two-tiered stochastic frontier model with exponential distribution for
+{pstd}Two-tier stochastic frontier model with exponential distribution for
 inefficiency terms{p_end}
 {phang2}{cmd:. sftt y x1 x2, check search nocons}{p_end}
 
