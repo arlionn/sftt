@@ -143,9 +143,9 @@ gen rnk_w_e = _n
 sort w_hat
 gen rnk_w_n = _n
 
-scatter rnk_w_n rnk_w_e, xtitle("Exponential") ytitle("Half-normal") scheme(sj) 
+scatter rnk_w_n rnk_w_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj) 
 graph export output/wi_rank.eps, replace	   
-scatter rnk_u_n rnk_u_e, xtitle("Exponential") ytitle("Half-normal") scheme(sj) 
+scatter rnk_u_n rnk_u_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj) 
 graph export output/ui_rank.eps, replace	   
 
 
