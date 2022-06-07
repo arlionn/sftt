@@ -10,7 +10,7 @@ generate ue = invexponential(0.6, uniform())
 generate we = invexponential(1.4, uniform())
 generate v = invnormal(uniform())
 generate y = x1 + 2 * x2 - ue + we + v
-sftt y x1 x2, check search nocons
+sftt y x1 x2, nocons
 // Second result
 sftt_sigs
 sftt_eff
@@ -33,7 +33,7 @@ generate y = x - exp(0.6 * zu) * ui + exp(0.8 * zw) * wi + vi
 sftt y x, scal sigmau(zu) sigmaw(zw) robust nocons
 // with initial values
 sftt y x, scal sigmau(zu) sigmaw(zw) robust nocons ///
-         initial(beta_x 1 du_zu 0.6 mu_u 1 dw_zw 0.8 mu_w 1)
+         initial(delta_x 1 du_zu 0.6 mu_u 1 dw_zw 0.8 mu_w 1)
 // postestimation
 sftt_sigs
 
@@ -42,9 +42,9 @@ sftt_sigs
 // reproduce result in KP09
 use kp09, clear
 sftt lwage iq educ educ2 exper exper2 tenure tenure2 age married south ///
-         urban black sibs brthord meduc feduc, check search seed(999)
+         urban black sibs brthord meduc feduc, seed(999)
 sftt lwage iq educ educ2 exper exper2 tenure tenure2 age married south ///
-         urban black sibs brthord meduc feduc, check search seed(666) hnorm
+         urban black sibs brthord meduc feduc, seed(666) hnorm
 sftt_sigs
 sftt_eff
 tabstat w_hat u_hat wu_diff, by(black) stat(mean p25 p50 p75) format(%6.3f) c(s)
@@ -56,7 +56,7 @@ tabstat w_hat_exp u_hat_exp wu_diff_exp, by(black) stat(mean p25 p50 p75) ///
 // ----- Section 5.2 -----
 // estimation
 use lu11, clear
-sftt lnprice lnage symp urban education job endurance insur i.province i.year, search check
+sftt lnprice lnage symp urban education job endurance insur i.province i.year, 
 // inefficiency estimation
 sftt_eff
 sum u_hat_exp w_hat_exp wu_diff_exp

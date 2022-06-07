@@ -134,14 +134,14 @@ that use bootstrap or jackknife methods; see
 
 {pstd}Two-tier stochastic frontier model with exponential distribution for
 inefficiency terms{p_end}
-{phang2}{cmd:. sftt y x1 x2, check search nocons}{p_end}
+{phang2}{cmd:. sftt y x1 x2, nocons}{p_end}
 
 {pstd}Two-tier stochastic frontier model with half-normal distribution for
 inefficiency terms{p_end}
-{phang2}{cmd:. sftt y x1 x2, check search nocons hnormal}{p_end}
+{phang2}{cmd:. sftt y x1 x2, nocons hnormal}{p_end}
 
 {pstd}Use {cmd: findseed} to find a usable seed{p_end}
-{phang2}{cmd:. sftt y x1 x2, check search nocons hnormal findseed}{p_end}
+{phang2}{cmd:. sftt y x1 x2, nocons hnormal findseed}{p_end}
 
 {pstd}Identify the variances of inefficiency terms and stochastic noise{p_end}
 {phang2}{cmd:. sftt_sigs}{p_end}

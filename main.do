@@ -17,7 +17,7 @@ generate ue = invexponential(0.6, uniform())
 generate we = invexponential(1.4, uniform())
 generate v = invnormal(uniform())
 generate y = x1 + 2 * x2 - ue + we + v
-sftt y x1 x2, check search nocons
+sftt y x1 x2, nocons
 sjlog close, replace
 // Second result
 sjlog using ./output/output_simu_ori2, replace
@@ -61,7 +61,7 @@ sjlog close, replace
 sjlog using ./output/output_exmp1_1, replace
 use kp09, clear
 sftt lwage iq educ educ2 exper exper2 tenure tenure2 age married south ///
-         urban black sibs brthord meduc feduc, check search seed(999)
+         urban black sibs brthord meduc feduc, seed(999)
 sftt_sigs
 sjlog close, replace
 // Second result - efficiency

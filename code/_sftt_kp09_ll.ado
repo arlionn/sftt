@@ -1,6 +1,5 @@
-// KP05  two-tier stochastic frontier model
-// cap drop sftt_KP09_ll
-program define sftt_KP09_ll
+// KP09 exp-exp-normal log likelihood
+program define _sftt_kp09_ll
 
    args lnf xb sigma_v sigma_u sigma_w
    tempvar e a b eta beta tmpsum

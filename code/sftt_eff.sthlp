@@ -35,7 +35,7 @@
 
 {pstd}Two-tier stochastic frontier model with exponential distribution for
 inefficiency terms{p_end}
-{phang2}{cmd:. sftt y x1 x2, check search nocons}{p_end}
+{phang2}{cmd:. sftt y x1 x2, nocons}{p_end}
 
 {pstd}Identify the variances of inefficiency terms and stochastic noise{p_end}
 {phang2}{cmd:. sftt_sigs}{p_end}
