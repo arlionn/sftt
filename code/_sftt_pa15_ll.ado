@@ -16,13 +16,13 @@ program define _sftt_pa15_ll
     }
     
     // generate Gs with bivariate normal
-//     tempvar G1 G2 rho1 rho2
-//     quietly {
-//         generate double `rho1' = `lambda1' / sqrt(1 + `lambda1'^2)
-//         generate double `rho2' = - `lambda2' / sqrt(1 + `lambda2'^2)
-//         generate double `G1'   = 2 * binormal(`e' / `omega1', 0, `rho1')
-//         generate double `G2'   = 2 * binormal(`e' / `omega2', 0, `rho2')
-//     }
+     /* tempvar G1 G2 rho1 rho2
+     quietly {
+         generate double `rho1' = `lambda1' / sqrt(1 + `lambda1'^2)
+         generate double `rho2' = - `lambda2' / sqrt(1 + `lambda2'^2)
+         generate double `G1'   = 2 * binormal(`e' / `omega1', 0, `rho1')
+         generate double `G2'   = 2 * binormal(`e' / `omega2', 0, `rho2')
+     } */
 
     // generate Gs with Owen's T Function
     tempvar e_omega1 e_omega2 owent1 owent2 G1 G2
