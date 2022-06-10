@@ -16,16 +16,16 @@ program define _sftt_pa15_ll
     }
     
     // generate Gs with bivariate normal
-     /* tempvar G1 G2 rho1 rho2
+     tempvar G1 G2 rho1 rho2
      quietly {
          generate double `rho1' = `lambda1' / sqrt(1 + `lambda1'^2)
          generate double `rho2' = - `lambda2' / sqrt(1 + `lambda2'^2)
          generate double `G1'   = 2 * binormal(`e' / `omega1', 0, `rho1')
          generate double `G2'   = 2 * binormal(`e' / `omega2', 0, `rho2')
-     } */
+     }
 
     // generate Gs with Owen's T Function
-    tempvar e_omega1 e_omega2 owent1 owent2 G1 G2
+    /* tempvar e_omega1 e_omega2 owent1 owent2 G1 G2
     quietly {
         generate double `e_omega1' = `e' / `omega1'
         generate double `e_omega2' = `e' / `omega2'
@@ -35,7 +35,7 @@ program define _sftt_pa15_ll
         owenst `e_omega2' `lambda2' `owent2'
         generate double `G1' = normal(`e_omega1') + 2 * `owent1'
         generate double `G2' = normal(`e_omega2') - 2 * `owent2'
-    }
+    } */
     
     // log-likelihood
     quietly replace `lnf' = - ln(`s') - (1 / (2 * `s'^2)) * `e'^2 + ln(`G1' - `G2')
