@@ -1,4 +1,5 @@
 program nl_scaling_opt
+    version 13
     syntax varlist if, at(name) [zu(varlist) zw(varlist) skipconstant]
     gettoken y xs: varlist
 

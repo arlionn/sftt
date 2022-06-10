@@ -1,12 +1,13 @@
-program sftt, eclass        
-    syntax varlist(min=1 fv) [if] [in] [, sigmau(varlist) sigmaw(varlist)    /// 
-                                  SCALing INITial(string) Robust vce(string) /// 
+program sftt, eclass
+    version 13
+    syntax varlist(min=1 fv) [if] [in] [, sigmau(varlist) sigmaw(varlist)    ///
+                                  SCALing INITial(string) Robust vce(string) ///
                                   noCONStant fe ITERate(integer 1000)        ///
                                   HNORMal findseed seed(string)]
-    preserve        
+    preserve
         // Clear ereturn macro
         ereturn clear
-    
+
         // classify variables
         local normal_varlist
         local factor_varlist
@@ -22,28 +23,28 @@ program sftt, eclass
                 local ori_factor_variables `ori_factor_variables' `var'
             }
         }
-            
+
         // process fe
         if "`fe'" == "fe" {
-            _xt, trequired                
+            _xt, trequired
             quietly xtset
             local id_var `r(panelvar)'
             local t_var `r(timevar)'
             sort `id_var' `t_var'
             foreach var in `normal_varlist' {
-                bysort `id_var': egen `var'_b = mean(`var') 
+                bysort `id_var': egen `var'_b = mean(`var')
                 egen `var'_bb = mean(`var')
                 replace `var' = `var' - `var'_b + `var'_bb
                 drop `var'_b `var'_bb
             }
         }
-        
+
         // get command options
         gettoken first options: 0, parse(",")
-        
+
         // recover variable list
         local varlist `normal_varlist' `factor_varlist'
-        
+
         // Find seed
         if "`findseed'" == "findseed" {
             if "`seed'" != "" {
@@ -81,12 +82,11 @@ program sftt, eclass
                 }
             }
         }
-        
+
         if "`seed'" != "" {
             set seed `seed'
         }
-        
-        
+
         // start estimating
         if "`scaling'" == "scaling" {
             sftt_scaling `varlist' `options'
@@ -103,28 +103,29 @@ end
 
 // sftt with scaling property
 program sftt_scaling, eclass
+    version 13
     syntax varlist(min=2) [if] [in] [, SCALing noCONStant fe INITial(string) ///
             sigmau(varlist) sigmaw(varlist) Robust ITERate(integer 1000)     ///
             findseed findingseedmode vce(string)]
     local zu `sigmau'
     local zw `sigmaw'
-            
-    gettoken y xs: varlist          
-    
+
+    gettoken y xs: varlist
+
     marksample touse, strok
     markout `touse' `y' `xs' `zu' `zw'
-    
+
     // if there is any dependent
     if "`xs'" == "" & "`constant'" == "noconstant" {
         display as error "No independent variable found."
         error 102
     }
-    
+
     // When invoked in finding seed mode, we only iterate 100 times
     if "`findingseedmode'"  == "findingseedmode" {
         local iterate 200
     }
-    
+
     // if y is constant
     quietly _rmcoll `y'
     if r(k_omitted) {
@@ -151,7 +152,7 @@ program sftt_scaling, eclass
         }
         local xs `xs' `var'
     }
-    
+
     // generate default initial value with reg / xtreg if not provided
     if "`initial'" == "" {
         if "`constant'" == "noconstant" {
@@ -160,7 +161,7 @@ program sftt_scaling, eclass
         else {
             quietly reg `y' `xs'
         }
-    
+
         matrix b = e(b)
         local coe_idx = 1
         foreach var in `xs' {
@@ -169,21 +170,21 @@ program sftt_scaling, eclass
         }
         if "`constant'" != "noconstant" {
             local tmp_coe = b[1, `coe_idx++']
-            local initial delta0 `tmp_coe' `initial'           
+            local initial delta0 `tmp_coe' `initial'
         }
         foreach var in `zu' {
-            local initial `initial' du_`var' 1 
+            local initial `initial' du_`var' 1
         }
         local initial `initial' mu_u 1
         foreach var in `zw' {
-            local initial `initial' dw_`var' 1 
+            local initial `initial' dw_`var' 1
         }
         local initial `initial' mu_w 1
-        
+
     }
     display "initial value: `initial'"
-    
-    
+
+
     // generate parameters list
     local para_list
     if "`constant'" != "noconstant" {
@@ -200,11 +201,10 @@ program sftt_scaling, eclass
         local para_list `para_list' dw_`var'
     }
     local para_list `para_list' mu_w
-    
-    
+
     // nls estimation
     if "`fe'" == "fe" {
-        local skipconstant 
+        local skipconstant
         if "`constant'" == "noconstant" {
             local skipconstant skipconstant
         }
@@ -213,25 +213,26 @@ program sftt_scaling, eclass
                 id_var(`r(panelvar)') parameters(`para_list')          ///
                 iterate(`iterate') initial(`initial')                  ///
                 `robust' vce(`vce')                                    ///
-                title(Two-tier SF Model (2TSF) : Scaling)                
+                title(Two-tier SF Model (2TSF) : Scaling)
     }
     else {
-        local skipconstant 
+        local skipconstant
         if "`constant'" == "noconstant" {
             local skipconstant skipconstant
         }
         nl _scaling_opt @ `y' `xs', zu(`zu') zw(`zw') `skipconstant'            ///
                 parameters(`para_list') `robust' vce(`vce') iterate(`iterate') ///
                 initial(`initial') title(Two-tier SF Model (2TSF) : Scaling)
-    }    
-    
+    }
+
     ereturn local zu `zu'
     ereturn local zw `zw'
 end
 
+
 // original sftt
 program define sftt_ori, eclass
-    version 8.2
+    version 13
     if replay() {
         if "`e(cmd)'" != "SFAsw" {
             error 301
@@ -244,27 +245,27 @@ program define sftt_ori, eclass
             sigmau(string) sigmaw(string) FE Check SEarch ///
             Plot Robust vce(string) ITERate(integer 1000) ///
             HNORMal findseed seed(string) findingseedmode]
-    
+
     if "`constant'" != "" {
         local nocns=", `constant'"
-    }  
+    }
     if "`robust'" != ""{
         local robust "robust"
     }
-    
+
     // When invoked in finding seed mode, we only iterate 100 times
     if "`findingseedmode'"  == "findingseedmode" {
         local iterate 200
     }
-        
+
     marksample touse
     markout `touse' `varlist' `sigmau' `sigmaw'
-    gettoken lhs varlist: varlist  
-    
+    gettoken lhs varlist: varlist
+
     if "`varlist'" == "" & "`constant'" != "" {
         error 102
     }
-        
+
     tsunab lhs : `lhs'
     /* check `lhs' not constant */
     qui _rmcoll `lhs'
@@ -272,15 +273,15 @@ program define sftt_ori, eclass
         display as err "dependent variable cannot be constant"
         exit 198
     }
-        
+
     markout `touse' `ivar' `tvar'  /* iis does not allow string */
 
     qui count if `touse' == 1
     if r(N) == 0 {
         error 2000
-    }   
+    }
 
-    ** remove collinearity 
+    ** remove collinearity
     capture noi _rmdcoll `lhs' `varlist' if `touse'  `nocns'
     if _rc {
         exit _rc
@@ -288,51 +289,50 @@ program define sftt_ori, eclass
     local varlist `r(varlist)'
     local names `varlist'
 
-    ** time-series operator 
+    ** time-series operator
     local eq1 : subinstr local lhs "." "_", all
     tsrevar `varlist'
     local varlist `r(varlist)'
     local lhsname `lhs'
     tsrevar `lhs'
     local lhs `r(varlist)'
-    markout `touse' `varlist' `lhs'  
+    markout `touse' `varlist' `lhs'
     if `"`sigmau'"' == "" & `"`sigmaw'"' == ""{
         if "`hnormal'" != "hnormal" {
-            ml model lf _sftt_kp09_ll (`eq1': `lhs'=`varlist' `nocns')     ///
+            ml model lf _sftt_kp09_ll (`eq1': `lhs'=`varlist' `nocns')    ///
                     (sigma_v: )                                           ///
                     (sigma_u: `sigmau')                                   ///
                     (sigma_w: `sigmaw' )                                  ///
-                    if `touse', `robust' vce(`vce') technique(bfgs)       ///
-                    title(Two-tier SF Model (2TSF) : HOMO exponential)  
+                    if `touse', `robust' vce(`vce')                       ///
+                    title(Two-tier SF Model (2TSF) : HOMO exponential)
         }
         else {
-            ml model lf _sftt_pa15_ll (`eq1': `lhs'=`varlist' `nocns')     ///
+            ml model lf _sftt_pa15_ll (`eq1': `lhs'=`varlist' `nocns')    ///
                      (sigma_v: )                                          ///
                      (sigma_u: `sigmau')                                  ///
                      (sigma_w: `sigmaw' )                                 ///
-                     if `touse', `robust' vce(`vce') technique(bfgs)      ///
-                     title(Two-tier SF Model (2TSF) : HOMO half-normal) 
+                     if `touse', `robust' vce(`vce')                      ///
+                     title(Two-tier SF Model (2TSF) : HOMO half-normal)
         }
     }
     else {
         if "`hnormal'" != "hnormal" {
-            ml model lf _sftt_kp09_ll (`eq1': `lhs'=`varlist' `nocns')     ///
+            ml model lf _sftt_kp09_ll (`eq1': `lhs'=`varlist' `nocns')    ///
                      (sigma_v: )                                          ///
                      (sigma_u: `sigmau')                                  ///
                      (sigma_w: `sigmaw' )                                 ///
-                     if `touse', `robust' vce(`vce') technique(bfgs)      ///
+                     if `touse', `robust' vce(`vce')                      ///
                      title(Two-tier SF Model (2TSF) : HET exponential)
         }
         else {
-            ml model lf _sftt_pa15_ll (`eq1': `lhs'=`varlist' `nocns')     ///
+            ml model lf _sftt_pa15_ll (`eq1': `lhs'=`varlist' `nocns')    ///
                      (sigma_v: )                                          ///
                      (sigma_u: `sigmau')                                  ///
                      (sigma_w: `sigmaw' )                                 ///
-                     if `touse', `robust' vce(`vce') technique(bfgs)      ///
+                     if `touse', `robust' vce(`vce')                      ///
                      title(Two-tier SF Model (2TSF) : HET half-normal)
         }
-    }        
-    
+    }
     quietly ml check
     quietly ml search
     ml max, iterate(`iterate') difficult

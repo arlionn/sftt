@@ -1,4 +1,5 @@
 program nl_scaling_opt_fe
+    version 13
     syntax varlist if, at(name) [zu(varlist) zw(varlist) skipconstant id_var(varlist)]
     gettoken y xs: varlist
 
@@ -64,8 +65,8 @@ program nl_scaling_opt_fe
     bysort `id_var': egen `expw_b' = mean(`expw')
     egen `expu_bb' = mean(`expu')
     egen `expw_bb' = mean(`expw')
-    
+
     // Now fill in dependent variable
     replace `y' = `expr_xb' - (`expu' - `expu_b' + `expu_bb') * `mu_u' + ///
-            (`expw' - `expw_b' + `expw_bb') * `mu_w'
+                 (`expw' - `expw_b' + `expw_bb') * `mu_w'
 end
