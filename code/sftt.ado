@@ -559,12 +559,17 @@ end
 /*
 SFTT EFF
 Efficiency analysis.
+This command is not available for 2TSF model with scaling property.
 
 Related commands:
     _sftt_eff
 */
 program define _sftt_eff
     version 13
+    if e(sftt_scaling) == "1" {
+        display as error "{bf: sftt eff} is not available for 2TSF model with scaling property."
+        error 499
+    }
 
     // recover factor variables
     foreach var in `e(factor_variables)' {
