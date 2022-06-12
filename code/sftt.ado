@@ -15,18 +15,26 @@ Syntax:
     - sftt variance decomposition
         sftt sigs
     - sftt efficiency analysis
-        sftt eff
+        sftt eff           // all measures of inefficiency, default names
+        sftt eff, level    // only level specification of inefficiencies, default names
+        sftt eff, exp      // only logarithmic specification of inefficiencies
+        sftt eff, relative // only relative measures of inefficiencies
+        sftt, level u_hat(my_u_hat)  // assign variable name
 */
 program sftt
     version 13
     if "`0'" == "sigs" {
         _sftt_sigs
     }
-    else if "`0'" == "eff" {
-        _sftt_eff
-    }
     else {
-        _sftt_regression `0'
+        gettoken before_comma after_comma: 0, parse(,)
+        local before_comma = strtrim("`before_comma'")
+        if "`before_comma'" == "eff" {
+            _sftt_eff `after_comma'
+        }
+        else {
+            _sftt_regression `0'
+        }
     }
 end
 
@@ -559,16 +567,41 @@ Related commands:
 */
 program define _sftt_eff
     version 13
+    syntax [, LEVel exp RELative                           ///
+              u_hat(string) w_hat(string) wu_diff(string)  ///
+              u_hat_exp(string) w_hat_exp(string)          ///
+              wu_diff_exp(string) wu_net_effect(string)]
     if "`e(sftt_scaling)'" == "" {
         display as error "No available {bf:sftt} estimation result found."
         exit 301       
     }
-
     if e(sftt_scaling) == "1" {
-        display as error "{bf: sftt eff} is not available for 2TSF model with scaling property."
+        display as error "{bf:sftt eff} is not available for 2TSF model with scaling property."
         exit 499
     }
 
+    // syntax check
+    if "`level'" == "level" & "`exp'" == "exp" {
+        display as error "Option {bf:level} and {bf:exp} should not be used simultaneously."
+        exit 198
+    }
+    // assign varname
+    foreach var in u_hat w_hat wu_diff u_hat_exp w_hat_exp wu_diff_exp wu_net_effect {
+        if "``var''" == "" {
+            local `var' = "_`var'"
+        }
+    }
+    if "`level'" == "level" {
+        foreach var in u_hat_exp w_hat_exp wu_diff_exp wu_net_effect {
+            local `var' = ""
+        }
+    }
+    if "`exp'" == "exp" {
+        foreach var in u_hat w_hat wu_diff {
+            local `var' = ""
+        }
+    }
+    
     // recover factor variables
     foreach var in `e(factor_variables)' {
         local tmp_var_name = subinstr("`var'", ".", "_", .)
@@ -626,28 +659,40 @@ program define _sftt_eff
 
     if e(sftt_specification) == "exponential" {
         tempvar aa bb betahat etahat Eta1 Eta2
-        quietly generate double `aa'      =  `ehat'/`sig_u' + `sig_v'^2/(2*`sig_u'^2)
-        quietly generate double `bb'      =  `ehat'/`sig_v' - `sig_v'/`sig_w'
-        quietly generate double `etahat'  =  (0.5*`sig_v'^2)/(`sig_w'^2) - `ehat'/`sig_w'
-        quietly generate double `betahat' = - `ehat'/`sig_v' - `sig_v'/`sig_u'
-        quietly generate double `Eta1'    = normal(`bb') + exp(`aa' - `etahat')*normal(`betahat')
-        quietly generate double `Eta2'    = exp(`etahat' - `aa')*`Eta1'
+        quietly generate double `aa'      = `ehat' / `sig_u' + `sig_v'^2 / (2 * `sig_u'^2)
+        quietly generate double `bb'      = `ehat' / `sig_v' - `sig_v' / `sig_w'
+        quietly generate double `etahat'  = (0.5 * `sig_v'^2) / (`sig_w'^2) - `ehat' / `sig_w'
+        quietly generate double `betahat' = -`ehat' / `sig_v' - `sig_v' / `sig_u'
+        quietly generate double `Eta1'    = normal(`bb') + exp(`aa' - `etahat') * normal(`betahat')
+        quietly generate double `Eta2'    = exp(`etahat' - `aa') * `Eta1'
 
         tempvar pp2 pp3
-        quietly generate double `pp2' = normalden(-`betahat') + `betahat'*normal(`betahat')
-        quietly generate double `pp3' = normalden(-`bb') + `bb'*normal(`bb')
-        quietly generate u_hat = `lamda1' + (`sig_v'*`pp2')/`Eta2'            /*E(u_i | epselon_i)*/
-        quietly generate w_hat = `lamda1' + (`sig_v'*`pp3')/`Eta1'            /*E(w_i | epselon_i)*/
-        quietly generate wu_diff = w_hat - u_hat
+        quietly generate double `pp2' = normalden(-`betahat') + `betahat' * normal(`betahat')
+        quietly generate double `pp3' = normalden(-`bb') + `bb' * normal(`bb')
+        if "`u_hat'" != "" {
+            quietly generate double `u_hat' = `lamda1' + (`sig_v' * `pp2') / `Eta2'            /* E(u_i | epselon_i) */
+        }
+        if "`w_hat'" != "" {
+            quietly generate double `w_hat' = `lamda1' + (`sig_v' * `pp3') / `Eta1'            /* E(w_i | epselon_i) */
+        }
+        if "`wu_diff'" != "" {
+            quietly generate double `wu_diff' = `w_hat' - `u_hat'
+        }
 
         tempvar qq1 qq2 qq3 qq4
         quietly generate double `qq1' = `sig_v'^2/2 - `sig_v'*`betahat'
-        quietly generate double `qq2' = normal(`bb') + exp(`aa' - `etahat')*exp(`qq1')*normal(`betahat' - `sig_v')
-        quietly generate double `qq3' = `sig_v'^2/2 - `sig_v'*`bb'
-        quietly generate double `qq4' = normal(`betahat') + exp(`etahat' - `aa')*exp(`qq3')*normal(`bb' - `sig_v')
-        quietly generate double u_hat_exp = 1 - `lamda2' * `qq2' / `Eta1'  /*E(1-e^{-u} | epselon)*/
-        quietly generate double w_hat_exp = 1 - `lamda2' * `qq4' / `Eta2'  /*E(1-e^{-w} | epselon)*/
-        quietly generate double wu_diff_exp = w_hat_exp - u_hat_exp        /*E(e^{-w}-e^{-u}) | epselon*/
+        quietly generate double `qq2' = normal(`bb') + exp(`aa' - `etahat') * exp(`qq1') * normal(`betahat' - `sig_v')
+        quietly generate double `qq3' = (`sig_v'^2) / 2 - `sig_v' * `bb'
+        quietly generate double `qq4' = normal(`betahat') + exp(`etahat' - `aa') * exp(`qq3') * normal(`bb' - `sig_v')
+        if "`u_hat_exp'" != "" {
+            quietly generate double `u_hat_exp' = 1 - `lamda2' * `qq2' / `Eta1'      /* E(1-e^{-u} | epselon) */
+        }
+        if "`w_hat_exp'" != "" {
+            quietly generate double `w_hat_exp' = 1 - `lamda2' * `qq4' / `Eta2'      /* E(1-e^{-w} | epselon) */
+        }
+        if "`wu_diff_exp'" != "" {
+            quietly generate double `wu_diff_exp' = `w_hat_exp' - `u_hat_exp'            /* E(e^{-w}-e^{-u}) | epselon */
+        }
 
         // net effect
         tempvar ne1 ne2 ne_p1 ne_p2
@@ -655,7 +700,9 @@ program define _sftt_eff
         quietly generate double `ne2' = (1 - `sig_w') * (`etahat' - `sig_v'^2 / (2 * `sig_w'))
         quietly generate double `ne_p1' = exp(`ne1') * normal(`betahat' - `sig_v') + exp(`ne2') * normal(`bb' + `sig_v')
         quietly generate double `ne_p2' = exp(`aa') * normal(`betahat') + exp(`etahat') * normal(`bb')
-        quietly generate wu_net_effect = `ne_p1' / `ne_p2' - 1
+        if "`wu_net_effect'" != "" {
+            quietly generate double `wu_net_effect' = `ne_p1' / `ne_p2' - 1
+        }
     }
     else if e(sftt_specification) == "half-normal" {
         tempvar theta1 theta2 tmp_sqrt s
@@ -681,9 +728,15 @@ program define _sftt_eff
         quietly generate double `psi1' = `g1' / (`G1' - `G2')
         quietly generate double `psi2' = `g2' / (`G1' - `G2')
         quietly generate double `psi'  = `psi1' - `psi2'
-        quietly generate u_hat   = `s'^2 * `psi2' - `sig_u'^2 / `s'^2 * (`ehat' - `s'^2 * `psi')
-        quietly generate w_hat   = `s'^2 * `psi1' + `sig_w'^2 / `s'^2 * (`ehat' - `s'^2 * `psi')
-        quietly generate wu_diff = w_hat - u_hat
+        if "`u_hat'" != "" {
+            quietly generate double `u_hat'   = `s'^2 * `psi2' - `sig_u'^2 / `s'^2 * (`ehat' - `s'^2 * `psi')
+        }
+        if "`w_hat'" != "" {
+            quietly generate double `w_hat'   = `s'^2 * `psi1' + `sig_w'^2 / `s'^2 * (`ehat' - `s'^2 * `psi')
+        }
+        if "`wu_diff'" != "" {
+            quietly generate double `wu_diff' = `w_hat' - `u_hat'
+        }
 
         tempvar s1 s2 omega_w omega_u
         quietly generate double `s1'      = sqrt(`sig_w'^2 + `sig_v'^2)
@@ -702,9 +755,17 @@ program define _sftt_eff
         quietly generate double `tmp_u1' = `omega_u'^2 / 2 + `omega_u' / `omega2' * `ehat'
         quietly generate double `tmp_u2' = (`ehat' - `sig_u'^2) / `omega1'
         quietly generate double `tmp_u3' = `omega_u' + `ehat' / `omega2'
-        quietly generate u_hat_exp = 1 - 2 / `G_diff' * exp(`tmp_u1') * (normal(`tmp_u2') - binormal(`tmp_u2', `tmp_u3', `rho'))
-        quietly generate w_hat_exp = 1 - 2 / `G_diff' * exp(`tmp_w1') * (normal(`tmp_w2') - binormal(`tmp_w2', `tmp_w3', `rho'))
-        quietly generate double wu_diff_exp = w_hat_exp - u_hat_exp        /*E(e^{-w}-e^{-u}) | epselon*/
+        if "`u_hat_exp'" != "" {
+            quietly generate double `u_hat_exp' = 1 - 2 / `G_diff' * exp(`tmp_u1') * (normal(`tmp_u2') - ///
+                                                  binormal(`tmp_u2', `tmp_u3', `rho'))
+        }
+        if "`w_hat_exp'" != "" {
+            quietly generate double `w_hat_exp' = 1 - 2 / `G_diff' * exp(`tmp_w1') * (normal(`tmp_w2') - ///
+                                                  binormal(`tmp_w2', `tmp_w3', `rho'))
+        }
+        if "`wu_diff_exp'" != "" {
+            quietly generate double `wu_diff_exp' = `w_hat_exp' - `u_hat_exp'   /*E(e^{-w}-e^{-u}) | epselon*/
+        }
 
         tempvar ne1 ne2 ne3 ne4 ne5 ne_rho1 ne_rho2
         quietly generate double `ne1'     = ((`sig_w'^2 + `sig_u'^2) / `s'^2) * (`sig_v'^2 / 2 + `ehat')
@@ -714,8 +775,18 @@ program define _sftt_eff
         quietly generate double `ne5'     = `ehat' / `omega2'
         quietly generate double `ne_rho1' = `lambda1' / sqrt(1 + `lambda1'^2)
         quietly generate double `ne_rho2' = - `lambda2' / sqrt(1 + `lambda2'^2)
-        quietly generate wu_net_effect = exp(`ne1') * ///
-                                         (binormal(`ne2', 0, `ne_rho1') - binormal(`ne3', 0, `ne_rho2')) / ///
-                                         (binormal(`ne4', 0, `ne_rho1') - binormal(`ne5', 0, `ne_rho2')) - 1
+        if "`wu_net_effect'" != "" {
+            quietly generate `wu_net_effect' = exp(`ne1') * ///
+                                              (binormal(`ne2', 0, `ne_rho1') - binormal(`ne3', 0, `ne_rho2')) / ///
+                                              (binormal(`ne4', 0, `ne_rho1') - binormal(`ne5', 0, `ne_rho2')) - 1
+        }
+    }
+    
+    if "`relative'" == "relative" {
+        foreach var in u_hat w_hat u_hat_exp w_hat_exp {
+            if "``var''" != "" {
+                drop ``var''
+            }
+        }
     }
 end
