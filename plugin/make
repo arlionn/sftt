@@ -1,4 +1,0 @@
-gcc -O -c -fPIC -o stplugin.o stplugin.c
-gcc -O -c -fPIC -o COwenTFunc.o COwenTFunc.c
-gcc -O -c -fPIC -o owen.o owen.c
-gcc -shared -o owenst_plugin_win64.dll stplugin.o COwenTFunc.o owen.o

@@ -340,11 +340,11 @@ program define _sftt_regression_original, eclass
     }
     else {
         ml model lf _sftt_pa15_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
-                    (ln_sig_v: )                                               ///
-                    (ln_sig_u: `sigmau')                                       ///
-                    (ln_sig_w: `sigmaw')                                       ///
-                    if `touse', `robust' vce(`vce')                            ///
-                    title("{bf:Two-tier stochastic frontier model with normal/half-normal/half-normal specification}")
+                (ln_sig_v: )                                               ///
+                (ln_sig_u: `sigmau')                                       ///
+                (ln_sig_w: `sigmaw')                                       ///
+                if `touse', `robust' vce(`vce')                            ///
+                title("{bf:Two-tier stochastic frontier model with normal/half-normal/half-normal specification}")
     }
     quietly ml check
     quietly ml search
