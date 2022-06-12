@@ -130,6 +130,18 @@ program _sftt_regression, eclass
         else {
             _sftt_regression_original `varlist' `options'
             ereturn local sftt_scaling = 0
+            if "`sigmau'" == "" & "`sigmaw'" == "" {
+                ereturn local sftt_model "homogeneous"
+            }
+            else {
+                ereturn local sftt_model "heterogeneous"
+            }
+            if "`hnormal'" == "hnormal" {
+                ereturn local sftt_specification "half-normal"
+            }
+            else {
+                ereturn local sftt_specification "exponential"
+            }
         }
         ereturn local factor_variables `ori_factor_variables'
     restore
@@ -151,7 +163,7 @@ program _sftt_regression_scaling, eclass
     // if there is any dependent
     if "`xs'" == "" & "`constant'" == "noconstant" {
         display as error "No independent variable found."
-        error 102
+        exit 102
     }
     // When invoked in finding seed mode, we only iterate 100 times
     if "`findingseedmode'"  == "findingseedmode" {
@@ -235,19 +247,20 @@ program _sftt_regression_scaling, eclass
         }
         quietly xtset
         nl _scaling_opt_fe @ `y' `xs', zu(`zu') zw(`zw') `skipconstant' ///
-                id_var(`r(panelvar)') parameters(`para_list')          ///
-                iterate(`iterate') initial(`initial')                  ///
-                `robust' vce(`vce')                                    ///
-                title(Two-tier SF Model (2TSF) : Scaling)
+                id_var(`r(panelvar)') parameters(`para_list')           ///
+                iterate(`iterate') initial(`initial')                   ///
+                `robust' vce(`vce')                                     ///
+                title("{bf:Two-tier stochastic frontier model with scaling property}")
     }
     else {
         local skipconstant
         if "`constant'" == "noconstant" {
             local skipconstant skipconstant
         }
-        nl _scaling_opt @ `y' `xs', zu(`zu') zw(`zw') `skipconstant'            ///
-                parameters(`para_list') `robust' vce(`vce') iterate(`iterate') ///
-                initial(`initial') title(Two-tier SF Model (2TSF) : Scaling)
+        nl _scaling_opt @ `y' `xs', zu(`zu') zw(`zw') `skipconstant'  ///
+                `robust' vce(`vce') iterate(`iterate')                ///
+                parameters(`para_list') initial(`initial')            ///
+                title("{bf:Two-tier stochastic frontier model with scaling property}")
     }
     ereturn local zu `zu'
     ereturn local zw `zw'
@@ -257,9 +270,9 @@ end
 // original sftt without scaling property
 program define _sftt_regression_original, eclass
     version 13
-    syntax varlist(min=1 ts fv) [if] [in] [,noCONStant    ///
-            sigmau(string) sigmaw(string) FE Check SEarch ///
-            Plot Robust vce(string) ITERate(integer 1000) ///
+    syntax varlist(min=1 ts fv) [if] [in] [,noCONStant      ///
+            sigmau(string) sigmaw(string) FE Check SEarch   ///
+            Plot Robust vce(string) ITERate(integer 1000)   ///
             HNORMal findseed seed(string) findingseedmode]
 
     if "`constant'" != "" {
@@ -275,22 +288,20 @@ program define _sftt_regression_original, eclass
     marksample touse
     markout `touse' `varlist' `sigmau' `sigmaw'
     gettoken lhs varlist: varlist
-
     if "`varlist'" == "" & "`constant'" != "" {
         error 102
     }
 
     tsunab lhs : `lhs'
     /* check `lhs' not constant */
-    qui _rmcoll `lhs'
+    quietly _rmcoll `lhs'
     if "`r(varlist)'" == "" {
         display as err "dependent variable cannot be constant"
         exit 198
     }
 
     markout `touse' `ivar' `tvar'  /* iis does not allow string */
-
-    qui count if `touse' == 1
+    quietly count if `touse' == 1
     if r(N) == 0 {
         error 2000
     }
@@ -311,41 +322,21 @@ program define _sftt_regression_original, eclass
     tsrevar `lhs'
     local lhs `r(varlist)'
     markout `touse' `varlist' `lhs'
-    if `"`sigmau'"' == "" & `"`sigmaw'"' == ""{
-        if "`hnormal'" != "hnormal" {
-            ml model lf _sftt_kp09_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
-                    (ln_sig_v: )                                           ///
-                    (ln_sig_u: `sigmau')                                   ///
-                    (ln_sig_w: `sigmaw')                                  ///
-                    if `touse', `robust' vce(`vce')                       ///
-                    title(Two-tier SF Model (2TSF) : HOMO exponential)
-        }
-        else {
-            ml model lf _sftt_pa15_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
-                     (ln_sig_v: )                                          ///
-                     (ln_sig_u: `sigmau')                                  ///
-                     (ln_sig_w: `sigmaw')                                 ///
-                     if `touse', `robust' vce(`vce')                      ///
-                     title(Two-tier SF Model (2TSF) : HOMO half-normal)
-        }
+    if "`hnormal'" != "hnormal" {
+        ml model lf _sftt_kp09_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
+                (ln_sig_v: )                                                   ///
+                (ln_sig_u: `sigmau')                                           ///
+                (ln_sig_w: `sigmaw')                                           ///
+                if `touse', `robust' vce(`vce')                                ///
+                title("{bf:Two-tier stochastic frontier model with normal/exponential/exponential specification}")
     }
     else {
-        if "`hnormal'" != "hnormal" {
-            ml model lf _sftt_kp09_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
-                     (ln_sig_v: )                                          ///
-                     (ln_sig_u: `sigmau')                                  ///
-                     (ln_sig_w: `sigmaw')                                 ///
-                     if `touse', `robust' vce(`vce')                      ///
-                     title(Two-tier SF Model (2TSF) : HET exponential)
-        }
-        else {
-            ml model lf _sftt_pa15_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
-                     (ln_sig_v: )                                          ///
-                     (ln_sig_u: `sigmau')                                  ///
-                     (ln_sig_w: `sigmaw')                                 ///
-                     if `touse', `robust' vce(`vce')                      ///
-                     title(Two-tier SF Model (2TSF) : HET half-normal)
-        }
+        ml model lf _sftt_pa15_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
+                    (ln_sig_v: )                                               ///
+                    (ln_sig_u: `sigmau')                                       ///
+                    (ln_sig_w: `sigmaw')                                       ///
+                    if `touse', `robust' vce(`vce')                            ///
+                    title("{bf:Two-tier stochastic frontier model with normal/half-normal/half-normal specification}")
     }
     quietly ml check
     quietly ml search
@@ -369,7 +360,10 @@ Related command:
 */
 program define _sftt_sigs, rclass
     version 13
-
+    if "`e(sftt_scaling)'" == "" {
+        display as error "No available {bf:sftt} estimation result found."
+        exit 301       
+    }
     preserve
         // recover factor variables
         foreach var in `e(factor_variables)' {
@@ -393,20 +387,19 @@ program define _sftt_sigs_original, rclass
     marksample touse
     markout `touse' `e(depvar)' `e(rhs)' `e(sigmaw)' `e(sigmau)'
 
-    if e(title) == "Two-tier SF Model (2TSF) : HOMO exponential" | ///
-       e(title) == "Two-tier SF Model (2TSF) : HOMO half-normal" {
-        local _sigv = exp([sigma_v]_cons)
-        local _sigu = exp([sigma_u]_cons)
-        local _sigw = exp([sigma_w]_cons)
+    if e(sftt_model) == "homogeneous" {
+        local _sigv = exp([ln_sig_v]_cons)
+        local _sigu = exp([ln_sig_u]_cons)
+        local _sigw = exp([ln_sig_w]_cons)
     }
     else {
         tempvar sigu sigw
-        local _sigv = exp([sigma_v]_cons)
-        quietly predict `sigu' if `touse', eq(sigma_u)
+        local _sigv = exp([ln_sig_v]_cons)
+        quietly predict `sigu' if `touse', eq(ln_sig_u)
         quietly replace `sigu' = exp(`sigu')
         quietly sum `sigu'
         local _sigu = r(mean)
-        quietly predict `sigw' if `touse', eq(sigma_w)
+        quietly predict `sigw' if `touse', eq(ln_sig_w)
         quietly replace `sigw' = exp(`sigw')
         quietly sum `sigw'
         local _sigw = r(mean)
@@ -566,9 +559,14 @@ Related commands:
 */
 program define _sftt_eff
     version 13
+    if "`e(sftt_scaling)'" == "" {
+        display as error "No available {bf:sftt} estimation result found."
+        exit 301       
+    }
+
     if e(sftt_scaling) == "1" {
         display as error "{bf: sftt eff} is not available for 2TSF model with scaling property."
-        error 499
+        exit 499
     }
 
     // recover factor variables
@@ -584,50 +582,49 @@ program define _sftt_eff
     predict double `yhat' if `touse'
     generate double `ehat' = `e(depvar)' - `yhat' if `touse'
 
-    if e(title) == "Two-tier SF Model (2TSF) : HOMO exponential" {
-        local sig_u = exp([sigma_u]_cons)
-        local sig_w = exp([sigma_w]_cons)
-        local sig_v = exp([sigma_v]_cons)
+    local sftt_eff_model_located 0
+    if e(sftt_model) == "homogeneous" & e(sftt_specification) == "exponential" {
+        local sig_u = exp([ln_sig_u]_cons)
+        local sig_w = exp([ln_sig_w]_cons)
+        local sig_v = exp([ln_sig_v]_cons)
         local lamda  = 1 / `sig_u' + 1 / `sig_w'
         local lamda1 = 1 / `lamda'
         local lamda2 = `lamda' / (1 + `lamda')
+        local sftt_eff_model_located 1
     }
-    else if e(title) == "Two-tier SF Model (2TSF) : HET exponential" {
+    if e(sftt_model) == "heterogeneous" & e(sftt_specification) == "exponential" {
         tempvar sig_u sig_w lamda lamda1 lamda2
-        local sig_v = exp([sigma_v]_cons)
-        quietly predict `sig_u' if `touse', eq(sigma_u)
+        local sig_v = exp([ln_sig_v]_cons)
+        quietly predict `sig_u' if `touse', eq(ln_sig_u)
         quietly replace `sig_u' = exp(`sig_u')
-        quietly predict `sig_w' if `touse', eq(sigma_w)
+        quietly predict `sig_w' if `touse', eq(ln_sig_w)
         quietly replace `sig_w' = exp(`sig_w')
         generate double `lamda'  = 1 / `sig_u' + 1 / `sig_w'
         generate double `lamda1' = 1 / `lamda'
         generate double `lamda2' = `lamda' / (1+`lamda')
+        local sftt_eff_model_located 1
     }
-    else if e(title) == "Two-tier SF Model (2TSF) : HOMO half-normal" {
-        local sig_u = exp([sigma_u]_cons)
-        local sig_w = exp([sigma_w]_cons)
-        local sig_v = exp([sigma_v]_cons)
+    if e(sftt_model) == "homogeneous" & e(sftt_specification) == "half-normal" {
+        local sig_u = exp([ln_sig_u]_cons)
+        local sig_w = exp([ln_sig_w]_cons)
+        local sig_v = exp([ln_sig_v]_cons)
+        local sftt_eff_model_located 1
     }
-    else if e(title) == "Two-tier SF Model (2TSF) : HET half-normal" {
+    if e(sftt_model) == "heterogeneous" & e(sftt_specification) == "half-normal" {
         tempvar sig_u sig_w lamda lamda1 lamda2
-        local sig_v = exp([sigma_v]_cons)
-        quietly predict `sig_u' if `touse', eq(sigma_u)
+        local sig_v = exp([ln_sig_v]_cons)
+        quietly predict `sig_u' if `touse', eq(ln_sig_u)
         quietly replace `sig_u' = exp(`sig_u')
-        quietly predict `sig_w' if `touse', eq(sigma_w)
+        quietly predict `sig_w' if `touse', eq(ln_sig_w)
         quietly replace `sig_w' = exp(`sig_w')
+        local sftt_eff_model_located 1
     }
-    else {
-        if e(sftt_scaling) == "1" {
-            display as error "sftt_eff doesn't support 2TSF model with scaling property."
-        }
-        else {
-            display as error "No qualified estimation result found."
-        }
-        exit 0
+    if `sftt_eff_model_located' == 0 {
+        display as error "No available {bf:sftt} estimation result found."
+        exit 301
     }
 
-    if e(title) == "Two-tier SF Model (2TSF) : HOMO exponential" | ///
-       e(title) == "Two-tier SF Model (2TSF) : HET" {
+    if e(sftt_specification) == "exponential" {
         tempvar aa bb betahat etahat Eta1 Eta2
         quietly generate double `aa'      =  `ehat'/`sig_u' + `sig_v'^2/(2*`sig_u'^2)
         quietly generate double `bb'      =  `ehat'/`sig_v' - `sig_v'/`sig_w'
@@ -639,7 +636,6 @@ program define _sftt_eff
         tempvar pp2 pp3
         quietly generate double `pp2' = normalden(-`betahat') + `betahat'*normal(`betahat')
         quietly generate double `pp3' = normalden(-`bb') + `bb'*normal(`bb')
-
         quietly generate u_hat = `lamda1' + (`sig_v'*`pp2')/`Eta2'            /*E(u_i | epselon_i)*/
         quietly generate w_hat = `lamda1' + (`sig_v'*`pp3')/`Eta1'            /*E(w_i | epselon_i)*/
         quietly generate wu_diff = w_hat - u_hat
@@ -649,11 +645,9 @@ program define _sftt_eff
         quietly generate double `qq2' = normal(`bb') + exp(`aa' - `etahat')*exp(`qq1')*normal(`betahat' - `sig_v')
         quietly generate double `qq3' = `sig_v'^2/2 - `sig_v'*`bb'
         quietly generate double `qq4' = normal(`betahat') + exp(`etahat' - `aa')*exp(`qq3')*normal(`bb' - `sig_v')
-
         quietly generate double u_hat_exp = 1 - `lamda2' * `qq2' / `Eta1'  /*E(1-e^{-u} | epselon)*/
         quietly generate double w_hat_exp = 1 - `lamda2' * `qq4' / `Eta2'  /*E(1-e^{-w} | epselon)*/
         quietly generate double wu_diff_exp = w_hat_exp - u_hat_exp        /*E(e^{-w}-e^{-u}) | epselon*/
-        // quietly generate double uw_diff_exp2= 1 - (1-u_hat_exp)/(1-w_hat_exp)  /*E[e^{w-u}-1], see KP05b, pp.16*/
 
         // net effect
         tempvar ne1 ne2 ne_p1 ne_p2
@@ -663,7 +657,7 @@ program define _sftt_eff
         quietly generate double `ne_p2' = exp(`aa') * normal(`betahat') + exp(`etahat') * normal(`bb')
         quietly generate wu_net_effect = `ne_p1' / `ne_p2' - 1
     }
-    else if e(title) == "Two-tier SF Model (2TSF) : HOMO half-normal" {
+    else if e(sftt_specification) == "half-normal" {
         tempvar theta1 theta2 tmp_sqrt s
         quietly generate double `theta1'   = `sig_w' / `sig_v'
         quietly generate double `theta2'   = `sig_u' / `sig_v'
@@ -687,7 +681,6 @@ program define _sftt_eff
         quietly generate double `psi1' = `g1' / (`G1' - `G2')
         quietly generate double `psi2' = `g2' / (`G1' - `G2')
         quietly generate double `psi'  = `psi1' - `psi2'
-
         quietly generate u_hat   = `s'^2 * `psi2' - `sig_u'^2 / `s'^2 * (`ehat' - `s'^2 * `psi')
         quietly generate w_hat   = `s'^2 * `psi1' + `sig_w'^2 / `s'^2 * (`ehat' - `s'^2 * `psi')
         quietly generate wu_diff = w_hat - u_hat
@@ -709,7 +702,6 @@ program define _sftt_eff
         quietly generate double `tmp_u1' = `omega_u'^2 / 2 + `omega_u' / `omega2' * `ehat'
         quietly generate double `tmp_u2' = (`ehat' - `sig_u'^2) / `omega1'
         quietly generate double `tmp_u3' = `omega_u' + `ehat' / `omega2'
-
         quietly generate u_hat_exp = 1 - 2 / `G_diff' * exp(`tmp_u1') * (normal(`tmp_u2') - binormal(`tmp_u2', `tmp_u3', `rho'))
         quietly generate w_hat_exp = 1 - 2 / `G_diff' * exp(`tmp_w1') * (normal(`tmp_w2') - binormal(`tmp_w2', `tmp_w3', `rho'))
         quietly generate double wu_diff_exp = w_hat_exp - u_hat_exp        /*E(e^{-w}-e^{-u}) | epselon*/
@@ -722,7 +714,6 @@ program define _sftt_eff
         quietly generate double `ne5'     = `ehat' / `omega2'
         quietly generate double `ne_rho1' = `lambda1' / sqrt(1 + `lambda1'^2)
         quietly generate double `ne_rho2' = - `lambda2' / sqrt(1 + `lambda2'^2)
-
         quietly generate wu_net_effect = exp(`ne1') * ///
                                          (binormal(`ne2', 0, `ne_rho1') - binormal(`ne3', 0, `ne_rho2')) / ///
                                          (binormal(`ne4', 0, `ne_rho1') - binormal(`ne5', 0, `ne_rho2')) - 1

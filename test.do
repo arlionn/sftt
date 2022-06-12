@@ -1,6 +1,7 @@
 cd C:\Users\lc_zd\dev\sftt
 adopath + "./code"
 
+// ---------------------------
 clear
 set seed 888
 quietly set obs 1600
@@ -13,6 +14,23 @@ generate y = x1 + 2 * x2 - ue + we + v
 sftt y x1 x2, nocons
 sftt y x1 x2, nocons hnormal
 
+// ---------------------
+clear
+set seed 888
+quietly set obs 1600
+generate x1 = invnormal(uniform())
+generate x2 = invnormal(uniform())
+generate ue = invexponential(0.6, uniform())
+generate we = invexponential(1.4, uniform())
+generate ss = invnormal(uniform()) + 1
+replace ss = -ss if ss < 0
+generate ues = invexponential(ss, uniform())
+generate v = invnormal(uniform())
+generate ys = x1 + 2 * x2 - ues + we + v
+sftt ys x1 x2, nocons sigmau(ss)
+sftt ys x1 x2, nocons sigmau(ss) hnormal
+
+// --------------------
 clear
 set seed 999
 quietly set obs 10000
