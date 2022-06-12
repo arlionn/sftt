@@ -313,36 +313,36 @@ program define _sftt_regression_original, eclass
     markout `touse' `varlist' `lhs'
     if `"`sigmau'"' == "" & `"`sigmaw'"' == ""{
         if "`hnormal'" != "hnormal" {
-            ml model lf _sftt_kp09_ll (`eq1': `lhs'=`varlist' `nocns')    ///
-                    (sigma_v: )                                           ///
-                    (sigma_u: `sigmau')                                   ///
-                    (sigma_w: `sigmaw' )                                  ///
+            ml model lf _sftt_kp09_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
+                    (ln_sig_v: )                                           ///
+                    (ln_sig_u: `sigmau')                                   ///
+                    (ln_sig_w: `sigmaw')                                  ///
                     if `touse', `robust' vce(`vce')                       ///
                     title(Two-tier SF Model (2TSF) : HOMO exponential)
         }
         else {
-            ml model lf _sftt_pa15_ll (`eq1': `lhs'=`varlist' `nocns')    ///
-                     (sigma_v: )                                          ///
-                     (sigma_u: `sigmau')                                  ///
-                     (sigma_w: `sigmaw' )                                 ///
+            ml model lf _sftt_pa15_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
+                     (ln_sig_v: )                                          ///
+                     (ln_sig_u: `sigmau')                                  ///
+                     (ln_sig_w: `sigmaw')                                 ///
                      if `touse', `robust' vce(`vce')                      ///
                      title(Two-tier SF Model (2TSF) : HOMO half-normal)
         }
     }
     else {
         if "`hnormal'" != "hnormal" {
-            ml model lf _sftt_kp09_ll (`eq1': `lhs'=`varlist' `nocns')    ///
-                     (sigma_v: )                                          ///
-                     (sigma_u: `sigmau')                                  ///
-                     (sigma_w: `sigmaw' )                                 ///
+            ml model lf _sftt_kp09_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
+                     (ln_sig_v: )                                          ///
+                     (ln_sig_u: `sigmau')                                  ///
+                     (ln_sig_w: `sigmaw')                                 ///
                      if `touse', `robust' vce(`vce')                      ///
                      title(Two-tier SF Model (2TSF) : HET exponential)
         }
         else {
-            ml model lf _sftt_pa15_ll (`eq1': `lhs'=`varlist' `nocns')    ///
-                     (sigma_v: )                                          ///
-                     (sigma_u: `sigmau')                                  ///
-                     (sigma_w: `sigmaw' )                                 ///
+            ml model lf _sftt_pa15_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
+                     (ln_sig_v: )                                          ///
+                     (ln_sig_u: `sigmau')                                  ///
+                     (ln_sig_w: `sigmaw')                                 ///
                      if `touse', `robust' vce(`vce')                      ///
                      title(Two-tier SF Model (2TSF) : HET half-normal)
         }
