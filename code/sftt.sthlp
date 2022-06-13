@@ -11,12 +11,30 @@
 
 {title:Syntax}
 
+    Estimation Syntax
+
 {p 8 17 2}
 {cmd:sftt}
 {depvar}
 [{indepvars}]
 {ifin}
 [{cmd:,} {it:options}]
+
+    Variance decomposition subcommand
+
+{p 8 17 2}
+{cmd:sftt sigs}
+
+    Efficiency analysis subcommand
+
+{p 8 17 2}
+{cmd:sftt eff}
+[{cmd:,} {opt lev:el} {opt exp} {opt rel:ative}]
+[
+    {opth u_hat(newvar)} {opth w_hat(newvar)} {opth wu_diff(newvar)} 
+    {opth u_hat_exp(newvar)} {opth w_hat_exp(newvar)} 
+    {opth wu_diff_exp(newvar)} {opth wu_net_effect(newvar)} 
+]
 
 {synoptset 33 tabbed}{...}
 {synopthdr}
@@ -65,6 +83,12 @@ which have a strictly nonnegative, nonpositive and symmetric distribution, respe
 (a measurement of inefficiency) is assumed to be from a half-normal or exponential, 
 or even without distributional assumption. In the latter case, maximization is performed
 through nonlinear least-squares estimation.
+
+{pstd}
+{opt sftt sigs} identifies the variances of each component in the composite error term.
+
+{pstd}
+{opt sftt eff} decomposes the residual into inefficiency terms and stochastic noise. Only used ina 2TSF models estimated with distributional assumptions.
 
 {title:Options}
 
@@ -144,10 +168,10 @@ inefficiency terms{p_end}
 {phang2}{cmd:. sftt y x1 x2, nocons hnormal findseed}{p_end}
 
 {pstd}Identify the variances of inefficiency terms and stochastic noise{p_end}
-{phang2}{cmd:. sftt_sigs}{p_end}
+{phang2}{cmd:. sftt sigs}{p_end}
 
 {pstd}Decompose the residual into inefficiency terms and stochastic noise{p_end}
-{phang2}{cmd:. sftt_eff}{p_end}
+{phang2}{cmd:. sftt eff}{p_end}
 
 
     {hline}
@@ -167,7 +191,7 @@ inefficiency terms{p_end}
 {phang2}{cmd:. sftt y x, scal sigmau(zu) sigmaw(zw) robust}{p_end}
 
 {pstd}Identify the variances of inefficiency terms and stochastic noise{p_end}
-{phang2}{cmd:. sftt_sigs}{p_end}
+{phang2}{cmd:. sftt sigs}{p_end}
     {hline}
 
 
