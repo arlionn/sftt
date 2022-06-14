@@ -8,6 +8,9 @@ Related command:
     sftt
 
 Syntax:
+    - sftt version
+        sftt, version
+        sftt, ver
     - sftt regression
         sftt y x1 x2, nocons
         sftt y x1 x2 x3, hnormal
@@ -23,11 +26,19 @@ Syntax:
 */
 program sftt
     version 13
+    gettoken before_comma after_comma: 0, parse(,)
+    
+    if strtrim("`after_comma'") == "version" | strtrim("`after_comma'") == "ver"  {
+        display _n(1) "{bf:{ul:Version}}"
+        display _n(1) "{txt}{sf}    sftt version 0.0.1"
+        display "    June 12, 2022"
+        exit 0
+    }
+
     if "`0'" == "sigs" {
         _sftt_sigs
     }
     else {
-        gettoken before_comma after_comma: 0, parse(,)
         local before_comma = strtrim("`before_comma'")
         if "`before_comma'" == "eff" {
             _sftt_eff `after_comma'
