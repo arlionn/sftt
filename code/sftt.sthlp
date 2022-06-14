@@ -1,14 +1,36 @@
 {smcl}
-{* *! version 1.1.2  25nov2011}{...}
-{cmd:help sftt}{right:also see:  {help sftt_sigs}, {help sftt_eff}}
-{hline}
-
+{* *! version 0.0.1  13Jun2022}{...}
+{vieweralsosee "[R] frontier" "help frontier"}{...}
+{vieweralsosee "sfkk" "help sfkk"}{...}
+{viewerjumpto "Syntax" "sftt##syntax"}{...}
+{viewerjumpto "Description" "sftt##description"}{...}
+{viewerjumpto "Estimate Options" "sftt##estimate_options_full"}{...}
+{viewerjumpto "Efficiency Options" "sftt##estimate_efficiency_full"}{...}
+{viewerjumpto "Stored Results" "sftt##stored_results"}{...}
+{viewerjumpto "Program Authors" "sftt##program_authors"}{...}
+{viewerjumpto "Reference" "sftt##reference"}{...}
+{viewerjumpto "Acknowledgments" "sftt##acknowledgments"}{...}
 {title:Title}
 
-{p2colset 5 18 23 2}{...}
+{p2colset 9 17 23 2}{...}
 {p2col :{hi:sftt} {hline 2}}Two-tier stochastic frontier model{p_end}
 {p2colreset}{...}
 
+
+{title:Contents}
+
+{pstd}{help sftt##syntax:Syntax}{p_end}
+{pstd}{help sftt##description:Description}{p_end}
+{pstd}{help sftt##estimate_options_full:Estimate Options}{p_end}
+{pstd}{help sftt##estimate_efficiency_full:Efficiency Options}{p_end}
+{pstd}{help sftt##examples:Examples}{p_end}
+{pstd}{help sftt##stored_results:Stored Results}{p_end}
+{pstd}{help sftt##program_authors:Program Authors}{p_end}
+{pstd}{help sftt##reference:Reference}{p_end}
+{pstd}{help sftt##acknowledgments:Acknowledgments}{p_end}
+
+
+{marker syntax}{...}
 {title:Syntax}
 
     Estimation Syntax
@@ -18,7 +40,7 @@
 {depvar}
 [{indepvars}]
 {ifin}
-[{cmd:,} {it:options}]
+[{cmd:,} {it:{help sftt##estimate_options:estimate_options}}]
 
     Variance decomposition subcommand
 
@@ -29,15 +51,12 @@
 
 {p 8 17 2}
 {cmd:sftt eff}
-[{cmd:,} {opt lev:el} {opt exp} {opt rel:ative}]
-[
-    {opth u_hat(newvar)} {opth w_hat(newvar)} {opth wu_diff(newvar)} 
-    {opth u_hat_exp(newvar)} {opth w_hat_exp(newvar)} 
-    {opth wu_diff_exp(newvar)} {opth wu_net_effect(newvar)} 
-]
+[{cmd:,} {it: {help sftt##efficiency_options:efficiency_options}}]
 
-{synoptset 33 tabbed}{...}
-{synopthdr}
+
+{synoptset 28 tabbed}{...}
+{marker estimate_options}{...}
+{synopthdr:estimate_options}
 {synoptline}
 {syntab :Estimation}
 {synopt :{opt nocons:tant}}suppress constant term{p_end}
@@ -59,52 +78,63 @@ variables for the upper (nonnegative) inefficiency variance function{p_end}
 {syntab :SE}
 {synopt :{opth vce(vcetype)}}{it:vcetype} may be {opt oim}, {opt opg}, {opt r:obust}, {opt cl:uster} {it:clustvar}, {opt boot:strap}, or {opt jack:knife}{p_end}
 {synopt :{opt r:obust}}synonym for {cmd:vce(robust)}{p_end}
-
-{p2colreset}{...}
-{p 4 6 2}
-{it:indepvars} may contain factor variables; see {help fvvarlist}.{p_end}
-{p 4 6 2}
-Note that when using {opt hnormal}, the estimation might not converge because
-of flat derivatives or missing values. 
-Rerun the command might help, you can also use {opt findseed} to find a usable random seed. 
-Or just removing this option to use the exponential specification{p_end}
-{p 4 6 2}
+{synoptline}
 
 
+{synoptset 28 tabbed}{...}
+{marker efficiency_options}{...}
+{synopthdr:efficiency_options}
+{synoptline}
+{syntab: Select variable type}
+{synopt: {opt lev:el}} only generate inefficiency terms in level specification.{p_end}
+{synopt: {opt exp}} only generate inefficiency terms in logarithmic specification.{p_end}
+{synopt: {opt rel:ative}} only generate relative measures of inefficiency.{p_end}
+
+{syntab: Assign variable name}
+{synopt: {opth u_hat(newvar)}} variable name of the estimated lower one-sided inefficiency term in level specification, default is {it: _u_hat}.{p_end}
+{synopt: {opth w_hat(newvar)}} variable name of the estimated upper one-sided inefficiency term in level specification, default is {it: _w_hat}.{p_end}
+{synopt: {opth wu_diff(newvar)}} variable name of the estimated net surplus in level specification, default is {it: _wu_diff}.{p_end}
+{synopt: {opth u_hat_exp(newvar)}} variable name of the estimated lower one-sided inefficiency term in logarithmic specification, default is {it: _u_hat_exp}.{p_end}
+{synopt: {opth w_hat_exp(newvar)}} variable name of the estimated upper one-sided inefficiency term in logarithmic specification, default is {it: _w_hat_exp}.{p_end}
+{synopt: {opth wu_diff_exp(newvar)}} variable name of the estimated net surplus in logarithmic specification, default is {it: _wu_diff_exp}.{p_end}
+{synopt: {opth wu_net_effect(newvar)}} variable name of the estimated net effect, default is {it: _wu_net_effect}.{p_end}
+{synoptline}
+
+
+{marker description}{...}
 {title:Description}
 
 {pstd}
-{opt sftt} fits two-tier stochastic frontier (2TSF) models; the default
-is a 2TSF model with inefficiency terms assumed to be distributed exponential. 
-It provides estimators for the parameters of
-a linear model with a disturbance that is assumed to be a mixture of three components, 
-which have a strictly nonnegative, nonpositive and symmetric distribution, respectively.
-{opt sftt} can fit models in which the nonnegative / nonpositive distributed component
-(a measurement of inefficiency) is assumed to be from a half-normal or exponential, 
-or even without distributional assumption. In the latter case, maximization is performed
-through nonlinear least-squares estimation.
+{opt sftt} fits two-tier stochastic frontier (2TSF) models with multiple model settings. {opt sftt} 
+provides estimators for the parameters of a linear model with a disturbance that is assumed to be a 
+mixture of three components: two measures of inefficiency which are strictly nonnegative and 
+nonpositive respectively, and a two-sided error term from a symmetric distribution. {opt sftt} can
+fit 2TSF models with distributional assumption. When using distributional assumption mode, 
+this command is applicable to estimate models in exponential/exponential/normal specification 
+following {help sftt##KP09:{bind:Kumbhakar and Parmeter (2009)}} and models in half-normal/half-normal/normal 
+specification following {help sftt##PP15:{bind:Papadopoulos (2015)}}. {opt sftt} also fits models
+with scaling assumption following {help sftt##PA18:{bind:Parmeter (2018)}}.
 
 {pstd}
-{opt sftt sigs} identifies the variances of each component in the composite error term.
+{opt sftt sigs} identifies the distribution of each component in the composite error term.
 
 {pstd}
-{opt sftt eff} decomposes the residual into inefficiency terms and stochastic noise. Only used ina 2TSF models estimated with distributional assumptions.
+{opt sftt eff} decomposes the residual and generate measures of inefficiency.
 
-{title:Options}
 
-{dlgtab:Estimation}
+{marker estimate_options_full}{...}
+{title:Estimate Options}
 
-{phang}
-{opt noconstant}; see
-{helpb estimation options##noconstant:[R] estimation options}.
+{dlgtab:Model setting}
 
 {phang}
-{opt hnormal} uses the half-normal specification rather than the benchmark exponential specification. Note that when using this option, the estimation might not converge because
-of flat derivatives or missing values. Rerun the command might help, you can also use {opt findseed} to find a usable random seed. Or just removing this option to use the exponential specification.
+{opt noconstant} suppresses the constant term (intercept) in the frontier.
 
 {phang}
-{opt scaling} estimates the 2TSF model with scaling property by NLS, 
-distributional assumption for the inefficiency terms are not needed. 
+{opt hnormal} uses the {it:half-normal/half-normal/normal} specification rather than the benchmark {it:exponential/exponential/normal} specification. Note that when using this option, the estimation might not converge because of flat derivatives or missing values, rerun the command several times might help. Users can also use {opt findseed} to find a usable random seed.
+
+{phang}
+{opt scaling} estimates the 2TSF model with scaling property.
 
 {dlgtab:Ancillary equations}
 
@@ -115,10 +145,10 @@ with the variance expressed as a function of the covariates defined in
 {it:varlist_u}.
 
 {phang}
-{cmd:sigmaw(}{help varlist:varlist_u} [,{opt noconstant}]{cmd:)}
+{cmd:sigmaw(}{help varlist:varlist_w} [,{opt noconstant}]{cmd:)}
 specifies that the lower (nonnegative) inefficiency component is heteroskedastic,
 with the variance expressed as a function of the covariates defined in 
-{it:varlist_u}.
+{it:varlist_w}.
 
 {dlgtab:Other options}
 
@@ -142,60 +172,97 @@ that use bootstrap or jackknife methods; see
 {phang}
 {opt robust} synonym for {cmd:vce(robust)}
 
+
+{marker estimate_efficiency_full}{...}
+{title:Efficiency Options}
+
+{dlgtab:Select variable type}
+
+{phang}
+{opt lev:el} only generates inefficiency terms in level specification.
+
+{phang}
+{opt exp} only generates inefficiency terms in logarithmic specification.
+
+{phang}
+{opt rel:ative} only generates relative measures of inefficiency.
+
+
+{dlgtab:Assign variable name}
+
+{phang}
+{opth u_hat(newvar)} sets the variable name of the estimated lower one-sided inefficiency term in level specification, default is {it: _u_hat}.{p_end}
+
+{phang}
+{opth w_hat(newvar)} sets the variable name of the estimated upper one-sided inefficiency term in level specification, default is {it: _w_hat}.{p_end}
+
+{phang}
+{opth wu_diff(newvar)} sets the variable name of the estimated net surplus in level specification, default is {it: _wu_diff}.{p_end}
+
+{phang}
+{opth u_hat_exp(newvar)} sets the variable name of the estimated lower one-sided inefficiency term in logarithmic specification, default is {it: _u_hat_exp}.{p_end}
+
+{phang}
+{opth w_hat_exp(newvar)} sets the variable name of the estimated upper one-sided inefficiency term in logarithmic specification, default is {it: _w_hat_exp}.{p_end}
+
+{phang}
+{opth wu_diff_exp(newvar)}} sets the variable name of the estimated net surplus in logarithmic specification, default is {it: _wu_diff_exp}.{p_end}
+
+{phang}
+{opth wu_net_effect(newvar)}} sets the variable name of the estimated net effect, default is {it: _wu_net_effect}.{p_end}
+
+
+{marker examples}{...}
 {title:Examples}
 
     {hline}
+{pstd}{bf:Two-tier stochastic frontier model with distributional assumptions}{p_end}
     Setup
-{phang2}{cmd:. clear}{p_end}
-{phang2}{cmd:. set seed 996}{p_end}
-{phang2}{cmd:. set obs 1600}{p_end}
-{phang2}{cmd:. generate x1 = invnormal(uniform())}{p_end}
-{phang2}{cmd:. generate x2 = invnormal(uniform())}{p_end}
-{phang2}{cmd:. generate ue = invexponential(0.6, uniform())}{p_end}
-{phang2}{cmd:. generate we = invexponential(1.4, uniform())}{p_end}
-{phang2}{cmd:. generate v = invnormal(uniform())}{p_end}
-{phang2}{cmd:. generate generate y = x1 + 2 * x2 - ue + we + v}{p_end}
+{phang2}{cmd:. {stata "use https://sftt.oss-cn-hangzhou.aliyuncs.com/sftt_dist.dta, clear"}}{p_end}
+{phang2}{cmd:. {stata "sftt, version"}}{p_end}
 
-{pstd}Two-tier stochastic frontier model with exponential distribution for
-inefficiency terms{p_end}
-{phang2}{cmd:. sftt y x1 x2, nocons}{p_end}
+{pstd}Estimate model in exponential specification{p_end}
+{phang2}{cmd:. {stata "sftt y x1 x2"}}{p_end}
+{phang2}{cmd:. {stata "sftt y x1 x2, nocons"}}{p_end}
 
-{pstd}Two-tier stochastic frontier model with half-normal distribution for
-inefficiency terms{p_end}
-{phang2}{cmd:. sftt y x1 x2, nocons hnormal}{p_end}
+{pstd}Estimate model in half-normal specification{p_end}
+{phang2}{cmd:. {stata "sftt y x1 x2, hnormal"}}{p_end}
+{phang2}{cmd:. {stata "sftt y x1 x2, nocons hnormal"}}{p_end}
+
+{pstd}Set random {cmd: seed} to make sure the estimation results remain constant{p_end}
+{phang2}{cmd:. {stata "sftt y x1 x2, nocons hnormal seed(20220612)"}}{p_end}
 
 {pstd}Use {cmd: findseed} to find a usable seed{p_end}
-{phang2}{cmd:. sftt y x1 x2, nocons hnormal findseed}{p_end}
+{phang2}{cmd:. {stata "sftt y x1 x2, nocons hnormal findseed"}}{p_end}
 
-{pstd}Identify the variances of inefficiency terms and stochastic noise{p_end}
-{phang2}{cmd:. sftt sigs}{p_end}
+{pstd}Identify the distributions of inefficiency terms and stochastic noise{p_end}
+{phang2}{cmd:. {stata "sftt sigs"}}{p_end}
 
-{pstd}Decompose the residual into inefficiency terms and stochastic noise{p_end}
-{phang2}{cmd:. sftt eff}{p_end}
-
+{pstd}Generate the measures of inefficiency{p_end}
+{pmore}To generate all measures of inefficiency with default variable names:{p_end}
+{phang2}{cmd:. {stata "sftt eff"}}{p_end}
+{pmore}To generate measures of inefficiency in level specification with default variable names:{p_end}
+{phang2}{cmd:. {stata "drop _*"}}  (optional){p_end}
+{phang2}{cmd:. {stata "sftt eff, level"}}{p_end}
+{pmore}To generate relative measures of inefficiency in exponential specification with customized variable names:{p_end}
+{phang2}{cmd:. {stata "sftt eff, exp relative wu_diff_exp(nsurplus) wu_net_effect(neffect)"}}{p_end}
 
     {hline}
+{pstd}{bf:Two-tier stochastic frontier model with scaling assumptions}{p_end}
     Setup
-{phang2}{cmd:. clear}{p_end}
-{phang2}{cmd:. set seed 996}{p_end}
-{phang2}{cmd:. set obs 10000}{p_end}
-{phang2}{cmd:. matrix C = (1, 0.1, 0.1 \ 0.1, 1, 0.1 \ 0.1, 0.1, 1)}{p_end}
-{phang2}{cmd:. drawnorm x zu zw, corr(C)}{p_end}
-{phang2}{cmd:. generate ui = invexponential(1, uniform())}{p_end}
-{phang2}{cmd:. generate wi = invexponential(1, uniform())}{p_end}
-{phang2}{cmd:. generate vi = invnormal(uniform())}{p_end}
-{phang2}{cmd:. generate y = x - exp(0.6 * zu) * ui + exp(0.8 * zw) * wi + vi}{p_end}
+{phang2}{cmd:. {stata "use https://sftt.oss-cn-hangzhou.aliyuncs.com/sftt_scal.dta, clear"}}{p_end}
 
-{pstd}Two-tier stochastic frontier model with scaling assumption for
-inefficiency terms{p_end}
-{phang2}{cmd:. sftt y x, scal sigmau(zu) sigmaw(zw) robust}{p_end}
+{pstd}Estimate model with scaling assumptions{p_end}
+{phang2}{cmd:. {stata "sftt y x, scal sigmau(zu) sigmaw(zw) robust"}}{p_end}
 
-{pstd}Identify the variances of inefficiency terms and stochastic noise{p_end}
-{phang2}{cmd:. sftt sigs}{p_end}
+{pstd}Identify the distributions of inefficiency terms{p_end}
+{phang2}{cmd:. {stata "sftt sigs"}}{p_end}
+
     {hline}
 
 
-{title:Saved results}
+{marker stored_results}{...}
+{title:Stored results}
 
 {pstd}
 {cmd:sftt} saves the following in {cmd:e()}:
@@ -268,7 +335,9 @@ inefficiency terms{p_end}
 {synopt:{cmd:e(ilog)}}iteration log (up to 20 iterations){p_end}
 {synopt:{cmd:e(V_modelbased)}}model-based variance{p_end}
 
-{title:Authors}
+
+{marker program_authors}{...}
+{title:Program Authors}
 
 {pstd}Yujun Lian{p_end}
 {pstd}Lingnan College, Sun Yat-sen University{p_end}
@@ -284,6 +353,31 @@ inefficiency terms{p_end}
 {pstd}Department of Economics, University of Miami{p_end}
 {pstd}Miami, FL, USA{p_end}
 {pstd}cparmeter@bus.miami.edu{p_end}
+
+
+{marker reference}{...}
+{title:Reference}
+
+{marker KP09}{...}
+{pstd}Kumbhakar, S.C., Parmeter, C.F. 2009.{p_end}
+{pstd}{browse "https://doi.org/10.1007/s11123-008-0117-3":The effects of match uncertainty and bargaining on labor market outcomes: evidence from firm and worker specific estimates}.{p_end}
+{pstd}Journal of Productivity Analysis 31(1): 1-14.{p_end}
+
+{marker PP15}{...}
+{pstd}Papadopoulos, A. 2015.{p_end}
+{pstd}{browse "https://doi.org/10.1007/s11123-014-0389-8":The half-normal specification for the two-tier stochastic frontier model}.{p_end}
+{pstd}Journal of Productivity Analysis 43(2): 225-230.{p_end}
+
+{marker PA18}{...}
+{pstd}Parmeter, C. F. 2018.{p_end}
+{pstd}{browse "https://doi.org/10.1007/s11123-017-0520-8":Estimation of the two-tiered stochastic frontier model with the scaling property}.{p_end}
+{pstd}Journal of Productivity Analysis 49(1): 37-47.{p_end}
+
+
+{marker acknowledgments}{...}
+{title:Acknowledgments}
+
+{pstd}We thank Alecos Papadopoulos for his amazing support.
 
 
 {title:Also see}
