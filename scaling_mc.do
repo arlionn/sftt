@@ -14,9 +14,9 @@ generate mu_u = .
 generate mu_w = .
 local non_converge = 0
 
-foreach obs in 400 1600 6400  {
+foreach obs in 100 400 1600 6400 {
     foreach delta_u in 0.6 0.8 1.1 {
-        foreach delta_w in 1.4 {
+        foreach delta_w in 0.5 1.2 1.4 {
             forvalues i = 1 / `simus' {
                 preserve
                     clear
