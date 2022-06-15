@@ -578,7 +578,7 @@ Related commands:
 */
 program define _sftt_eff
     version 13
-    syntax [, LEVel exp RELative                           ///
+    syntax [, LEVel exp RELative replace                   ///
               u_hat(string) w_hat(string) wu_diff(string)  ///
               u_hat_exp(string) w_hat_exp(string)          ///
               wu_diff_exp(string) wu_net_effect(string)]
@@ -610,6 +610,22 @@ program define _sftt_eff
     if "`exp'" == "exp" {
         foreach var in u_hat w_hat wu_diff {
             local `var' = ""
+        }
+    }
+
+    // check if variable already defined
+    foreach var in u_hat w_hat wu_diff u_hat_exp w_hat_exp wu_diff_exp wu_net_effect {
+        if "``var''" != "" {
+            quietly capture sum ``var''
+            if _rc == 0 {
+                if "`replace'" == "replace" {
+                    drop ``var''
+                }
+                else {
+                    display as error "Variable {bf:``var''} already defined."
+                    exit 110
+                }
+            }
         }
     }
     

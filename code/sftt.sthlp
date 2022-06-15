@@ -187,7 +187,6 @@ that use bootstrap or jackknife methods; see
 {phang}
 {opt rel:ative} only generates relative measures of inefficiency.
 
-
 {dlgtab:Assign variable name}
 
 {phang}
@@ -210,6 +209,11 @@ that use bootstrap or jackknife methods; see
 
 {phang}
 {opth wu_net_effect(newvar)}} sets the variable name of the estimated net effect, default is {it: _wu_net_effect}.{p_end}
+
+{dlgtab:Other}
+
+{phang}
+{opt replace} permits {opt sftt} to overwrite existing variables.{p_end}
 
 
 {marker examples}{...}
@@ -242,8 +246,7 @@ that use bootstrap or jackknife methods; see
 {pmore}To generate all measures of inefficiency with default variable names:{p_end}
 {phang2}{cmd:. {stata "sftt eff"}}{p_end}
 {pmore}To generate measures of inefficiency in level specification with default variable names:{p_end}
-{phang2}{cmd:. {stata "drop _*"}}  (optional){p_end}
-{phang2}{cmd:. {stata "sftt eff, level"}}{p_end}
+{phang2}{cmd:. {stata "sftt eff, level replace"}}{p_end}
 {pmore}To generate relative measures of inefficiency in exponential specification with customized variable names:{p_end}
 {phang2}{cmd:. {stata "sftt eff, exp relative wu_diff_exp(nsurplus) wu_net_effect(neffect)"}}{p_end}
 
