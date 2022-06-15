@@ -43,4 +43,7 @@ Guangzhou, China.
 Department of Economics, University of Miami
 Miami, FL, USA.
 
+## Repository information
+
+This repository is mainly managed on [Gitee](https://gitee.com/ranglab/sftt), and mirrored on [GitHub](https://github.com/liuch288/sftt).
 

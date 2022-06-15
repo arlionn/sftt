@@ -63,9 +63,9 @@ foreach obs in 100 400 1600 6400 {
 
 // --- export MC results ---
 local simus 10000
-foreach delta_w in 1.4 {
+foreach delta_w in 0.5 1.2 1.4 {
     foreach delta_u in 0.6 0.8 1.1 {
-        foreach obs in 400 1600 6400 {
+        foreach obs in 100 400 1600 6400 {
             quietly {
                 noisily di as result "delta_u: `delta_u', delta_w: `delta_w', obs: `obs'"
                 use	./mc_results/scaling_`delta_u'_`delta_w'_`obs'_`simus'.dta, clear
@@ -98,14 +98,14 @@ foreach delta_w in 1.4 {
                 foreach var in beta mu_u delta_u mu_w delta_w {
                     sum `var'_bias
                     local tmp = round(r(mean), 0.0001)
-                    local output `output' `tmp'
+                    local output "`output' & `tmp'"
                 }
                 noi di as text "BIAS: `output'"
                 local output
                 foreach var in beta mu_u delta_u mu_w delta_w {
                     sum `var'_mse
                     local tmp = round(r(mean), 0.0001)
-                    local output `output' `tmp'
+                    local output "`output' & (`tmp')"
                 }
                 noi di as text " MSE: `output'"
                 noi di ""
