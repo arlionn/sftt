@@ -114,13 +114,22 @@ histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))            
 	   ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                   ///
 	   xscale(titlegap(3) outergap(-2)) scheme(sj)
 graph export output/netsurplus.eps, replace
-drop _u_hat_exp _w_hat_exp _wu_diff_exp _wu_net_effect
+
+
+
+/*
+  DISTRIBUTION COMPARISON
+  The following code is prepared to generate the results of distribution comparison
+  Some format details need manually adjustments to generate the exact results presented in manuscript,
+  while the .
+*/
+use lu11, clear
 quietly {
 	// OLS
 	reg lnprice lnage symp urban education job endurance insur i.province i.year, r
 	est store res0
 	// 2TSF - exponential specification
-	sftt lnprice lnage symp urban education job endurance insur i.province i.year, seed(20220612)
+	sftt lnprice lnage symp urban education job endurance insur i.province i.year, seed(20220613)
 	est store res1
 	noisily sftt sigs
 	sftt eff
@@ -134,6 +143,8 @@ quietly {
 	sftt eff
 }
 esttab res0 res1 res2, drop(i_* *.year *.province)
+esttab res0 res1 res2 using ./output/output_empirical_cmp_raw.tex, drop(i_* *.year *.province) ///
+        title(Estimation results with different distributions) replace
 
 sum _u_hat_e _u_hat
 sum _wu_net_effect _wu_net_effect_e
