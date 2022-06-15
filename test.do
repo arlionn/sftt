@@ -1,4 +1,3 @@
-cd C:\Users\lc_zd\dev\sftt
 adopath + "./code"
 
 // ---------------------------
@@ -44,4 +43,3 @@ sftt y x, scal sigmau(zu) sigmaw(zw) robust nocons
 sftt y x, scal sigmau(zu) sigmaw(zw) robust nocons ///
          initial(delta_x 1 du_zu 0.6 mu_u 1 dw_zw 0.8 mu_w 1)
 sftt_sigs
-

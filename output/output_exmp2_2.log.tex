@@ -1,27 +1,27 @@
-. sftt_eff
+. sftt eff, exp
 {\smallskip}
-. sum u_hat_exp w_hat_exp wu_diff_exp
+. sum _u_hat_exp _w_hat_exp _wu_diff_exp
 {\smallskip}
     Variable {\VBAR}        Obs        Mean    Std. Dev.       Min        Max
 \HLI{13}{\PLUS}\HLI{57}
-   u_hat_exp {\VBAR}      1,806    .2355847    .0407005   .1908129   .5764352
-   w_hat_exp {\VBAR}      1,806    .5016707    .1672743   .2073766   .9943292
- wu_diff_exp {\VBAR}      1,806     .266086    .2015444  -.3690586   .8035164
+  _u_hat_exp {\VBAR}      1,806    .2357577    .0407659    .190928     .57721
+  _w_hat_exp {\VBAR}      1,806    .5016865    .1672928   .2074208   .9943327
+_wu_diff_exp {\VBAR}      1,806    .2659288    .2016163  -.3697892   .8034047
 {\smallskip}
-. sum wu_diff_exp, detail
+. sum _wu_diff_exp, detail
 {\smallskip}
-                         wu_diff_exp
+                        _wu_diff_exp
 \HLI{61}
       Percentiles      Smallest
- 1\%    -.1121815      -.3690586
- 5\%     -.013398      -.3331648
-10\%     .0352132      -.2469724       Obs               1,806
-25\%     .1195989      -.2241978       Sum of Wgt.       1,806
+ 1\%     -.112585      -.3697892
+ 5\%    -.0137029      -.3338553
+10\%     .0349517      -.2475624       Obs               1,806
+25\%      .119395      -.2247437       Sum of Wgt.       1,806
 {\smallskip}
-50\%     .2359863                      Mean            .266086
-                        Largest       Std. Dev.      .2015444
-75\%     .3937159       .7952944
-90\%     .5636941       .7953893       Variance       .0406201
-95\%     .6551778       .8009964       Skewness       .4911115
-99\%     .7682297       .8035164       Kurtosis       2.834468
+50\%     .2358363                      Mean           .2659288
+                        Largest       Std. Dev.      .2016163
+75\%     .3936126        .795188
+90\%     .5636307       .7952823       Variance       .0406491
+95\%     .6551249       .8008862       Skewness       .4904532
+99\%     .7681351       .8034047       Kurtosis       2.834133
 {\smallskip}

@@ -1,14 +1,14 @@
-. histogram u_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
+. histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
 >            ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (\%)") ///
 >            xscale(titlegap(3) outergap(-2))
-(bin=32, start=.19081286, width=.0120507)
+(bin=32, start=.19092797, width=.01207131)
 {\smallskip}
-. histogram w_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
+. histogram _w_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
 >            ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (\%)")  ///
 >            xscale(titlegap(3) outergap(-2))
-(bin=32, start=.20737658, width=.02459227)
+(bin=32, start=.2074208, width=.024591)
 {\smallskip}
-. histogram wu_diff_exp, percent title(Percent, place(10) size(*0.7))             ///
+. histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))             ///
 >            ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (\%)")                   ///
 >            xscale(titlegap(3) outergap(-2))
-(bin=32, start=-.36905863, width=.03664297)
+(bin=32, start=-.36978916, width=.03666231)

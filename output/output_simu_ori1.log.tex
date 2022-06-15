@@ -16,39 +16,34 @@
 {\smallskip}
 . generate y = x1 + 2 * x2 - ue + we + v
 {\smallskip}
-. sftt y x1 x2, check search nocons
+. sftt y x1 x2, nocons
 {\smallskip}
 initial:       log likelihood = -3233.1231
 rescale:       log likelihood = -3233.1231
 rescale eq:    log likelihood = -3229.7914
 Iteration 0:   log likelihood = -3229.7914  
-Iteration 1:   log likelihood = -3164.7779  (backed up)
-Iteration 2:   log likelihood = -3163.2322  (backed up)
-Iteration 3:   log likelihood = -3163.1171  (backed up)
-Iteration 4:   log likelihood =  -3162.339  (backed up)
-Iteration 5:   log likelihood = -3162.3324  (backed up)
-Iteration 6:   log likelihood = -3161.2586  
-Iteration 7:   log likelihood =  -3161.087  
-Iteration 8:   log likelihood = -3161.0853  
-Iteration 9:   log likelihood = -3161.0851  
+Iteration 1:   log likelihood = -3170.7506  (not concave)
+Iteration 2:   log likelihood = -3161.2028  
+Iteration 3:   log likelihood = -3161.0853  
+Iteration 4:   log likelihood = -3161.0851  
 {\smallskip}
-Two-tier SF Model (2TSF) : HOMO exponential       Number of obs   =       1600
-                                                  Wald chi2(2)    =    3186.54
+{\bftt{Two-tier stochastic frontier model with normal/exponential/exponential specification}}Number of obs=       1600
+                                                  Wald chi2(2)    =    3186.44
 Log likelihood = -3161.0851                       Prob > chi2     =     0.0000
 {\smallskip}
 \HLI{13}{\TOPT}\HLI{64}
            y {\VBAR}      Coef.   Std. Err.      z    P>|z|     [95\% Conf. Interval]
 \HLI{13}{\PLUS}\HLI{64}
-y            {\VBAR}
-          x1 {\VBAR}   .9915205    .041967    23.63   0.000     .9092666    1.073774
-          x2 {\VBAR}    2.03265   .0402517    50.50   0.000     1.953758    2.111542
+frontier_y   {\VBAR}
+          x1 {\VBAR}   .9915255   .0419677    23.63   0.000     .9092703    1.073781
+          x2 {\VBAR}   2.032645   .0402523    50.50   0.000     1.953752    2.111538
 \HLI{13}{\PLUS}\HLI{64}
-sigma_v      {\VBAR}
-       _cons {\VBAR}  -.0712805   .0951774    -0.75   0.454    -.2578247    .1152637
+ln_sig_v     {\VBAR}
+       _cons {\VBAR}  -.0712458   .0951567    -0.75   0.454    -.2577494    .1152579
 \HLI{13}{\PLUS}\HLI{64}
-sigma_u      {\VBAR}
-       _cons {\VBAR}    -.47424    .097224    -4.88   0.000    -.6647955   -.2836845
+ln_sig_u     {\VBAR}
+       _cons {\VBAR}  -.4742256   .0972085    -4.88   0.000    -.6647506   -.2837005
 \HLI{13}{\PLUS}\HLI{64}
-sigma_w      {\VBAR}
-       _cons {\VBAR}   .3918688   .0468054     8.37   0.000     .3001318    .4836058
+ln_sig_w     {\VBAR}
+       _cons {\VBAR}   .3918662   .0468007     8.37   0.000     .3001386    .4835939
 \HLI{13}{\BOTT}\HLI{64}

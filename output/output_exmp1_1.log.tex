@@ -1,83 +1,75 @@
+. set seed 20220612
+{\smallskip}
 . use kp09, clear
 {\smallskip}
 . sftt lwage iq educ educ2 exper exper2 tenure tenure2 age married south ///
->          urban black sibs brthord meduc feduc, check search seed(999)
+>          urban black sibs brthord meduc feduc
 {\smallskip}
-initial:       log likelihood = -385.36577
-rescale:       log likelihood = -385.36577
-rescale eq:    log likelihood = -382.79647
-Iteration 0:   log likelihood = -382.79647  
-Iteration 1:   log likelihood = -381.50013  (backed up)
-Iteration 2:   log likelihood = -367.45096  (backed up)
-Iteration 3:   log likelihood = -360.02586  (backed up)
-Iteration 4:   log likelihood = -348.96213  (backed up)
-Iteration 5:   log likelihood =  -326.7465  (backed up)
-Iteration 6:   log likelihood = -316.43468  (backed up)
-Iteration 7:   log likelihood = -309.79174  (backed up)
-Iteration 8:   log likelihood = -304.91158  (backed up)
-Iteration 9:   log likelihood = -283.67563  (backed up)
-Iteration 10:  log likelihood =  -277.1813  (backed up)
-Iteration 11:  log likelihood = -275.15142  (backed up)
-Iteration 12:  log likelihood = -271.95009  (backed up)
-Iteration 13:  log likelihood = -267.91798  (backed up)
-Iteration 14:  log likelihood = -264.47981  (backed up)
-Iteration 15:  log likelihood = -260.74394  (backed up)
-Iteration 16:  log likelihood = -255.17899  (backed up)
-Iteration 17:  log likelihood = -254.60745  (backed up)
-Iteration 18:  log likelihood = -245.18767  
-Iteration 19:  log likelihood = -240.81044  
-Iteration 20:  log likelihood =  -232.5727  (backed up)
-Iteration 21:  log likelihood = -227.09654  
-Iteration 22:  log likelihood = -226.24875  
-Iteration 23:  log likelihood = -226.08533  
-Iteration 24:  log likelihood = -226.07249  
-Iteration 25:  log likelihood = -226.06953  
-Iteration 26:  log likelihood = -226.06925  
-Iteration 27:  log likelihood = -226.06915  
-Iteration 28:  log likelihood = -226.06914  
+initial:       log likelihood = -821.98656
+rescale:       log likelihood = -821.98656
+rescale eq:    log likelihood = -821.98656
+Iteration 0:   log likelihood = -821.98656  (not concave)
+Iteration 1:   log likelihood = -790.13904  (not concave)
+Iteration 2:   log likelihood = -741.61326  (not concave)
+Iteration 3:   log likelihood = -603.77753  (not concave)
+Iteration 4:   log likelihood = -492.59413  (not concave)
+Iteration 5:   log likelihood = -427.11948  (not concave)
+Iteration 6:   log likelihood = -255.80699  (not concave)
+Iteration 7:   log likelihood = -245.79817  (not concave)
+Iteration 8:   log likelihood =  -244.2202  (not concave)
+Iteration 9:   log likelihood = -242.30752  (not concave)
+Iteration 10:  log likelihood =  -241.4548  (not concave)
+Iteration 11:  log likelihood = -241.35641  (not concave)
+Iteration 12:  log likelihood = -239.40533  (not concave)
+Iteration 13:  log likelihood = -233.12952  
+Iteration 14:  log likelihood =  -232.1448  
+Iteration 15:  log likelihood = -226.16193  
+Iteration 16:  log likelihood = -226.06989  
+Iteration 17:  log likelihood = -226.06913  
+Iteration 18:  log likelihood = -226.06913  
 {\smallskip}
-Two-tier SF Model (2TSF) : HOMO exponential       Number of obs   =        663
-                                                  Wald chi2(16)   =     319.35
-Log likelihood = -226.06914                       Prob > chi2     =     0.0000
+{\bftt{Two-tier stochastic frontier model with normal/exponential/exponential specification}}Number of obs=        663
+                                                  Wald chi2(16)   =     319.41
+Log likelihood = -226.06913                       Prob > chi2     =     0.0000
 {\smallskip}
-\HLI{13}{\TOPT}\HLI{64}
-       lwage {\VBAR}      Coef.   Std. Err.      z    P>|z|     [95\% Conf. Interval]
-\HLI{13}{\PLUS}\HLI{64}
-lwage        {\VBAR}
-          iq {\VBAR}   .0043961   .0011061     3.97   0.000     .0022281     .006564
-        educ {\VBAR}   2.035504   1.128688     1.80   0.071    -.1766833    4.247692
-       educ2 {\VBAR}  -.7556993   .5533985    -1.37   0.172     -1.84034    .3289418
-       exper {\VBAR}   .2822846   .1561954     1.81   0.071    -.0238527     .588422
-      exper2 {\VBAR}   -.100513   .0921489    -1.09   0.275    -.2811215    .0800955
-      tenure {\VBAR}   .1536122   .0635721     2.42   0.016     .0290131    .2782112
-     tenure2 {\VBAR}   -.056848    .038085    -1.49   0.136    -.1314931    .0177972
-         age {\VBAR}    .495001   .1867617     2.65   0.008     .1289547    .8610473
-     married {\VBAR}   .2060026   .0443445     4.65   0.000      .119089    .2929162
-       south {\VBAR}  -.0348156   .0297136    -1.17   0.241    -.0930531    .0234219
-       urban {\VBAR}   .2208679   .0290569     7.60   0.000     .1639175    .2778184
-       black {\VBAR}   -.102222   .0526956    -1.94   0.052    -.2055034    .0010595
-        sibs {\VBAR}   .0088143   .0072324     1.22   0.223     -.005361    .0229895
-     brthord {\VBAR}  -.0153657   .0106099    -1.45   0.148    -.0361606    .0054293
-       meduc {\VBAR}   .0081414   .0056129     1.45   0.147    -.0028597    .0191425
-       feduc {\VBAR}   .0076518   .0050713     1.51   0.131    -.0022878    .0175915
-       _cons {\VBAR}   3.858941    .612932     6.30   0.000     2.657617    5.060266
-\HLI{13}{\PLUS}\HLI{64}
-sigma_v      {\VBAR}
-       _cons {\VBAR}  -1.659554   .1569061   -10.58   0.000    -1.967084   -1.352024
-\HLI{13}{\PLUS}\HLI{64}
-sigma_u      {\VBAR}
-       _cons {\VBAR}  -1.510842   .1146947   -13.17   0.000    -1.735639   -1.286045
-\HLI{13}{\PLUS}\HLI{64}
-sigma_w      {\VBAR}
-       _cons {\VBAR}  -1.665967   .1230599   -13.54   0.000     -1.90716   -1.424774
-\HLI{13}{\BOTT}\HLI{64}
+\HLI{15}{\TOPT}\HLI{64}
+         lwage {\VBAR}      Coef.   Std. Err.      z    P>|z|     [95\% Conf. Interval]
+\HLI{15}{\PLUS}\HLI{64}
+frontier_lwage {\VBAR}
+            iq {\VBAR}   .0043955   .0011061     3.97   0.000     .0022277    .0065634
+          educ {\VBAR}   2.036803   1.128628     1.80   0.071    -.1752673    4.248873
+         educ2 {\VBAR}  -.7563296   .5533699    -1.37   0.172    -1.840915    .3282554
+         exper {\VBAR}     .28234   .1561886     1.81   0.071     -.023784     .588464
+        exper2 {\VBAR}  -.1005302   .0921451    -1.09   0.275    -.2811314    .0800709
+        tenure {\VBAR}   .1535866   .0635696     2.42   0.016     .0289925    .2781808
+       tenure2 {\VBAR}  -.0568321   .0380829    -1.49   0.136    -.1314732    .0178091
+           age {\VBAR}   .4950143   .1867546     2.65   0.008      .128982    .8610466
+       married {\VBAR}   .2060007   .0443427     4.65   0.000     .1190905    .2929109
+         south {\VBAR}  -.0348172   .0297127    -1.17   0.241     -.093053    .0234186
+         urban {\VBAR}   .2208797   .0290555     7.60   0.000     .1639319    .2778275
+         black {\VBAR}  -.1022164   .0526949    -1.94   0.052    -.2054965    .0010637
+          sibs {\VBAR}   .0088167    .007232     1.22   0.223    -.0053579    .0229912
+       brthord {\VBAR}   -.015372   .0106093    -1.45   0.147    -.0361658    .0054218
+         meduc {\VBAR}   .0081452   .0056126     1.45   0.147    -.0028553    .0191456
+         feduc {\VBAR}   .0076534   .0050712     1.51   0.131    -.0022858    .0175927
+         _cons {\VBAR}   3.858254   .6128944     6.30   0.000     2.657003    5.059505
+\HLI{15}{\PLUS}\HLI{64}
+ln_sig_v       {\VBAR}
+         _cons {\VBAR}  -1.659804   .1570302   -10.57   0.000    -1.967577    -1.35203
+\HLI{15}{\PLUS}\HLI{64}
+ln_sig_u       {\VBAR}
+         _cons {\VBAR}  -1.510707   .1146933   -13.17   0.000    -1.735502   -1.285912
+\HLI{15}{\PLUS}\HLI{64}
+ln_sig_w       {\VBAR}
+         _cons {\VBAR}  -1.665971    .123085   -13.54   0.000    -1.907213   -1.424729
+\HLI{15}{\BOTT}\HLI{64}
 {\smallskip}
-. sftt_sigs
+. sftt sigs
 {\smallskip}
                Variance Estimation          
 \HLI{47}
 sigma_v    :       0.1902
-sigma_u    :       0.2207
+sigma_u    :       0.2208
 sigma_w    :       0.1890
 sigma_v_sq :       0.0362
 sigma_u_sq :       0.0487
@@ -86,8 +78,8 @@ sigma_w_sq :       0.0357
                Variance Analysis          
 \HLI{47}
 Total sigma_sqs     :  0.1206
-(sigu2+sigw2)/Total :  0.7000
-sigu2/(sigu2+sigw2) :  0.5769
-sigw2/(sigu2+sigw2) :  0.4231
+(sigu2+sigw2)/Total :  0.7002
+sigu2/(sigu2+sigw2) :  0.5770
+sigw2/(sigu2+sigw2) :  0.4230
 sig_u - sig_w       :  0.0317
 \HLI{47}

@@ -27,7 +27,7 @@ Syntax:
 program sftt
     version 13
     gettoken before_comma after_comma: 0, parse(,)
-    
+
     if strtrim("`after_comma'") == "version" | strtrim("`after_comma'") == "ver"  {
         display _n(1) "{bf:{ul:Version}}"
         display _n(1) "{txt}{sf}    sftt version 0.0.1"
@@ -288,7 +288,7 @@ end
 
 // original sftt without scaling property
 program define _sftt_regression_original, eclass
-    version 13
+    version 8.2
     syntax varlist(min=1 ts fv) [if] [in] [,noCONStant      ///
             sigmau(string) sigmaw(string) FE Check SEarch   ///
             Plot Robust vce(string) ITERate(integer 1000)   ///
@@ -381,7 +381,7 @@ program define _sftt_sigs, rclass
     version 13
     if "`e(sftt_scaling)'" == "" {
         display as error "No available {bf:sftt} estimation result found."
-        exit 301       
+        exit 301
     }
     preserve
         // recover factor variables
@@ -584,7 +584,7 @@ program define _sftt_eff
               wu_diff_exp(string) wu_net_effect(string)]
     if "`e(sftt_scaling)'" == "" {
         display as error "No available {bf:sftt} estimation result found."
-        exit 301       
+        exit 301
     }
     if e(sftt_scaling) == "1" {
         display as error "{bf:sftt eff} is not available for 2TSF model with scaling property."
@@ -616,7 +616,7 @@ program define _sftt_eff
     // check if variable already defined
     foreach var in u_hat w_hat wu_diff u_hat_exp w_hat_exp wu_diff_exp wu_net_effect {
         if "``var''" != "" {
-            quietly capture sum ``var''
+            quietly capture confirm variable ``var'', exact
             if _rc == 0 {
                 if "`replace'" == "replace" {
                     drop ``var''
@@ -628,7 +628,7 @@ program define _sftt_eff
             }
         }
     }
-    
+
     // recover factor variables
     foreach var in `e(factor_variables)' {
         local tmp_var_name = subinstr("`var'", ".", "_", .)
@@ -808,7 +808,7 @@ program define _sftt_eff
                                               (binormal(`ne4', 0, `ne_rho1') - binormal(`ne5', 0, `ne_rho2')) - 1
         }
     }
-    
+
     if "`relative'" == "relative" {
         foreach var in u_hat w_hat u_hat_exp w_hat_exp {
             if "``var''" != "" {
