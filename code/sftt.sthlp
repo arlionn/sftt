@@ -70,10 +70,10 @@ variables for the lower (nonpositive) inefficiency variance function{p_end}
 variables for the upper (nonnegative) inefficiency variance function{p_end}
 
 {syntab :Other options}
-{synopt :{opt seed(#)}}sets a random seed before estimating to ensure that the results are reproducible{p_end}
-{synopt :{opt findseed}}loops through 100 estimations, during which the random seed was set from 1 to 100. In each attampt, we iterate at most 200 times{p_end}
 {synopt :{opt iter:ate(#)}}specifies the maximum number of iterations, default is {opt iterate(1000)}. In most cases, the optimization should be converged in less than 1000 iterations.{p_end}
 {synopt :{opt fe}}uses the fix-effect estimator. In {opt fe} mode, noconstant should not be added to absorb the constant term{p_end}
+{synopt :{opt seed(#)}}sets a random seed before estimating to ensure that the results are reproducible{p_end}
+{synopt :{opt findseed}}loops through 100 estimations, during which the random seed was set from 1 to 100. In each attampt, we iterate at most 100 times{p_end}
 
 {syntab :SE}
 {synopt :{opth vce(vcetype)}}{it:vcetype} may be {opt oim}, {opt opg}, {opt r:obust}, {opt cl:uster} {it:clustvar}, {opt boot:strap}, or {opt jack:knife}{p_end}

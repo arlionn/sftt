@@ -109,7 +109,7 @@ program _sftt_regression, eclass
             }
             else {
                 display "Finding seeds ", _continue
-                forvalues i = 1 / 10 {
+                forvalues i = 1 / 100 {
                     // start estimating
                     set seed `i'
                     capture {
@@ -186,7 +186,7 @@ program _sftt_regression_scaling, eclass
     }
     // When invoked in finding seed mode, we only iterate 100 times
     if "`findingseedmode'"  == "findingseedmode" {
-        local iterate 200
+        local iterate 100
     }
     // if y is constant
     quietly _rmcoll `y'
@@ -302,7 +302,7 @@ program define _sftt_regression_original, eclass
     }
     // When invoked in finding seed mode, we only iterate 100 times
     if "`findingseedmode'"  == "findingseedmode" {
-        local iterate 200
+        local iterate 100
     }
     marksample touse
     markout `touse' `varlist' `sigmau' `sigmaw'
