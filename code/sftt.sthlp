@@ -87,8 +87,9 @@ variables for the upper (nonnegative) inefficiency variance function{p_end}
 {synoptline}
 {syntab: Select variable type}
 {synopt: {opt lev:el}} only generate inefficiency terms in level specification.{p_end}
-{synopt: {opt exp}} only generate inefficiency terms in logarithmic specification.{p_end}
-{synopt: {opt rel:ative}} only generate relative measures of inefficiency.{p_end}
+{synopt: {opt exp}} only generate inefficiency terms in logarithmic specification, {opt level} and {opt exp} should not be used simultaneously.{p_end}
+{synopt: {opt abs:olute}} only generate absolute measures of inefficiency.{p_end}
+{synopt: {opt rel:ative}} only generate relative measures of inefficiency, {opt absolute} and {opt relative} should not be used simultaneously.{p_end}
 
 {syntab: Assign variable name}
 {synopt: {opth u_hat(newvar)}} variable name of the estimated lower one-sided inefficiency term in level specification, default is {it: _u_hat}.{p_end}
@@ -98,6 +99,9 @@ variables for the upper (nonnegative) inefficiency variance function{p_end}
 {synopt: {opth w_hat_exp(newvar)}} variable name of the estimated upper one-sided inefficiency term in logarithmic specification, default is {it: _w_hat_exp}.{p_end}
 {synopt: {opth wu_diff_exp(newvar)}} variable name of the estimated net surplus in logarithmic specification, default is {it: _wu_diff_exp}.{p_end}
 {synopt: {opth wu_net_effect(newvar)}} variable name of the estimated net effect, default is {it: _wu_net_effect}.{p_end}
+
+{syntab: Other option}
+{synopt: {opt replace}} permits {opt sftt} to overwrite existing variables.{p_end}
 {synoptline}
 
 
@@ -182,10 +186,13 @@ that use bootstrap or jackknife methods; see
 {opt lev:el} only generates inefficiency terms in level specification.
 
 {phang}
-{opt exp} only generates inefficiency terms in logarithmic specification.
+{opt exp} only generates inefficiency terms in logarithmic specification, {opt level} and {opt exp} should not be used simultaneously.
 
 {phang}
-{opt rel:ative} only generates relative measures of inefficiency.
+{opt abs:olute} only generates absolute measures of inefficiency.
+
+{phang}
+{opt rel:ative} only generates relative measures of inefficiency, {opt absolute} and {opt relative} should not be used simultaneously.
 
 {dlgtab:Assign variable name}
 

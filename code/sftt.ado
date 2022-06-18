@@ -578,7 +578,7 @@ Related commands:
 */
 program define _sftt_eff
     version 13
-    syntax [, LEVel exp RELative replace                   ///
+    syntax [, LEVel exp ABSolute RELative replace                   ///
               u_hat(string) w_hat(string) wu_diff(string)  ///
               u_hat_exp(string) w_hat_exp(string)          ///
               wu_diff_exp(string) wu_net_effect(string)]
@@ -594,6 +594,10 @@ program define _sftt_eff
     // syntax check
     if "`level'" == "level" & "`exp'" == "exp" {
         display as error "Option {bf:level} and {bf:exp} should not be used simultaneously."
+        exit 198
+    }
+    if "`absolute'" == "absolute" & "`relative'" == "relative" {
+        display as error "Option {bf:absolute} and {bf:relative} should not be used simultaneously."
         exit 198
     }
     // assign varname
@@ -622,7 +626,7 @@ program define _sftt_eff
                     drop ``var''
                 }
                 else {
-                    display as error "Variable {bf:``var''} already defined."
+                    display as error "Variable {bf:``var''} already defined, please assign another name or use {bf:replace} to overwrite."
                     exit 110
                 }
             }
@@ -811,6 +815,13 @@ program define _sftt_eff
 
     if "`relative'" == "relative" {
         foreach var in u_hat w_hat u_hat_exp w_hat_exp {
+            if "``var''" != "" {
+                drop ``var''
+            }
+        }
+    }
+    if "`absolute'" == "absolute" {
+        foreach var in wu_diff wu_diff_exp wu_net_effect {
             if "``var''" != "" {
                 drop ``var''
             }
