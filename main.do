@@ -53,9 +53,10 @@ sjlog close, replace
 
 // ----- Section 4.3 -----
 /*
-  I run [scaling_mc.do] to get the results in [./mc_results/].
-  Note that this script runs extremely slowly, I splited the
-  loop into different Stata processes to accerlate.
+  I run [scaling_mc.do] to get the results in [./mc_results/], 
+  and collect bias and MSE manually.
+  Since this script runs very slowly (because of the large scale of simulations),
+  I splited the loop into 12 different Stata processes to accerlate.
 */
 
 
@@ -120,8 +121,9 @@ graph export output/netsurplus.eps, replace
 /*
   DISTRIBUTION COMPARISON
   The following code is prepared to generate the results of distribution comparison
-  Some format details need manually adjustments to generate the exact results presented in manuscript,
-  while the .
+  Some format details need manually adjustments to generate the exact results presented in manuscript.
+  The original results used to prepare Table 2 & 3 are not sjlogged,
+  while the bundled results are esttabed to tex files.
 */
 use lu11, clear
 quietly {

@@ -424,7 +424,7 @@ program define _sftt_sigs_original, rclass
         local _sigw = r(mean)
     }
 
-    local uw_diff   = `_sigu' - `_sigw'
+    local wu_diff   = `_sigw' - `_sigu'
     local sigs_sum  = `_sigv'^2 + `_sigu'^2 + `_sigw'^2
     local sigs_uw_r = (`_sigu'^2 + `_sigw'^2)/`sigs_sum'
     local sigs_u_r  = `_sigu'^2/(`_sigu'^2 + `_sigw'^2)
@@ -446,11 +446,11 @@ program define _sftt_sigs_original, rclass
     display in g "(sigu2+sigw2)/Total :  " _col(20) in y %6.4f `sigs_uw_r'
     display in g "sigu2/(sigu2+sigw2) :  " _col(20) in y %6.4f `sigs_u_r'
     display in g "sigw2/(sigu2+sigw2) :  " _col(20) in y %6.4f `sigs_w_r'
-    if `uw_diff' < 0 {
-        display in g "sig_u - sig_w       : " _col(20) in y %6.4f `uw_diff'
+    if `wu_diff' < 0 {
+        display in g "sig_w - sig_u       : " _col(20) in y %6.4f `wu_diff'
     }
     else {
-        display in g "sig_u - sig_w       :  " _col(20) in y %6.4f `uw_diff'
+        display in g "sig_w - sig_u       :  " _col(20) in y %6.4f `wu_diff'
     }
     display in g in smcl "{hline 47}"
 
@@ -526,7 +526,7 @@ program define _sftt_sigs_scaling, rclass
 
     local _sigv = (`e(rss)' / (`e(N)' - 1))^0.5
 
-    local uw_diff   = `_sigu' - `_sigw'
+    local wu_diff   = `_sigw' - `_sigu'
     local sigs_sum  = `_sigv'^2 + `_sigu'^2 + `_sigw'^2
     local sigs_uw_r = (`_sigu'^2 + `_sigw'^2)/`sigs_sum'
     local sigs_u_r  = `_sigu'^2/(`_sigu'^2 + `_sigw'^2)
@@ -548,11 +548,11 @@ program define _sftt_sigs_scaling, rclass
     display in g "(sigu2+sigw2)/Total :  " _col(20) in y %6.4f `sigs_uw_r'
     display in g "sigu2/(sigu2+sigw2) :  " _col(20) in y %6.4f `sigs_u_r'
     display in g "sigw2/(sigu2+sigw2) :  " _col(20) in y %6.4f `sigs_w_r'
-    if `uw_diff' < 0 {
-        display in g "sig_u - sig_w       : " _col(20) in y %6.4f `uw_diff'
+    if `wu_diff' < 0 {
+        display in g "sig_w - sig_u       : " _col(20) in y %6.4f `wu_diff'
     }
     else {
-        display in g "sig_u - sig_w       :  " _col(20) in y %6.4f `uw_diff'
+        display in g "sig_w - sig_u       :  " _col(20) in y %6.4f `wu_diff'
     }
     display in g in smcl "{hline 47}"
     return scalar sigma_u = `_sigu'
