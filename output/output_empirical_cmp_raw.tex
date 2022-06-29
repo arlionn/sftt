@@ -1,0 +1,51 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Estimation results with different distributions}
+\begin{tabular}{l*{3}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}\\
+            &\multicolumn{1}{c}{lnprice}&\multicolumn{1}{c}{lnprice}&\multicolumn{1}{c}{lnprice}\\
+\hline
+main        &                     &                     &                     \\
+lnage       &       0.666\sym{***}&       0.598\sym{***}&       0.557\sym{***}\\
+            &      (6.02)         &      (5.23)         &      (4.93)         \\
+[1em]
+symptoms    &       0.765\sym{***}&       0.746\sym{***}&       0.745\sym{***}\\
+            &     (13.23)         &     (13.60)         &     (13.65)         \\
+[1em]
+urban       &       0.210\sym{**} &       0.205\sym{**} &       0.206\sym{**} \\
+            &      (2.69)         &      (2.69)         &      (2.73)         \\
+[1em]
+education   &      0.0536         &      0.0630         &      0.0687\sym{*}  \\
+            &      (1.47)         &      (1.82)         &      (2.05)         \\
+[1em]
+job         &      -0.274\sym{***}&      -0.293\sym{***}&      -0.286\sym{***}\\
+            &     (-3.44)         &     (-3.77)         &     (-3.71)         \\
+[1em]
+endurance   &      -0.969\sym{***}&      -1.015\sym{***}&      -0.990\sym{***}\\
+            &    (-10.43)         &    (-11.09)         &    (-11.00)         \\
+[1em]
+insurance   &      0.0947         &      0.0990         &      0.0998         \\
+            &      (1.07)         &      (1.15)         &      (1.17)         \\
+[1em]
+\_cons      &      -1.255\sym{**} &      -1.587\sym{**} &      -1.512\sym{**} \\
+            &     (-2.61)         &     (-2.98)         &     (-3.05)         \\
+\hline
+ln\_sig\_v    &                     &                     &                     \\
+\_cons      &                     &       0.127         &      -0.576         \\
+            &                     &      (1.03)         &     (-1.74)         \\
+\hline
+ln\_sig\_u    &                     &                     &                     \\
+\_cons      &                     &      -1.176         &       0.137         \\
+            &                     &     (-1.10)         &      (1.01)         \\
+\hline
+ln\_sig\_w    &                     &                     &                     \\
+\_cons      &                     &     0.00375         &       0.731\sym{***}\\
+            &                     &      (0.04)         &     (15.89)         \\
+\hline
+\(N\)       &        1806         &        1806         &        1806         \\
+\hline\hline
+\multicolumn{4}{l}{\footnotesize \textit{t} statistics in parentheses}\\
+\multicolumn{4}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}
