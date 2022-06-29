@@ -347,7 +347,7 @@ program define _sftt_regression_original, eclass
                 (ln_sig_u: `sigmau')                                           ///
                 (ln_sig_w: `sigmaw')                                           ///
                 if `touse', `robust' vce(`vce')                                ///
-                title("{bf:Two-tier stochastic frontier model with normal/exponential/exponential specification}")
+                title("{bf:Two-tier stochastic frontier model with exponential specification}")
     }
     else {
         ml model lf _sftt_pa15_ll (frontier_`eq1': `lhs'=`varlist' `nocns')    ///
@@ -355,16 +355,22 @@ program define _sftt_regression_original, eclass
                 (ln_sig_u: `sigmau')                                       ///
                 (ln_sig_w: `sigmaw')                                       ///
                 if `touse', `robust' vce(`vce')                            ///
-                title("{bf:Two-tier stochastic frontier model with normal/half-normal/half-normal specification}")
+                title("{bf:Two-tier stochastic frontier model with half-normal specification}")
     }
     quietly ml check
     quietly ml search
-    ml max, iterate(`iterate') difficult
+    ml max, noout iterate(`iterate') difficult
+    version 13
+    ml display
     ereturn repost
+    ereturn local cmd "sftt"
+    ereturn local cmdbase "ml"
     ereturn local sigmau "`sigmau'"
     ereturn local sigmaw "`sigmaw'"
     ereturn local rhs `varlist'
     ereturn local good_seed "`seed_using'"
+    estimates title: Model 2TSF
+    estimates store Model2TSF
 end
 
 
