@@ -63,7 +63,7 @@ sjlog close, replace
 // ----- Section 5.1 -----
 sjlog using ./output/output_exmp1_1, replace
 set seed 20220612
-use kp09, clear
+use https://sftt.oss-cn-hangzhou.aliyuncs.com/kp09.dta, clear
 sftt lwage iq educ educ2 exper exper2 tenure tenure2 age married south ///
          urban black sibs brthord meduc feduc
 sftt sigs
@@ -81,7 +81,7 @@ sjlog close, replace
 // First result - estimation
 sjlog using ./output/output_exmp2_1, replace
 set seed 20220612
-use lu11, clear
+use https://sftt.oss-cn-hangzhou.aliyuncs.com/lu11.dta, clear
 sftt lnprice lnage symp urban education job endurance insur i.province i.year
 sjlog close, replace
 // Second result - efficiency
@@ -125,7 +125,7 @@ graph export output/netsurplus.eps, replace
   The original results used to prepare Table 2 & 3 are not sjlogged,
   while the bundled results are esttabed to tex files.
 */
-use lu11, clear
+use https://sftt.oss-cn-hangzhou.aliyuncs.com/lu11.dta, clear
 quietly {
 	// OLS
 	reg lnprice lnage symp urban education job endurance insur i.province i.year, r

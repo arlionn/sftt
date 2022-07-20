@@ -1,11 +1,19 @@
 . sftt eff
+The following variables have been generated:
+_u_hat
+_w_hat
+_wu_diff
+_u_hat_exp
+_w_hat_exp
+_wu_diff_exp
+_wu_net_effect
 {\smallskip}
 . tabstat _w_hat _u_hat _wu_diff, by(black) stat(mean p25 p50 p75) format(\%6.3f) c(s)
 {\smallskip}
 Summary for variables: _w_hat _u_hat _wu_diff
-     by categories of: black 
+Group variable: black 
 {\smallskip}
-   black {\VBAR}      mean       p25       p50       p75
+   black {\VBAR}      Mean       p25       p50       p75
 \HLI{9}{\PLUS}\HLI{40}
        0 {\VBAR}     0.189     0.114     0.143     0.212
          {\VBAR}     0.221     0.122     0.165     0.249
@@ -24,9 +32,9 @@ Summary for variables: _w_hat _u_hat _wu_diff
 >         format(\%6.3f) c(s)
 {\smallskip}
 Summary for variables: _w_hat_exp _u_hat_exp _wu_diff_exp
-     by categories of: black 
+Group variable: black 
 {\smallskip}
-   black {\VBAR}      mean       p25       p50       p75
+   black {\VBAR}      Mean       p25       p50       p75
 \HLI{9}{\PLUS}\HLI{40}
        0 {\VBAR}     0.159     0.103     0.127     0.182
          {\VBAR}     0.181     0.109     0.144     0.210
