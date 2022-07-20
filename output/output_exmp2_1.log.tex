@@ -1,64 +1,64 @@
 . set seed 20220612
 {\smallskip}
-. use lu11, clear
+. use https://sftt.oss-cn-hangzhou.aliyuncs.com/lu11.dta, clear
 {\smallskip}
 . sftt lnprice lnage symp urban education job endurance insur i.province i.year
-note: i_province_1 dropped because of collinearity
-note: i_year_1 dropped because of collinearity
+note: {\bftt{i_province_1}} omitted because of collinearity.
+note: {\bftt{i_year_1}} omitted because of collinearity.
 {\smallskip}
 initial:       log likelihood = -3675.6139
 rescale:       log likelihood = -3675.6139
 rescale eq:    log likelihood =  -3645.644
 Iteration 0:   log likelihood =  -3645.644  
 Iteration 1:   log likelihood = -3460.2008  (not concave)
-Iteration 2:   log likelihood = -3405.1845  
-Iteration 3:   log likelihood = -3326.8018  (not concave)
-Iteration 4:   log likelihood =  -3312.865  
-Iteration 5:   log likelihood = -3311.5064  
-Iteration 6:   log likelihood =  -3311.429  
-Iteration 7:   log likelihood = -3311.4162  
-Iteration 8:   log likelihood = -3311.4151  
+Iteration 2:   log likelihood = -3408.8394  
+Iteration 3:   log likelihood = -3328.3334  (not concave)
+Iteration 4:   log likelihood = -3313.7233  
+Iteration 5:   log likelihood = -3311.5462  
+Iteration 6:   log likelihood = -3311.4348  
+Iteration 7:   log likelihood = -3311.4182  
+Iteration 8:   log likelihood = -3311.4152  
 Iteration 9:   log likelihood =  -3311.415  
 {\smallskip}
 {\bftt{Two-tier stochastic frontier model with exponential specification}}
 {\smallskip}
-                                                Number of obs     =      1,806
-                                                Wald chi2(21)     =     671.54
-Log likelihood =  -3311.415                     Prob > chi2       =     0.0000
+                                                        Number of obs =  1,806
+                                                        Wald chi2(21) = 672.30
+Log likelihood = -3311.415                              Prob > chi2   = 0.0000
 {\smallskip}
 \HLI{17}{\TOPT}\HLI{64}
-         lnprice {\VBAR}      Coef.   Std. Err.      z    P>|z|     [95\% Conf. Interval]
+         lnprice {\VBAR} Coefficient  Std. err.      z    P>|z|     [95\% conf. interval]
 \HLI{17}{\PLUS}\HLI{64}
 frontier_lnprice {\VBAR}
-           lnage {\VBAR}   .5983034    .114455     5.23   0.000     .3739757     .822631
-        symptoms {\VBAR}    .745793   .0548429    13.60   0.000      .638303    .8532831
-           urban {\VBAR}   .2049711     .07612     2.69   0.007     .0557787    .3541635
-       education {\VBAR}   .0630567   .0347716     1.81   0.070    -.0050944    .1312079
-             job {\VBAR}    -.29292   .0777538    -3.77   0.000    -.4453147   -.1405254
-       endurance {\VBAR}  -1.015488   .0916429   -11.08   0.000    -1.195104   -.8358709
-       insurance {\VBAR}   .0989852   .0857129     1.15   0.248    -.0690089    .2669793
-    i_province_2 {\VBAR}   .2183294    .140903     1.55   0.121    -.0578354    .4944942
-    i_province_3 {\VBAR}   .9542861   .1576721     6.05   0.000     .6452544    1.263318
-    i_province_4 {\VBAR}   .4148787   .1523583     2.72   0.006     .1162619    .7134955
-    i_province_5 {\VBAR}   .5426002   .1485292     3.65   0.000     .2514883     .833712
-    i_province_6 {\VBAR}   1.158284   .1372383     8.44   0.000      .889302    1.427266
-    i_province_7 {\VBAR}   .6197702   .1360698     4.55   0.000     .3530783     .886462
-    i_province_8 {\VBAR}   .6700469   .1298511     5.16   0.000     .4155435    .9245503
-    i_province_9 {\VBAR}   .8400755   .1728568     4.86   0.000     .5012824    1.178869
-        i_year_2 {\VBAR}  -.2171432   .2684327    -0.81   0.419    -.7432615    .3089752
-        i_year_3 {\VBAR}   .4859086     .23905     2.03   0.042     .0173793    .9544379
-        i_year_4 {\VBAR}   .9461048   .2338269     4.05   0.000     .4878126    1.404397
-        i_year_5 {\VBAR}    1.09333   .2220411     4.92   0.000     .6581377    1.528523
-        i_year_6 {\VBAR}   1.228338   .2168503     5.66   0.000     .8033195    1.653357
-        i_year_7 {\VBAR}   1.201616   .2266176     5.30   0.000     .7574539    1.645779
-           _cons {\VBAR}  -1.586701   .5324855    -2.98   0.003    -2.630354   -.5430485
+           lnage {\VBAR}   .5982669   .1144368     5.23   0.000     .3739749    .8225589
+        symptoms {\VBAR}   .7457762   .0548343    13.60   0.000      .638303    .8532494
+           urban {\VBAR}   .2049573   .0761184     2.69   0.007      .055768    .3541466
+       education {\VBAR}   .0630323   .0347386     1.81   0.070     -.005054    .1311187
+             job {\VBAR}  -.2929117   .0777554    -3.77   0.000    -.4453096   -.1405139
+       endurance {\VBAR}  -1.015442   .0916003   -11.09   0.000    -1.194975   -.8359089
+       insurance {\VBAR}   .0989831   .0857168     1.15   0.248    -.0690186    .2669849
+    i_province_2 {\VBAR}   .2183114   .1409055     1.55   0.121    -.0578583    .4944811
+    i_province_3 {\VBAR}   .9542828   .1576803     6.05   0.000     .6452352     1.26333
+    i_province_4 {\VBAR}   .4149146   .1523481     2.72   0.006     .1163179    .7135114
+    i_province_5 {\VBAR}   .5425583   .1485092     3.65   0.000     .2514856     .833631
+    i_province_6 {\VBAR}   1.158281   .1372447     8.44   0.000     .8892863    1.427276
+    i_province_7 {\VBAR}    .619752   .1360716     4.55   0.000     .3530566    .8864474
+    i_province_8 {\VBAR}    .669994   .1298144     5.16   0.000     .4155625    .9244255
+    i_province_9 {\VBAR}   .8401081   .1728515     4.86   0.000     .5013254    1.178891
+        i_year_2 {\VBAR}  -.2172029   .2684153    -0.81   0.418    -.7432872    .3088815
+        i_year_3 {\VBAR}   .4858874   .2390564     2.03   0.042     .0173456    .9544293
+        i_year_4 {\VBAR}   .9460852   .2338343     4.05   0.000     .4877784    1.404392
+        i_year_5 {\VBAR}   1.093294   .2220391     4.92   0.000     .6581055    1.528483
+        i_year_6 {\VBAR}   1.228311   .2168527     5.66   0.000     .8032871    1.653334
+        i_year_7 {\VBAR}   1.201607   .2266267     5.30   0.000     .7574271    1.645787
+           _cons {\VBAR}  -1.587025    .532159    -2.98   0.003    -2.630038   -.5440125
 \HLI{17}{\PLUS}\HLI{64}
 ln_sig_v         {\VBAR}
-           _cons {\VBAR}   .1267972   .1246228     1.02   0.309     -.117459    .3710534
+           _cons {\VBAR}   .1270812   .1233206     1.03   0.303    -.1146228    .3687852
 \HLI{17}{\PLUS}\HLI{64}
 ln_sig_u         {\VBAR}
-           _cons {\VBAR}  -1.175992   1.082008    -1.09   0.277    -3.296689    .9447052
+           _cons {\VBAR}  -1.178028   1.074875    -1.10   0.273    -3.284745    .9286889
 \HLI{17}{\PLUS}\HLI{64}
 ln_sig_w         {\VBAR}
-           _cons {\VBAR}   .0037854   .0919465     0.04   0.967    -.1764265    .1839973
+           _cons {\VBAR}   .0036437   .0915262     0.04   0.968    -.1757443    .1830317
 \HLI{17}{\BOTT}\HLI{64}

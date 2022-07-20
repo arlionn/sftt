@@ -31,11 +31,11 @@ We thank Alecos Papadopoulos for his amazing support.
 
 
 ## Program Authors
-[Yujun Lian](mailto:arlionn@163.com).
+[Yujun Lian](mailto:arlionn@163.com) (repo owner).
 Lingnan College, Sun Yat-sen University.
 Guangzhou, China.
 
-[Chang Liu](mailto:liuch288@mail2.sysu.edu.cn) (repo owner).
+[Chang Liu](mailto:liuch288@mail2.sysu.edu.cn).
 Lingnan College, Sun Yat-sen University
 Guangzhou, China.
 
