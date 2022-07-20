@@ -823,6 +823,7 @@ program define _sftt_eff
         foreach var in u_hat w_hat u_hat_exp w_hat_exp {
             if "``var''" != "" {
                 drop ``var''
+                local `var' = ""
             }
         }
     }
@@ -830,7 +831,14 @@ program define _sftt_eff
         foreach var in wu_diff wu_diff_exp wu_net_effect {
             if "``var''" != "" {
                 drop ``var''
+                local `var' = ""
             }
+        }
+    }
+    display as text "The following variables have been generated:"
+    foreach var in u_hat w_hat wu_diff u_hat_exp w_hat_exp wu_diff_exp wu_net_effect {
+        if "``var''" != "" {
+            display as result "``var''"
         }
     }
 end
