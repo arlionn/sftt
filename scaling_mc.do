@@ -1,5 +1,5 @@
 // ----- Load commands -----
-adopath + "./code"
+adopath + "./src"
 
 
 // ----- settings -----
