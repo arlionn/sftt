@@ -1,0 +1,95 @@
+. use https://sftt.oss-cn-hangzhou.aliyuncs.com/kp10.dta, clear
+{\smallskip}
+. sftt lprn lsf unitsftc bathstot roomsn sfan sfdn          ///
+>           agelt5 age510 age1015 agegte30                  ///
+>           cencityn urbsubn urbann riuraln inadeq degreen  ///
+>           s87 s88 s89 s90 s91 s92 s93                     ///
+>           verylg large siz1to3 small,                     ///
+>      sigmaw(outbuy firstbuy incbuy busbuy agebuy          ///
+>             blkbuy marbuy sfbuy edubuy kidbuy)            ///
+>      sigmau(incsell bussell agesell blksell marsell       ///
+>             sfsell edusell kidsell)                       ///
+>      hnormal seed(6)
+{\smallskip}
+initial:       log likelihood = -5527.2566
+rescale:       log likelihood = -5527.2566
+rescale eq:    log likelihood = -5411.5646
+Iteration 0:   log likelihood = -5411.5646  (not concave)
+Iteration 1:   log likelihood = -4377.4182  
+Iteration 2:   log likelihood = -3757.9845  (not concave)
+Iteration 3:   log likelihood =  -3150.925  (not concave)
+Iteration 4:   log likelihood = -3035.8419  (not concave)
+Iteration 5:   log likelihood = -2970.0992  (not concave)
+Iteration 6:   log likelihood = -2920.9603  (not concave)
+Iteration 7:   log likelihood = -2856.4921  
+Iteration 8:   log likelihood = -2847.2733  
+Iteration 9:   log likelihood = -2846.9476  
+Iteration 10:  log likelihood = -2846.9465  
+Iteration 11:  log likelihood = -2846.9465  
+{\smallskip}
+{\bftt{Two-tier stochastic frontier model with half-normal specification}}
+{\smallskip}
+                                                       Number of obs =   4,962
+                                                       Wald chi2(27) = 2215.44
+Log likelihood = -2846.9465                            Prob > chi2   =  0.0000
+{\smallskip}
+\HLI{14}{\TOPT}\HLI{64}
+         lprn {\VBAR} Coefficient  Std. err.      z    P>|z|     [95\% conf. interval]
+\HLI{14}{\PLUS}\HLI{64}
+frontier_lprn {\VBAR}
+          lsf {\VBAR}   .2974248   .0246533    12.06   0.000     .2491052    .3457444
+     unitsftc {\VBAR}  -.1209988   .0424967    -2.85   0.004    -.2042908   -.0377068
+     bathstot {\VBAR}   .2234376   .0154125    14.50   0.000     .1932297    .2536455
+       roomsn {\VBAR}   .0100356    .006246     1.61   0.108    -.0022063    .0222774
+         sfan {\VBAR}   .5028812   .0473966    10.61   0.000     .4099855    .5957769
+         sfdn {\VBAR}   .5890742   .0349243    16.87   0.000     .5206238    .6575246
+       agelt5 {\VBAR}   .1964769   .0299935     6.55   0.000     .1376908     .255263
+       age510 {\VBAR}   .0916725   .0242236     3.78   0.000     .0441951    .1391499
+      age1015 {\VBAR}   .0365938   .0237961     1.54   0.124    -.0100457    .0832334
+     agegte30 {\VBAR}  -.0010997   .0201294    -0.05   0.956    -.0405526    .0383532
+     cencityn {\VBAR}  -.1176011   .0298582    -3.94   0.000     -.176122   -.0590802
+      urbsubn {\VBAR}  -.0234167   .0275902    -0.85   0.396    -.0774925    .0306591
+       urbann {\VBAR}  -.3236884   .0336743    -9.61   0.000    -.3896889    -.257688
+      riuraln {\VBAR}  -.3196334   .0312238   -10.24   0.000    -.3808309   -.2584359
+       inadeq {\VBAR}   .0445826   .0669426     0.67   0.505    -.0866226    .1757878
+      degreen {\VBAR}  -.0093918   .0057882    -1.62   0.105    -.0207363    .0019528
+          s87 {\VBAR}   .0408673   .0285615     1.43   0.152    -.0151122    .0968467
+          s88 {\VBAR}   .0559374   .0281587     1.99   0.047     .0007474    .1111274
+          s89 {\VBAR}   .1140626   .0288773     3.95   0.000     .0574641     .170661
+          s90 {\VBAR}   .1885624   .0294924     6.39   0.000     .1307584    .2463664
+          s91 {\VBAR}   .1295756   .0296901     4.36   0.000      .071384    .1877672
+          s92 {\VBAR}   .1351328   .0285183     4.74   0.000     .0792379    .1910277
+          s93 {\VBAR}    .155737   .0304918     5.11   0.000     .0959742    .2154998
+       verylg {\VBAR}   .5600216   .0376576    14.87   0.000     .4862141    .6338292
+        large {\VBAR}   .1516602   .0362236     4.19   0.000     .0806633    .2226571
+      siz1to3 {\VBAR}   .1975844   .0259853     7.60   0.000     .1466541    .2485146
+        small {\VBAR}  -.0954865   .0270787    -3.53   0.000    -.1485599   -.0424132
+        _cons {\VBAR}   8.171206   .1780183    45.90   0.000     7.822297    8.520116
+\HLI{14}{\PLUS}\HLI{64}
+ln_sig_v      {\VBAR}
+        _cons {\VBAR}  -1.142588   .0527576   -21.66   0.000    -1.245991   -1.039185
+\HLI{14}{\PLUS}\HLI{64}
+ln_sig_u      {\VBAR}
+      incsell {\VBAR}   -.376247   .0403725    -9.32   0.000    -.4553755   -.2971184
+      bussell {\VBAR}  -.2718325   .0475578    -5.72   0.000    -.3650442   -.1786209
+      agesell {\VBAR}  -.2809188   .0516318    -5.44   0.000    -.3821152   -.1797223
+      blksell {\VBAR}   .2727506   .0809759     3.37   0.001     .1140408    .4314604
+      marsell {\VBAR}  -.1369206   .0412779    -3.32   0.001    -.2178238   -.0560175
+       sfsell {\VBAR}  -.0725142   .0466663    -1.55   0.120    -.1639784      .01895
+      edusell {\VBAR}  -.3189307   .0356874    -8.94   0.000    -.3888767   -.2489847
+      kidsell {\VBAR}  -.0180102   .0342882    -0.53   0.599    -.0852137    .0491934
+        _cons {\VBAR}   .4297788   .0753302     5.71   0.000     .2821342    .5774233
+\HLI{14}{\PLUS}\HLI{64}
+ln_sig_w      {\VBAR}
+       outbuy {\VBAR}   .0790764   .0725617     1.09   0.276    -.0631419    .2212946
+     firstbuy {\VBAR}   .0079435   .0672448     0.12   0.906    -.1238538    .1397409
+       incbuy {\VBAR}   .3901671   .0388287    10.05   0.000     .3140644    .4662699
+       busbuy {\VBAR}   .3152689   .0641264     4.92   0.000     .1895835    .4409543
+       agebuy {\VBAR}   .6749659   .1082553     6.23   0.000     .4627895    .8871424
+       blkbuy {\VBAR}  -1.367096   .6211147    -2.20   0.028    -2.584459   -.1497337
+       marbuy {\VBAR}   -.003838   .0801277    -0.05   0.962    -.1608854    .1532094
+        sfbuy {\VBAR}   .1127083   .0998315     1.13   0.259    -.0829579    .3083746
+       edubuy {\VBAR}   .4212968    .072445     5.82   0.000     .2793073    .5632864
+       kidbuy {\VBAR}  -.1204759   .0587331    -2.05   0.040    -.2355907    -.005361
+        _cons {\VBAR}  -2.486013    .246684   -10.08   0.000    -2.969505   -2.002522
+\HLI{14}{\BOTT}\HLI{64}
