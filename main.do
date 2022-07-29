@@ -2,9 +2,9 @@
 adopath + "./src"
 
 
-// ----- Section 4.1 -----
-// Original 2TSF with simulated data
-// First result
+// ----- Section 5.1 -----
+// The benchmark 2TSF model
+// model estimation
 sjlog using ./output/output_simu_ori1, replace
 clear
 set seed 999
@@ -17,7 +17,7 @@ generate v = invnormal(uniform())
 generate y = x1 + 2 * x2 - ue + we + v
 sftt y x1 x2, nocons
 sjlog close, replace
-// Second result
+// efficiency analysis
 sjlog using ./output/output_simu_ori2, replace
 sftt sigs
 sftt eff
@@ -26,7 +26,7 @@ sum _wu_diff_exp, detail
 sjlog close, replace
 
 
-// ----- Section 4.2 -----
+// ----- Section 5.2 -----
 // 2TSF model with scaling property
 // First result - no initial values
 sjlog using ./output/output_simu_scal1, replace
@@ -46,21 +46,10 @@ sjlog using ./output/output_simu_scal2, replace
 sftt y x, scal sigmau(zu) sigmaw(zw) robust nocons ///
          initial(delta_x 1 du_zu 0.6 mu_u 1 dw_zw 0.8 mu_w 1)
 sjlog close, replace
-// Third result - postestimation
-sjlog using ./output/output_simu_scal3, replace
-sftt sigs
-sjlog close, replace
-
-// ----- Section 4.3 -----
-/*
-  I run [scaling_mc.do] to get the results in [./mc_results/], 
-  and collect bias and MSE manually.
-  Since this script runs very slowly (because of the large scale of simulations),
-  I splited the loop into 12 different Stata processes to accerlate.
-*/
 
 
-// ----- Section 5.1 -----
+// ----- Section 6.1 -----
+// Replicate the results in Kumbhakar and Parmeter (2009)
 sjlog using ./output/output_exmp1_1, replace
 set seed 20220612
 use https://sftt.oss-cn-hangzhou.aliyuncs.com/kp09.dta, clear
@@ -77,7 +66,8 @@ tabstat _w_hat_exp _u_hat_exp _wu_diff_exp, by(black) stat(mean p25 p50 p75) ///
 sjlog close, replace
 
 
-// ----- Section 5.2 -----
+// ----- Section 6.2 -----
+// Replicate the results in Lu et al. (2011)
 // First result - estimation
 sjlog using ./output/output_exmp2_1, replace
 set seed 20220612
@@ -164,8 +154,4 @@ scatter rnk_w_n rnk_w_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj)
 graph export output/wi_rank.eps, replace
 scatter rnk_u_n rnk_u_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj)
 graph export output/ui_rank.eps, replace
-
-
-
-
 
