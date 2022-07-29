@@ -83,27 +83,27 @@ sjlog close, replace
 // Third result - histogram
 sjlog using ./output/output_exmp2_3, replace
 histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)") ///
-	   xscale(titlegap(3) outergap(-2))
+       ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)")  ///
+       xscale(titlegap(3) outergap(-2))
 histogram _w_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (%)")  ///
-	   xscale(titlegap(3) outergap(-2))
+       ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (%)")   ///
+       xscale(titlegap(3) outergap(-2))
 histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))             ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                   ///
-	   xscale(titlegap(3) outergap(-2))
+       ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                    ///
+       xscale(titlegap(3) outergap(-2))
 sjlog close, replace
 // Generate the figures used in the paper
 histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)") ///
-	   xscale(titlegap(3) outergap(-2)) scheme(sj)
+       ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)")  ///
+       xscale(titlegap(3) outergap(-2)) scheme(sj)
 graph export output/patients.eps, replace
 histogram _w_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (%)")  ///
-	   xscale(titlegap(3) outergap(-2)) scheme(sj)
+       ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (%)")   ///
+       xscale(titlegap(3) outergap(-2)) scheme(sj)
 graph export output/doctors.eps, replace
 histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))             ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                   ///
-	   xscale(titlegap(3) outergap(-2)) scheme(sj)
+       ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                    ///
+       xscale(titlegap(3) outergap(-2)) scheme(sj)
 graph export output/netsurplus.eps, replace
 
 
@@ -117,22 +117,22 @@ graph export output/netsurplus.eps, replace
 */
 use https://sftt.oss-cn-hangzhou.aliyuncs.com/lu11.dta, clear
 quietly {
-	// OLS
-	reg lnprice lnage symp urban education job endurance insur i.province i.year, r
-	est store res0
-	// 2TSF - exponential specification
-	sftt lnprice lnage symp urban education job endurance insur i.province i.year, seed(20220613)
-	est store res1
-	noisily sftt sigs
-	sftt eff
-	foreach var in u_hat w_hat wu_diff u_hat_exp w_hat_exp wu_diff_exp wu_net_effect {
-		rename _`var' _`var'_e
-	}
-	// 2TSF - half-normal specification
-	sftt lnprice lnage symp urban education job endurance insur i.province i.year, hnormal seed(20220613)
-	est store res2
-	noisily sftt sigs
-	sftt eff
+    // OLS
+    reg lnprice lnage symp urban education job endurance insur i.province i.year, r
+    est store res0
+    // 2TSF - exponential specification
+    sftt lnprice lnage symp urban education job endurance insur i.province i.year, seed(20220613)
+    est store res1
+    noisily sftt sigs
+    sftt eff
+    foreach var in u_hat w_hat wu_diff u_hat_exp w_hat_exp wu_diff_exp wu_net_effect {
+        rename _`var' _`var'_e
+    }
+    // 2TSF - half-normal specification
+    sftt lnprice lnage symp urban education job endurance insur i.province i.year, hnormal seed(20220613)
+    est store res2
+    noisily sftt sigs
+    sftt eff
 }
 esttab res0 res1 res2, drop(i_* *.year *.province)
 esttab res0 res1 res2 using ./output/output_empirical_cmp_raw.tex, drop(i_* *.year *.province) ///
@@ -154,4 +154,24 @@ scatter rnk_w_n rnk_w_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj)
 graph export output/wi_rank.eps, replace
 scatter rnk_u_n rnk_u_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj)
 graph export output/ui_rank.eps, replace
+
+
+// ----- Section 6.3 -----
+// Use the results in Kumbhakar and Parmeter (2010)
+sjlog using ./output/output_exmp3_1, replace
+use https://sftt.oss-cn-hangzhou.aliyuncs.com/kp10.dta, clear
+sftt lprn lsf unitsftc bathstot roomsn sfan sfdn          ///
+          agelt5 age510 age1015 agegte30                  ///
+          cencityn urbsubn urbann riuraln inadeq degreen  ///
+          s87 s88 s89 s90 s91 s92 s93                     ///
+          verylg large siz1to3 small,                     ///
+     sigmaw(outbuy firstbuy incbuy busbuy agebuy          ///
+            blkbuy marbuy sfbuy edubuy kidbuy)            ///
+     sigmau(incsell bussell agesell blksell marsell       ///
+            sfsell edusell kidsell)                       ///
+     hnormal seed(6)
+sjlog close, replace
+     
+
+
 
