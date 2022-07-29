@@ -172,7 +172,7 @@ program _sftt_regression_scaling, eclass
     version 13
     syntax varlist(min=2) [if] [in] [, SCALing noCONStant fe INITial(string) ///
             sigmau(varlist) sigmaw(varlist) Robust ITERate(integer 1000)     ///
-            findseed findingseedmode vce(string)]
+            findseed seed(string) findingseedmode vce(string)]
     local zu `sigmau'
     local zw `sigmaw'
     gettoken y xs: varlist
