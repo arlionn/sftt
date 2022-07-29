@@ -82,15 +82,15 @@ sum _wu_diff_exp, detail
 sjlog close, replace
 // Third result - histogram
 sjlog using ./output/output_exmp2_3, replace
-histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
-       ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)")  ///
-       xscale(titlegap(3) outergap(-2))
-histogram _w_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
-       ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (%)")   ///
-       xscale(titlegap(3) outergap(-2))
-histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))             ///
-       ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                    ///
-       xscale(titlegap(3) outergap(-2))
+histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))                 ///
+        ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)")  ///
+        xscale(titlegap(3) outergap(-2))
+histogram _w_hat_exp, percent title(Percent, place(10) size(*0.7))                 ///
+        ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (%)")   ///
+        xscale(titlegap(3) outergap(-2))
+histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))               ///
+        ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                    ///
+        xscale(titlegap(3) outergap(-2))
 sjlog close, replace
 // Generate the figures used in the paper
 histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
