@@ -63,7 +63,7 @@ program _sftt_regression, eclass
     version 13
     syntax varlist(min=1 fv) [if] [in] [, sigmau(varlist) sigmaw(varlist)    ///
                                   SCALing INITial(string) Robust vce(string) ///
-                                  noCONStant fe ITERate(integer 1000)        ///
+                                  noCONStant ITERate(integer 1000)        ///
                                   HNORMal findseed seed(string)]
     preserve
         // Clear ereturn macro
@@ -81,20 +81,6 @@ program _sftt_regression, eclass
             else {
                 local factor_varlist `factor_varlist' `r(varlist)'
                 local ori_factor_variables `ori_factor_variables' `var'
-            }
-        }
-        // process fe
-        if "`fe'" == "fe" {
-            _xt, trequired
-            quietly xtset
-            local id_var `r(panelvar)'
-            local t_var `r(timevar)'
-            sort `id_var' `t_var'
-            foreach var in `normal_varlist' {
-                bysort `id_var': egen `var'_b = mean(`var')
-                egen `var'_bb = mean(`var')
-                replace `var' = `var' - `var'_b + `var'_bb
-                drop `var'_b `var'_bb
             }
         }
         // get command options
@@ -170,7 +156,7 @@ end
 // sftt with scaling property
 program _sftt_regression_scaling, eclass
     version 13
-    syntax varlist(min=2) [if] [in] [, SCALing noCONStant fe INITial(string) ///
+    syntax varlist(min=2) [if] [in] [, SCALing noCONStant INITial(string) ///
             sigmau(varlist) sigmaw(varlist) Robust ITERate(integer 1000)     ///
             findseed findingseedmode vce(string)]
     local zu `sigmau'
@@ -259,28 +245,14 @@ program _sftt_regression_scaling, eclass
     }
     local para_list `para_list' mu_w
     // nls estimation
-    if "`fe'" == "fe" {
-        local skipconstant
-        if "`constant'" == "noconstant" {
-            local skipconstant skipconstant
-        }
-        quietly xtset
-        nl _scaling_opt_fe @ `y' `xs', zu(`zu') zw(`zw') `skipconstant' ///
-                id_var(`r(panelvar)') parameters(`para_list')           ///
-                iterate(`iterate') initial(`initial')                   ///
-                `robust' vce(`vce')                                     ///
-                title("{bf:Two-tier stochastic frontier model with scaling property}")
+    local skipconstant
+    if "`constant'" == "noconstant" {
+        local skipconstant skipconstant
     }
-    else {
-        local skipconstant
-        if "`constant'" == "noconstant" {
-            local skipconstant skipconstant
-        }
-        nl _scaling_opt @ `y' `xs', zu(`zu') zw(`zw') `skipconstant'  ///
-                `robust' vce(`vce') iterate(`iterate')                ///
-                parameters(`para_list') initial(`initial')            ///
-                title("{bf:Two-tier stochastic frontier model with scaling property}")
-    }
+    nl _scaling_opt @ `y' `xs', zu(`zu') zw(`zw') `skipconstant'  ///
+            `robust' vce(`vce') iterate(`iterate')                ///
+            parameters(`para_list') initial(`initial')            ///
+            title("{bf:Two-tier stochastic frontier model with scaling property}")
     ereturn local zu `zu'
     ereturn local zw `zw'
 end
@@ -290,7 +262,7 @@ end
 program define _sftt_regression_original, eclass
     version 8.2
     syntax varlist(min=1 ts fv) [if] [in] [,noCONStant      ///
-            sigmau(string) sigmaw(string) FE Check SEarch   ///
+            sigmau(string) sigmaw(string) Check SEarch   ///
             Plot Robust vce(string) ITERate(integer 1000)   ///
             HNORMal findseed seed(string) findingseedmode]
 
