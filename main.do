@@ -2,6 +2,7 @@
 adopath + "./src"
 
 
+
 // ----- Section 5.1 -----
 // The benchmark 2TSF model
 // model estimation
@@ -26,6 +27,7 @@ sum _wu_diff_exp, detail
 sjlog close, replace
 
 
+
 // ----- Section 5.2 -----
 // 2TSF model with scaling property
 // First result - no initial values
@@ -48,6 +50,7 @@ sftt y x, scal sigmau(zu) sigmaw(zw) robust nocons ///
 sjlog close, replace
 
 
+
 // ----- Section 6.1 -----
 // Replicate the results in Kumbhakar and Parmeter (2009)
 sjlog using ./output/output_exmp1_1, replace
@@ -66,7 +69,26 @@ tabstat _w_hat_exp _u_hat_exp _wu_diff_exp, by(black) stat(mean p25 p50 p75) ///
 sjlog close, replace
 
 
+
 // ----- Section 6.2 -----
+// Replicate the results in Kumbhakar and Parmeter (2010)
+sjlog using ./output/output_exmp3_1, replace
+use https://sftt.oss-cn-hangzhou.aliyuncs.com/kp10.dta, clear
+sftt lprn lsf unitsftc bathstot roomsn sfan sfdn          ///
+          agelt5 age510 age1015 agegte30                  ///
+          cencityn urbsubn urbann riuraln inadeq degreen  ///
+          s87 s88 s89 s90 s91 s92 s93                     ///
+          verylg large siz1to3 small,                     ///
+     sigmaw(outbuy firstbuy incbuy busbuy agebuy          ///
+            blkbuy marbuy sfbuy edubuy kidbuy)            ///
+     sigmau(incsell bussell agesell blksell marsell       ///
+            sfsell edusell kidsell)                       ///
+     hnormal seed(6)
+sjlog close, replace
+     
+
+
+// ----- Section 6.3 -----
 // Replicate the results in Lu et al. (2011)
 // First result - estimation
 sjlog using ./output/output_exmp2_1, replace
@@ -74,12 +96,14 @@ set seed 20220612
 use https://sftt.oss-cn-hangzhou.aliyuncs.com/lu11.dta, clear
 sftt lnprice lnage symp urban education job endurance insur i.province i.year
 sjlog close, replace
+
 // Second result - efficiency
 sjlog using ./output/output_exmp2_2, replace
 sftt eff, exp
 sum _u_hat_exp _w_hat_exp _wu_diff_exp
 sum _wu_diff_exp, detail
 sjlog close, replace
+
 // Third result - histogram
 sjlog using ./output/output_exmp2_3, replace
 histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))                 ///
@@ -92,7 +116,8 @@ histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))            
         ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                    ///
         xscale(titlegap(3) outergap(-2))
 sjlog close, replace
-// Generate the figures used in the paper
+
+// Export the figures into files, no need to be sjlogged
 histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
        ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)")  ///
        xscale(titlegap(3) outergap(-2)) scheme(sj)
@@ -105,8 +130,6 @@ histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))            
        ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                    ///
        xscale(titlegap(3) outergap(-2)) scheme(sj)
 graph export output/netsurplus.eps, replace
-
-
 
 /*
   DISTRIBUTION COMPARISON
@@ -134,9 +157,8 @@ quietly {
     noisily sftt sigs
     sftt eff
 }
-esttab res0 res1 res2, drop(i_* *.year *.province)
 esttab res0 res1 res2 using ./output/output_empirical_cmp_raw.tex, drop(i_* *.year *.province) ///
-        title(Estimation results with different distributions) replace
+        title(Estimation results with different distributions) replace   // Export results into a .tex file
 
 sum _u_hat_e _u_hat
 sum _wu_net_effect _wu_net_effect_e
@@ -149,29 +171,8 @@ sort _w_hat_e
 gen rnk_w_e = _n
 sort _w_hat
 gen rnk_w_n = _n
-
 scatter rnk_w_n rnk_w_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj)
-graph export output/wi_rank.eps, replace
+graph export output/wi_rank.eps, replace  // Export figures into .eps files
 scatter rnk_u_n rnk_u_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj)
-graph export output/ui_rank.eps, replace
-
-
-// ----- Section 6.3 -----
-// Use the results in Kumbhakar and Parmeter (2010)
-sjlog using ./output/output_exmp3_1, replace
-use https://sftt.oss-cn-hangzhou.aliyuncs.com/kp10.dta, clear
-sftt lprn lsf unitsftc bathstot roomsn sfan sfdn          ///
-          agelt5 age510 age1015 agegte30                  ///
-          cencityn urbsubn urbann riuraln inadeq degreen  ///
-          s87 s88 s89 s90 s91 s92 s93                     ///
-          verylg large siz1to3 small,                     ///
-     sigmaw(outbuy firstbuy incbuy busbuy agebuy          ///
-            blkbuy marbuy sfbuy edubuy kidbuy)            ///
-     sigmau(incsell bussell agesell blksell marsell       ///
-            sfsell edusell kidsell)                       ///
-     hnormal seed(6)
-sjlog close, replace
-     
-
-
+graph export output/ui_rank.eps, replace  
 
