@@ -1,6 +1,10 @@
+cscript sftt
+version 17
+pwd
+dir
+
 // ----- Load commands -----
 adopath + "./src"
-
 
 
 // ----- Section 5.1 -----
@@ -27,7 +31,6 @@ sum _wu_diff_exp, detail
 sjlog close, replace
 
 
-
 // ----- Section 5.2 -----
 // 2TSF model with scaling property
 // First result - no initial values
@@ -50,7 +53,6 @@ sftt y x, scal sigmau(zu) sigmaw(zw) robust nocons ///
 sjlog close, replace
 
 
-
 // ----- Section 6.1 -----
 // Replicate the results in Kumbhakar and Parmeter (2009)
 sjlog using ./output/output_exmp1_1, replace
@@ -69,7 +71,6 @@ tabstat _w_hat_exp _u_hat_exp _wu_diff_exp, by(black) stat(mean p25 p50 p75) ///
 sjlog close, replace
 
 
-
 // ----- Section 6.2 -----
 // Replicate the results in Kumbhakar and Parmeter (2010)
 sjlog using ./output/output_exmp2_1, replace
@@ -85,7 +86,6 @@ sftt lprn lsf unitsftc bathstot roomsn sfan sfdn          ///
             sfsell edusell kidsell)                       ///
      hnormal seed(6)
 sjlog close, replace
-     
 
 
 // ----- Section 6.3 -----
@@ -174,5 +174,4 @@ gen rnk_w_n = _n
 scatter rnk_w_n rnk_w_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj)
 graph export output/wi_rank.eps, replace  // Export figures into .eps files
 scatter rnk_u_n rnk_u_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj)
-graph export output/ui_rank.eps, replace  
-
+graph export output/ui_rank.eps, replace
