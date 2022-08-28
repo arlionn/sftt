@@ -72,7 +72,7 @@ sjlog close, replace
 
 // ----- Section 6.2 -----
 // Replicate the results in Kumbhakar and Parmeter (2010)
-sjlog using ./output/output_exmp3_1, replace
+sjlog using ./output/output_exmp2_1, replace
 use https://sftt.oss-cn-hangzhou.aliyuncs.com/kp10.dta, clear
 sftt lprn lsf unitsftc bathstot roomsn sfan sfdn          ///
           agelt5 age510 age1015 agegte30                  ///
@@ -91,21 +91,21 @@ sjlog close, replace
 // ----- Section 6.3 -----
 // Replicate the results in Lu et al. (2011)
 // First result - estimation
-sjlog using ./output/output_exmp2_1, replace
+sjlog using ./output/output_exmp3_1, replace
 set seed 20220612
 use https://sftt.oss-cn-hangzhou.aliyuncs.com/lu11.dta, clear
 sftt lnprice lnage symp urban education job endurance insur i.province i.year
 sjlog close, replace
 
 // Second result - efficiency
-sjlog using ./output/output_exmp2_2, replace
+sjlog using ./output/output_exmp3_2, replace
 sftt eff, exp
 sum _u_hat_exp _w_hat_exp _wu_diff_exp
 sum _wu_diff_exp, detail
 sjlog close, replace
 
 // Third result - histogram
-sjlog using ./output/output_exmp2_3, replace
+sjlog using ./output/output_exmp3_3, replace
 histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))                 ///
         ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)")  ///
         xscale(titlegap(3) outergap(-2))
