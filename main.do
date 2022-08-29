@@ -1,5 +1,5 @@
 cscript sftt
-version 17
+version 17  // Stata version must be >= 14
 pwd
 dir
 
