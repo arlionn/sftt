@@ -1,10 +1,15 @@
+cscript sftt
+version 17  // Stata version must be >= 14
+pwd
+dir
+
 // ----- Load commands -----
 adopath + "./src"
 
 
-// ----- Section 4.1 -----
-// Original 2TSF with simulated data
-// First result
+// ----- Section 5.1 -----
+// The benchmark 2TSF model
+// model estimation
 sjlog using ./output/output_simu_ori1, replace
 clear
 set seed 999
@@ -17,7 +22,7 @@ generate v = invnormal(uniform())
 generate y = x1 + 2 * x2 - ue + we + v
 sftt y x1 x2, nocons
 sjlog close, replace
-// Second result
+// efficiency analysis
 sjlog using ./output/output_simu_ori2, replace
 sftt sigs
 sftt eff
@@ -26,7 +31,7 @@ sum _wu_diff_exp, detail
 sjlog close, replace
 
 
-// ----- Section 4.2 -----
+// ----- Section 5.2 -----
 // 2TSF model with scaling property
 // First result - no initial values
 sjlog using ./output/output_simu_scal1, replace
@@ -46,21 +51,10 @@ sjlog using ./output/output_simu_scal2, replace
 sftt y x, scal sigmau(zu) sigmaw(zw) robust nocons ///
          initial(delta_x 1 du_zu 0.6 mu_u 1 dw_zw 0.8 mu_w 1)
 sjlog close, replace
-// Third result - postestimation
-sjlog using ./output/output_simu_scal3, replace
-sftt sigs
-sjlog close, replace
-
-// ----- Section 4.3 -----
-/*
-  I run [scaling_mc.do] to get the results in [./mc_results/], 
-  and collect bias and MSE manually.
-  Since this script runs very slowly (because of the large scale of simulations),
-  I splited the loop into 12 different Stata processes to accerlate.
-*/
 
 
-// ----- Section 5.1 -----
+// ----- Section 6.1 -----
+// Replicate the results in Kumbhakar and Parmeter (2009)
 sjlog using ./output/output_exmp1_1, replace
 set seed 20220612
 use https://sftt.oss-cn-hangzhou.aliyuncs.com/kp09.dta, clear
@@ -77,46 +71,65 @@ tabstat _w_hat_exp _u_hat_exp _wu_diff_exp, by(black) stat(mean p25 p50 p75) ///
 sjlog close, replace
 
 
-// ----- Section 5.2 -----
-// First result - estimation
+// ----- Section 6.2 -----
+// Replicate the results in Kumbhakar and Parmeter (2010)
 sjlog using ./output/output_exmp2_1, replace
+use https://sftt.oss-cn-hangzhou.aliyuncs.com/kp10.dta, clear
+sftt lprn lsf unitsftc bathstot roomsn sfan sfdn          ///
+          agelt5 age510 age1015 agegte30                  ///
+          cencityn urbsubn urbann riuraln inadeq degreen  ///
+          s87 s88 s89 s90 s91 s92 s93                     ///
+          verylg large siz1to3 small,                     ///
+     sigmaw(outbuy firstbuy incbuy busbuy agebuy          ///
+            blkbuy marbuy sfbuy edubuy kidbuy)            ///
+     sigmau(incsell bussell agesell blksell marsell       ///
+            sfsell edusell kidsell)                       ///
+     hnormal seed(6)
+sjlog close, replace
+
+
+// ----- Section 6.3 -----
+// Replicate the results in Lu et al. (2011)
+// First result - estimation
+sjlog using ./output/output_exmp3_1, replace
 set seed 20220612
 use https://sftt.oss-cn-hangzhou.aliyuncs.com/lu11.dta, clear
 sftt lnprice lnage symp urban education job endurance insur i.province i.year
 sjlog close, replace
+
 // Second result - efficiency
-sjlog using ./output/output_exmp2_2, replace
+sjlog using ./output/output_exmp3_2, replace
 sftt eff, exp
 sum _u_hat_exp _w_hat_exp _wu_diff_exp
 sum _wu_diff_exp, detail
 sjlog close, replace
+
 // Third result - histogram
-sjlog using ./output/output_exmp2_3, replace
-histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)") ///
-	   xscale(titlegap(3) outergap(-2))
-histogram _w_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (%)")  ///
-	   xscale(titlegap(3) outergap(-2))
-histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))             ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                   ///
-	   xscale(titlegap(3) outergap(-2))
+sjlog using ./output/output_exmp3_3, replace
+histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))                 ///
+        ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)")  ///
+        xscale(titlegap(3) outergap(-2))
+histogram _w_hat_exp, percent title(Percent, place(10) size(*0.7))                 ///
+        ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (%)")   ///
+        xscale(titlegap(3) outergap(-2))
+histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))               ///
+        ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                    ///
+        xscale(titlegap(3) outergap(-2))
 sjlog close, replace
-// Generate the figures used in the paper
+
+// Export the figures into files, no need to be sjlogged
 histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)") ///
-	   xscale(titlegap(3) outergap(-2)) scheme(sj)
+       ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)")  ///
+       xscale(titlegap(3) outergap(-2)) scheme(sj)
 graph export output/patients.eps, replace
 histogram _w_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (%)")  ///
-	   xscale(titlegap(3) outergap(-2)) scheme(sj)
+       ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by doctors (%)")   ///
+       xscale(titlegap(3) outergap(-2)) scheme(sj)
 graph export output/doctors.eps, replace
 histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))             ///
-	   ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                   ///
-	   xscale(titlegap(3) outergap(-2)) scheme(sj)
+       ylabel(,angle(0)) ytitle("") xtitle("Net Surplus (%)")                    ///
+       xscale(titlegap(3) outergap(-2)) scheme(sj)
 graph export output/netsurplus.eps, replace
-
-
 
 /*
   DISTRIBUTION COMPARISON
@@ -127,26 +140,25 @@ graph export output/netsurplus.eps, replace
 */
 use https://sftt.oss-cn-hangzhou.aliyuncs.com/lu11.dta, clear
 quietly {
-	// OLS
-	reg lnprice lnage symp urban education job endurance insur i.province i.year, r
-	est store res0
-	// 2TSF - exponential specification
-	sftt lnprice lnage symp urban education job endurance insur i.province i.year, seed(20220613)
-	est store res1
-	noisily sftt sigs
-	sftt eff
-	foreach var in u_hat w_hat wu_diff u_hat_exp w_hat_exp wu_diff_exp wu_net_effect {
-		rename _`var' _`var'_e
-	}
-	// 2TSF - half-normal specification
-	sftt lnprice lnage symp urban education job endurance insur i.province i.year, hnormal seed(20220613)
-	est store res2
-	noisily sftt sigs
-	sftt eff
+    // OLS
+    reg lnprice lnage symp urban education job endurance insur i.province i.year, r
+    est store res0
+    // 2TSF - exponential specification
+    sftt lnprice lnage symp urban education job endurance insur i.province i.year, seed(20220613)
+    est store res1
+    noisily sftt sigs
+    sftt eff
+    foreach var in u_hat w_hat wu_diff u_hat_exp w_hat_exp wu_diff_exp wu_net_effect {
+        rename _`var' _`var'_e
+    }
+    // 2TSF - half-normal specification
+    sftt lnprice lnage symp urban education job endurance insur i.province i.year, hnormal seed(20220613)
+    est store res2
+    noisily sftt sigs
+    sftt eff
 }
-esttab res0 res1 res2, drop(i_* *.year *.province)
 esttab res0 res1 res2 using ./output/output_empirical_cmp_raw.tex, drop(i_* *.year *.province) ///
-        title(Estimation results with different distributions) replace
+        title(Estimation results with different distributions) replace   // Export results into a .tex file
 
 sum _u_hat_e _u_hat
 sum _wu_net_effect _wu_net_effect_e
@@ -159,13 +171,7 @@ sort _w_hat_e
 gen rnk_w_e = _n
 sort _w_hat
 gen rnk_w_n = _n
-
 scatter rnk_w_n rnk_w_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj)
-graph export output/wi_rank.eps, replace
+graph export output/wi_rank.eps, replace  // Export figures into .eps files
 scatter rnk_u_n rnk_u_e, xtitle("Exponential") ytitle("Half-Normal") scheme(sj)
 graph export output/ui_rank.eps, replace
-
-
-
-
-
