@@ -135,10 +135,10 @@ with scaling assumption following {help sftt##PA18:{bind:Parmeter (2018)}}.
 {opt noconstant} suppresses the constant term (intercept) in the frontier.
 
 {phang}
-{opt hnormal} uses the {it:half-normal/half-normal/normal} specification rather than the benchmark {it:exponential/exponential/normal} specification. Note that when using this option, the estimation might not converge because of flat derivatives or missing values, rerun the command several times might help. Users can also use {opt findseed} to find a usable random seed.
+{opt hnormal} uses the {it:half-normal/half-normal/normal} specification rather than the benchmark {it:exponential/exponential/normal} specification. Note that when using this option, the estimation might not converge because of flat derivatives or missing values, set another random seed using the option {opt seed(#)} might help. Users can also specify the {opt findseed} option to find a usable random seed.
 
 {phang}
-{opt scaling} estimates the 2TSF model with scaling property.
+{opt scaling} estimates the 2TSF model with scaling property. Note that the results might be very sensitive to the initial values if the models are complex.
 
 {dlgtab:Ancillary equations}
 

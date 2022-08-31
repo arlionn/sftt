@@ -249,10 +249,14 @@ program _sftt_regression_scaling, eclass
     if "`constant'" == "noconstant" {
         local skipconstant skipconstant
     }
-    nl _scaling_opt @ `y' `xs', zu(`zu') zw(`zw') `skipconstant'  ///
-            `robust' vce(`vce') iterate(`iterate')                ///
-            parameters(`para_list') initial(`initial')            ///
+    capture noisily nl _scaling_opt @ `y' `xs', zu(`zu') zw(`zw') `skipconstant'  ///
+            `robust' vce(`vce') iterate(`iterate')                                ///
+            parameters(`para_list') initial(`initial')                            ///
             title("{bf:Two-tier stochastic frontier model with scaling property}")
+    if _rc {
+        display as error "Convergence not achieved, you can adjust the initial values, or remove {bf:scaling} to estimate with distributional assumptions. See {help sftt}."
+        exit _rc
+    }
     ereturn local zu `zu'
     ereturn local zw `zw'
 end
@@ -331,7 +335,11 @@ program define _sftt_regression_original, eclass
     }
     quietly ml check
     quietly ml search
-    ml max, noout iterate(`iterate') difficult
+    capture noisily ml max, nooutput iterate(`iterate') difficult
+    if _rc {
+        display as error "Convergence not achieved, you can set another randon seed using the option {bf:seed(#)}, or, specify {bf:findseed} option. See {help sftt}."
+        exit _rc
+    }
     version 13
     ml display
     ereturn repost
