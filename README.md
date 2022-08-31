@@ -6,8 +6,7 @@ The repository of Stata command *sftt*.
 ## Description
 **sftt** fits two-tier stochastic frontier (2TSF) models with multiple model settings. 
 
-**sftt** provides estimators for the
-parameters of a linear model with a disturbance that is assumed to be a mixture of three components: 
+The 2TSF model consists of a linear model with a disturbance that is assumed to be a mixture of three components: 
 two measures of inefficiency which are strictly nonnegative and nonpositive respectively,
 and a two-sided error term from a symmetric distribution.
 
@@ -18,7 +17,7 @@ following [Kumbhakar and Parmeter (2009)](https://doi.org/10.1007/s11123-008-011
 and models in half-normal/half-normal/normal specification following
 [Papadopoulos (2015)](https://doi.org/10.1007/s11123-014-0389-8).
 
-**sftt** also fits models with scaling assumption following
+This command also fits models with scaling property following
 [Parmeter (2018)](https://doi.org/10.1007/s11123-017-0520-8).
 
 **sftt sigs** identifies the distribution of each component in the composite error term.
@@ -42,8 +41,3 @@ Guangzhou, China.
 [Christopher F. Parmeter](cparmeter@bus.miami.edu).
 Department of Economics, University of Miami
 Miami, FL, USA.
-
-## Repository information
-
-This repository is mainly managed on [Gitee](https://gitee.com/ranglab/sftt), and mirrored on [GitHub](https://github.com/liuch288/sftt).
-

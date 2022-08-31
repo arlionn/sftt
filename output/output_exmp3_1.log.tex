@@ -1,0 +1,64 @@
+. set seed 20220612
+{\smallskip}
+. use https://sftt.oss-cn-hangzhou.aliyuncs.com/lu11.dta, clear
+{\smallskip}
+. sftt lnprice lnage symp urban education job endurance insur i.province i.year
+note: {\bftt{i_province_1}} omitted because of collinearity.
+note: {\bftt{i_year_1}} omitted because of collinearity.
+{\smallskip}
+initial:       log likelihood = -3675.6139
+rescale:       log likelihood = -3675.6139
+rescale eq:    log likelihood =  -3645.644
+Iteration 0:   log likelihood =  -3645.644  
+Iteration 1:   log likelihood = -3460.2008  (not concave)
+Iteration 2:   log likelihood = -3408.8394  
+Iteration 3:   log likelihood = -3328.3334  (not concave)
+Iteration 4:   log likelihood = -3313.7233  
+Iteration 5:   log likelihood = -3311.5462  
+Iteration 6:   log likelihood = -3311.4348  
+Iteration 7:   log likelihood = -3311.4182  
+Iteration 8:   log likelihood = -3311.4152  
+Iteration 9:   log likelihood =  -3311.415  
+{\smallskip}
+{\bftt{Two-tier stochastic frontier model with exponential specification}}
+{\smallskip}
+                                                        Number of obs =  1,806
+                                                        Wald chi2(21) = 672.30
+Log likelihood = -3311.415                              Prob > chi2   = 0.0000
+{\smallskip}
+\HLI{17}{\TOPT}\HLI{64}
+         lnprice {\VBAR} Coefficient  Std. err.      z    P>|z|     [95\% conf. interval]
+\HLI{17}{\PLUS}\HLI{64}
+frontier_lnprice {\VBAR}
+           lnage {\VBAR}   .5982669   .1144368     5.23   0.000     .3739749    .8225589
+        symptoms {\VBAR}   .7457762   .0548343    13.60   0.000      .638303    .8532494
+           urban {\VBAR}   .2049573   .0761184     2.69   0.007      .055768    .3541466
+       education {\VBAR}   .0630323   .0347386     1.81   0.070     -.005054    .1311187
+             job {\VBAR}  -.2929117   .0777554    -3.77   0.000    -.4453096   -.1405139
+       endurance {\VBAR}  -1.015442   .0916003   -11.09   0.000    -1.194975   -.8359089
+       insurance {\VBAR}   .0989831   .0857168     1.15   0.248    -.0690186    .2669849
+    i_province_2 {\VBAR}   .2183114   .1409055     1.55   0.121    -.0578583    .4944811
+    i_province_3 {\VBAR}   .9542828   .1576803     6.05   0.000     .6452352     1.26333
+    i_province_4 {\VBAR}   .4149146   .1523481     2.72   0.006     .1163179    .7135114
+    i_province_5 {\VBAR}   .5425583   .1485092     3.65   0.000     .2514856     .833631
+    i_province_6 {\VBAR}   1.158281   .1372447     8.44   0.000     .8892863    1.427276
+    i_province_7 {\VBAR}    .619752   .1360716     4.55   0.000     .3530566    .8864474
+    i_province_8 {\VBAR}    .669994   .1298144     5.16   0.000     .4155625    .9244255
+    i_province_9 {\VBAR}   .8401081   .1728515     4.86   0.000     .5013254    1.178891
+        i_year_2 {\VBAR}  -.2172029   .2684153    -0.81   0.418    -.7432872    .3088815
+        i_year_3 {\VBAR}   .4858874   .2390564     2.03   0.042     .0173456    .9544293
+        i_year_4 {\VBAR}   .9460852   .2338343     4.05   0.000     .4877784    1.404392
+        i_year_5 {\VBAR}   1.093294   .2220391     4.92   0.000     .6581055    1.528483
+        i_year_6 {\VBAR}   1.228311   .2168527     5.66   0.000     .8032871    1.653334
+        i_year_7 {\VBAR}   1.201607   .2266267     5.30   0.000     .7574271    1.645787
+           _cons {\VBAR}  -1.587025    .532159    -2.98   0.003    -2.630038   -.5440125
+\HLI{17}{\PLUS}\HLI{64}
+ln_sig_v         {\VBAR}
+           _cons {\VBAR}   .1270812   .1233206     1.03   0.303    -.1146228    .3687852
+\HLI{17}{\PLUS}\HLI{64}
+ln_sig_u         {\VBAR}
+           _cons {\VBAR}  -1.178028   1.074875    -1.10   0.273    -3.284745    .9286889
+\HLI{17}{\PLUS}\HLI{64}
+ln_sig_w         {\VBAR}
+           _cons {\VBAR}   .0036437   .0915262     0.04   0.968    -.1757443    .1830317
+\HLI{17}{\BOTT}\HLI{64}
