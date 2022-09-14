@@ -2,7 +2,7 @@
 
 The repository of Stata command `sftt`. For details, see:
 
-> Yujun, Chang Liu, Christopher F. Parmeter. Two-tier stochastic frontier analysis using Stata. **Stata Joural**, 2022, forthcoming.
+> Yujun Lian, Chang Liu, Christopher F. Parmeter. Two-tier stochastic frontier analysis using Stata. **Stata Joural**, 2022, forthcoming.
 
 
 ## Description
@@ -41,6 +41,6 @@ Guangzhou, China. [-Link-](https://www.lianxh.cn)
 - [Chang Liu](mailto:liuch288@mail2.sysu.edu.cn).
 Lingnan College, Sun Yat-sen University
 Guangzhou, China.
-- [Christopher F. Parmeter](cparmeter@bus.miami.edu).
+- [Christopher F. Parmeter](mailto:cparmeter@bus.miami.edu).
 Department of Economics, University of Miami
 Miami, FL, USA.
