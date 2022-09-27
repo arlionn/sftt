@@ -73,7 +73,7 @@ variables for the upper (nonnegative) inefficiency variance function{p_end}
 {synopt :{opt iter:ate(#)}}specifies the maximum number of iterations, default is {opt iterate(1000)}. In most cases, the optimization should be converged in less than 1000 iterations{p_end}
 {synopt :{opt seed(#)}}sets a random seed before estimating to ensure that the results are reproducible{p_end}
 {synopt :{opt findseed}}loops through 100 estimations, during which the random seed was set from 1 to 100. In each attampt, we iterate at most 100 times{p_end}
-{synopt :{opt init:ial}}specifies the initial values to begin the NLS estimation. This option is only used when estimating with {opt scaling}{p_end}
+{synopt :{cmdab:init:ial(}{it:{help nl##initial_values:initial_values}}{cmd:)}}specifies the initial values to begin the NLS estimation. This option is only used when estimating with {opt scaling}{p_end}
 
 {syntab :SE}
 {synopt :{opth vce(vcetype)}}{it:vcetype} may be {opt oim}, {opt opg}, {opt r:obust}, {opt cl:uster} {it:clustvar}, {opt boot:strap}, or {opt jack:knife}{p_end}
@@ -164,6 +164,9 @@ with the variance expressed as a function of the covariates defined in
 
 {phang}
 {opt iterate(#)} specifies the maximum number of iterations, default is {opt iterate(1000)}. In most cases, the optimization should be converged in less than 1000 iterations.
+
+{phang}
+{cmd:initial(}{it:{help nl##initial_values:initial_values}}{cmd:)} specifies the initial values to begin the NLS estimation. This option is only used when estimating with {opt scaling}.
 
 {dlgtab:SE}
 
