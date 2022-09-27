@@ -176,7 +176,7 @@ that allow for intragroup correlation ({opt cluster} {it:clustvar}), that use bo
 see {helpb vce_option:[R] {it:vce_option}}.
 
 {phang}
-{opt robust} synonym for {cmd:vce(robust)}
+{opt robust} is the synonym for {cmd:vce(robust)}.
 
 
 {marker estimate_efficiency_full}{...}
