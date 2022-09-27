@@ -70,10 +70,10 @@ variables for the lower (nonpositive) inefficiency variance function{p_end}
 variables for the upper (nonnegative) inefficiency variance function{p_end}
 
 {syntab :Other options}
-{synopt :{opt iter:ate(#)}}specifies the maximum number of iterations, default is {opt iterate(1000)}. In most cases, the optimization should be converged in less than 1000 iterations.{p_end}
-{synopt :{opt fe}}uses the fix-effect estimator. In {opt fe} mode, noconstant should not be added to absorb the constant term{p_end}
+{synopt :{opt iter:ate(#)}}specifies the maximum number of iterations, default is {opt iterate(1000)}. In most cases, the optimization should be converged in less than 1000 iterations{p_end}
 {synopt :{opt seed(#)}}sets a random seed before estimating to ensure that the results are reproducible{p_end}
 {synopt :{opt findseed}}loops through 100 estimations, during which the random seed was set from 1 to 100. In each attampt, we iterate at most 100 times{p_end}
+{synopt :{cmdab:init:ial(}{it:{help nl##initial_values:initial_values}}{cmd:)}}specifies the initial values to begin the NLS estimation. This option is only used when estimating with {opt scaling}{p_end}
 
 {syntab :SE}
 {synopt :{opth vce(vcetype)}}{it:vcetype} may be {opt oim}, {opt opg}, {opt r:obust}, {opt cl:uster} {it:clustvar}, {opt boot:strap}, or {opt jack:knife}{p_end}
@@ -86,22 +86,22 @@ variables for the upper (nonnegative) inefficiency variance function{p_end}
 {synopthdr:efficiency_options}
 {synoptline}
 {syntab: Select variable type}
-{synopt: {opt lev:el}} only generate inefficiency terms in level specification.{p_end}
-{synopt: {opt exp}} only generate inefficiency terms in logarithmic specification, {opt level} and {opt exp} should not be used simultaneously.{p_end}
-{synopt: {opt abs:olute}} only generate absolute measures of inefficiency.{p_end}
-{synopt: {opt rel:ative}} only generate relative measures of inefficiency, {opt absolute} and {opt relative} should not be used simultaneously.{p_end}
+{synopt: {opt lev:el}} only generate inefficiency terms in level specification{p_end}
+{synopt: {opt exp}} only generate inefficiency terms in logarithmic specification, {opt level} and {opt exp} should not be used simultaneously{p_end}
+{synopt: {opt abs:olute}} only generate absolute measures of inefficiency{p_end}
+{synopt: {opt rel:ative}} only generate relative measures of inefficiency, {opt absolute} and {opt relative} should not be used simultaneously{p_end}
 
 {syntab: Assign variable name}
-{synopt: {opth u_hat(newvar)}} variable name of the estimated lower one-sided inefficiency term in level specification, default is {it: _u_hat}.{p_end}
-{synopt: {opth w_hat(newvar)}} variable name of the estimated upper one-sided inefficiency term in level specification, default is {it: _w_hat}.{p_end}
-{synopt: {opth wu_diff(newvar)}} variable name of the estimated net surplus in level specification, default is {it: _wu_diff}.{p_end}
-{synopt: {opth u_hat_exp(newvar)}} variable name of the estimated lower one-sided inefficiency term in logarithmic specification, default is {it: _u_hat_exp}.{p_end}
-{synopt: {opth w_hat_exp(newvar)}} variable name of the estimated upper one-sided inefficiency term in logarithmic specification, default is {it: _w_hat_exp}.{p_end}
-{synopt: {opth wu_diff_exp(newvar)}} variable name of the estimated net surplus in logarithmic specification, default is {it: _wu_diff_exp}.{p_end}
-{synopt: {opth wu_net_effect(newvar)}} variable name of the estimated net effect, default is {it: _wu_net_effect}.{p_end}
+{synopt: {opth u_hat(newvar)}} variable name of the estimated lower one-sided inefficiency term in level specification, default is {it: _u_hat}{p_end}
+{synopt: {opth w_hat(newvar)}} variable name of the estimated upper one-sided inefficiency term in level specification, default is {it: _w_hat}{p_end}
+{synopt: {opth wu_diff(newvar)}} variable name of the estimated net surplus in level specification, default is {it: _wu_diff}{p_end}
+{synopt: {opth u_hat_exp(newvar)}} variable name of the estimated lower one-sided inefficiency term in logarithmic specification, default is {it: _u_hat_exp}{p_end}
+{synopt: {opth w_hat_exp(newvar)}} variable name of the estimated upper one-sided inefficiency term in logarithmic specification, default is {it: _w_hat_exp}{p_end}
+{synopt: {opth wu_diff_exp(newvar)}} variable name of the estimated net surplus in logarithmic specification, default is {it: _wu_diff_exp}{p_end}
+{synopt: {opth wu_net_effect(newvar)}} variable name of the estimated net effect, default is {it: _wu_net_effect}{p_end}
 
 {syntab: Other option}
-{synopt: {opt replace}} permits {opt sftt} to overwrite existing variables.{p_end}
+{synopt: {opt replace}} permits {opt sftt} to overwrite existing variables{p_end}
 {synoptline}
 
 
@@ -164,6 +164,9 @@ with the variance expressed as a function of the covariates defined in
 
 {phang}
 {opt iterate(#)} specifies the maximum number of iterations, default is {opt iterate(1000)}. In most cases, the optimization should be converged in less than 1000 iterations.
+
+{phang}
+{cmd:initial(}{it:{help nl##initial_values:initial_values}}{cmd:)} specifies the initial values to begin the NLS estimation. This option is only used when estimating with {opt scaling}.
 
 {dlgtab:SE}
 
