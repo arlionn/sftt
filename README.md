@@ -2,7 +2,7 @@
 
 The repository of Stata command `sftt`. For details, see:
 
-> Yujun Lian, Chang Liu, Christopher F. Parmeter. Two-tier stochastic frontier analysis using Stata. **The Stata Joural**, 2022, forthcoming.
+> Lian, Y., Liu, C., & Parmeter, C. F. (2023). Two-tier stochastic frontier analysis using Stata. The Stata Journal, 23(1), 197–229. [link](https://journals.sagepub.com/doi/abs/10.1177/1536867X231162033)
 
 
 ## Description
