@@ -76,7 +76,7 @@ variables for the upper (nonnegative) inefficiency variance function{p_end}
 {synopt :{cmdab:init:ial(}{it:{help nl##initial_values:initial_values}}{cmd:)}}specifies the initial values to begin the NLS estimation. This option is only used when estimating with {opt scaling}{p_end}
 
 {syntab :SE}
-{synopt :{opth vce(vcetype)}}{it:vcetype} may be {opt oim}, {opt opg}, {opt r:obust}, {opt cl:uster} {it:clustvar}, {opt boot:strap}, or {opt jack:knife}{p_end}
+{synopt :{opth vce(vcetype)}}specifies the type of standard error reported; {it:vcetype} may be {opt r:obust}, {opt cl:uster} {it:clustvar}, {opt boot:strap}, or {opt jack:knife}{p_end}
 {synopt :{opt r:obust}}synonym for {cmd:vce(robust)}{p_end}
 {synoptline}
 
@@ -171,13 +171,12 @@ with the variance expressed as a function of the covariates defined in
 {dlgtab:SE}
 
 {phang}
-{opt vce(vcetype)} specifies the type of standard error reported,
-which includes types that are derived from asymptotic theory and
-that use bootstrap or jackknife methods; see 
-{helpb vce_option:[R] {it:vce_option}}.
+{opt vce(vcetype)} specifies the type of standard error reported, which includes types thatare robust to some kinds of misspecification ({opt robust}), 
+that allow for intragroup correlation ({opt cluster} {it:clustvar}), that use bootstrap or jackknife methods ({opt bootstrap}, {opt jackknife}) for estimation with {opt scaling}; 
+see {helpb vce_option:[R] {it:vce_option}}.
 
 {phang}
-{opt robust} synonym for {cmd:vce(robust)}
+{opt robust} is the synonym for {cmd:vce(robust)}.
 
 
 {marker estimate_efficiency_full}{...}
