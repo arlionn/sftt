@@ -2,7 +2,8 @@
 
 The repository of Stata command `sftt`. For details, see:
 
-> Lian, Y., Liu, C., & Parmeter, C. F. (2023). Two-tier stochastic frontier analysis using Stata. The Stata Journal, 23(1), 197–229. [link](https://journals.sagepub.com/doi/abs/10.1177/1536867X231162033)
+> Lian, Y., Liu, C., & Parmeter, C. F. (2023). Two-tier stochastic frontier analysis using Stata. The Stata Journal, 23(1), 197–229. [link](https://journals.sagepub.com/doi/abs/10.1177/1536867X231162033), [-PDF-](
+https://file.lianxh.cn/Refs/LianPub/Lian-2023-SJ-sftt-Two-tier-SFA.pdf)
 
 
 ## Description
@@ -29,6 +30,17 @@ This command also fits
 - `sftt sigs` identifies the distribution of each component in the composite error term.
 - `sftt eff` decomposes the residual and generate measures of inefficiency.
 
+## Install
+You can always type `search sftt` in Stata's command window to get access to package. 
+Or, you can use the following commands to download it directly.
+```stata
+net install st0705.pkg, replace
+net get     st0705.pkg, replace  // to get main.do file
+```
+Then you can read the help document to get more detailed information:
+```stata
+help sftt
+```
 
 ## Example
  First add directory to end of ado-path.
@@ -61,13 +73,20 @@ You can use `help sftt` to see more detailed instructions.
 - `scaling_mc.do` implements the Monte-Carlo simulation following [Parmeter (2018)](https://doi.org/10.1007/s11123-017-0520-8), the results will be saved in `./mc_results`.
 
 
+## References
+
+- Kumbhakar, S. C., and C. F. Parmeter.  2009.  The effects of match uncertainty and bargaining on labor market outcomes: Evidence from firm and worker specific estimates.  Journal of Productivity Analysis 31: 1–14.  https://doi.org/10.1007/s11123-008-0117-3.
+- Papadopoulos, A. A.  2015.  The half-normal specification for the two-tier stochastic frontier model.  Journal of Productivity Analysis 43: 225–230.  https://doi.org/10.1007/s11123-014-0389-8.
+- Parmeter, C. F.  2018.  Estimation of the two-tiered stochastic frontier model with the scaling property.  Journal of Productivity Analysis 49: 37–47.  https://doi.org/10.1007/s11123-017-0520-8.
+
+
 ## Acknowledgments
 We thank Dr. Jenkins and the anonymous reviewer for their valuable and insightful comments.
 
 We also thank Alecos Papadopoulos for his helpful support.
 
 
-## Program Authors
+## Authors
 - [Yujun Lian](mailto:arlionn@163.com) (repo owner).
 Lingnan College, Sun Yat-sen University.
 Guangzhou, China. 
