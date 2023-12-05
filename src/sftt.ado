@@ -41,7 +41,7 @@ program sftt
     else {
         local before_comma = strtrim("`before_comma'")
         if "`before_comma'" == "eff" {
-            _sftt_eff `after_comma'
+            _sftt_eff `if' `after_comma'
         }
         else {
             _sftt_regression `0'
@@ -100,11 +100,11 @@ program _sftt_regression, eclass
                     set seed `i'
                     capture {
                         if "`scaling'" == "scaling" {
-                            _sftt_regression_scaling `varlist' `options' findingseedmode
+                            _sftt_regression_scaling `varlist' `if' `options' findingseedmode
                             ereturn local sftt_scaling = 1
                         }
                         else {
-                            _sftt_regression_original `varlist' `options' findingseedmode
+                            _sftt_regression_original `varlist' `if' `options' findingseedmode
                             ereturn local sftt_scaling = 0
                         }
                     }
@@ -129,11 +129,12 @@ program _sftt_regression, eclass
         }
         // start estimating
         if "`scaling'" == "scaling" {
-            _sftt_regression_scaling `varlist' `options'
+            _sftt_regression_scaling `varlist' `if' `options'
             ereturn local sftt_scaling = 1
         }
         else {
-            _sftt_regression_original `varlist' `options'
+            noisily di "_sftt_regression_original `varlist' `if' `options'"
+            _sftt_regression_original `varlist' `if' `options'
             ereturn local sftt_scaling = 0
             if "`sigmau'" == "" & "`sigmaw'" == "" {
                 ereturn local sftt_model "homogeneous"
