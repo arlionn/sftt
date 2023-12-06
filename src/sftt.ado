@@ -1,4 +1,4 @@
-*! sftt 0.0.1 12Jun2022
+*! sftt 1.0.0 06Dec2023
 
 /*
 SFTT MAIN FUNCTION
@@ -32,7 +32,7 @@ program sftt
     if strtrim("`after_comma'") == "version" | strtrim("`after_comma'") == "ver"  {
         display _n(1) "{bf:{ul:Version}}"
         display _n(1) "{txt}{sf}    sftt version 1.0.0"
-        display "    June 12, 2022"
+        display "    December 06, 2023"
         exit 0
     }
 
