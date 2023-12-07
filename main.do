@@ -117,7 +117,7 @@ histogram _wu_diff_exp, percent title(Percent, place(10) size(*0.7))            
         xscale(titlegap(3) outergap(-2))
 sjlog close, replace
 
-// Export the figures into files, no need to be sjlogged
+// Export the figures into files
 histogram _u_hat_exp, percent title(Percent, place(10) size(*0.7))               ///
        ylabel(,angle(0)) ytitle("") xtitle("Surplus extracted by patients (%)")  ///
        xscale(titlegap(3) outergap(-2)) scheme(sj)
