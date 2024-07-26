@@ -39,13 +39,13 @@ where $\mathbf{y}$ is an $n \times 1$ vector containing observations of the outc
 
 $$
 \begin{aligned}
-v_i & \sim \text { i.i.d. } \text{N}\left(0, \sigma_v^2\right) \\
+v_i & \sim \text { i.i.d. } N\left(0, \sigma_v^2\right) \\
 u_i & \sim \text { i.i.d. } \text{Exp}\left(\sigma_u\right) \\
 w_i & \sim \text { i.i.d. } \text{Exp}\left(\sigma_w\right)
 \end{aligned}
 $$
 
-where i.i.d. stands for independent and identically distributed, $\text{N}\left(0, \sigma_v^2\right)$ denotes a normal distribution with mean 0 and variance $\sigma_v^2$, and $\text{Exp}\left(\sigma_z\right)$ denotes a random variable $z$ that is exponentially distributed with mean $\sigma_z$ and variance $\sigma_z^2$.
+where i.i.d. stands for independent and identically distributed, $N(0, \sigma_v^2)$ denotes a normal distribution with mean 0 and variance $\sigma_v^2$, and $\text{Exp}(\sigma_z)$ denotes a random variable $z$ that is exponentially distributed with mean $\sigma_z$ and variance $\sigma_z^2$.
 
 The model can be estimated using MLE, and $E\left(u_i \mid \varepsilon_i\right)$ and $E\left(w_i \mid \varepsilon_i\right)$ are estimated to measure inefficiency.
 
